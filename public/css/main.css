@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  color: #333;
+}
+
+img.img-resp {
+  width: 100%;
+}
+
+.product {
+  display: block;
+  padding: 5px 5px 15px;
+  margin-top: 30px;
+  overflow: hidden;
+  text-align: center;
+  color: #333;
+  border-radius: 5px;
+  position: relative;
+}
+
+.product.product-small {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product.product-common {
+  -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+.product:hover {
+  text-decoration: none;
+  color: #4390BC;
+}
+
+.product .discounted {
+  display: block;
+  position: absolute;
+  left: -35px;
+  top: 28px;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  width: 150px;
+  background-color: #4390BC;
+  color: #fff;
+}
+
+.comment-image {
+  width: 20%;
+}
+
+.comment-text {
+  width: 80%;
+}
+
+section#similar .container,
+section#user-login .container,
+section#cart .container,
+section#comments .container,
+section#details .container,
+section#top-products .container,
+section#all-products .container {
+  padding: 50px 0;
+}
+
+section#slider .carousel-caption {
+  background-color: rgba(51, 51, 51, 0.582);
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+section#slider .carousel-indicators {
+  margin-bottom: 7px;
+}
+
+section#details .details-image {
+  width: 100%;
+}
+
+section#details .details-info {
+  padding: 50px;
+}
+
+section#details .details-gallery .img-gallery {
+  width: 100px;
+  cursor: pointer;
+  border: 3px solid #d6d6d6;
+  margin: 5px;
+}
+
+section#details ul li {
+  list-style: none;
+}
+
+section#comments .img-comment {
+  width: 100px;
+}
+
+section#comments .media-comment {
+  padding: 10px;
+  border-radius: 20px;
+  border: 3px solid #d6d6d67e;
+  margin-top: 30px;
+}
+
+section#comments .media-comment.media-comment-me {
+  border: 3px solid #4390bc86;
+}
+
+section#comments .media-response {
+  border-top: 3px solid #d6d6d67e;
+  padding: 10px;
+}
+
+section#cart .cart-image {
+  width: 150px;
+}
+
+section#cart .cart-descr {
+  width: 200px;
+  max-height: 100px;
+  overflow: hidden;
+}
+/*# sourceMappingURL=main.css.map */
