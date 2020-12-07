@@ -62,6 +62,7 @@ img.img-resp {
   width: 80%;
 }
 
+section#add-product .container,
 section#similar .container,
 section#user-login .container,
 section#cart .container,
@@ -100,6 +101,12 @@ section#details .details-gallery .img-gallery {
 
 section#details ul li {
   list-style: none;
+}
+
+section#details .discount-percent {
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 15px;
 }
 
 section#comments .img-comment {

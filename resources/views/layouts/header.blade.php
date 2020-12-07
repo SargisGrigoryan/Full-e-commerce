@@ -21,6 +21,12 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/register">Register</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/addProduct">Add product</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/addCat">Add category</a>
+                </li>
               </ul>
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

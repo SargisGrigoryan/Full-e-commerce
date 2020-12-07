@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('content')
-
     {{-- Details --}}
     <section id="details">
         <div class="container">
@@ -10,10 +9,10 @@
                 {{-- Product Gallery --}}
                 <div class="col-md-6">
                     <div class="details-image">
-                        <img src="https://icdn2.digitaltrends.com/image/aem/aem-2020-7-3-dc6bd6650daf4630691cbe11c37b7b42bf0a30e9-500x500.png" alt="image" class="img-resp img-general">
+                        <img src="{{ $data->image }}" alt="image" class="img-resp img-general">
                     </div>
                     <div class="details-gallery">
-                        <img src="https://icdn2.digitaltrends.com/image/aem/aem-2020-7-3-dc6bd6650daf4630691cbe11c37b7b42bf0a30e9-500x500.png" alt="image" class="img-gallery">
+                        <img src="{{ $data->image }}" alt="image" class="img-gallery">
                         <img src="https://cdn.gsmarena.com/imgroot/news/18/05/aquaris-x2-x2pro/-500/gsmarena_003.jpg" alt="image" class="img-gallery">
                         <img src="https://www.eutronix.nl/wp-content/uploads/2019/09/PM90-front-view-500x500.jpg" alt="image" class="img-gallery">
                         <img src="https://www.swissphone.com/wp-content/uploads/2019/05/SOS-Mobile-App_EN.jpg" alt="image" class="img-gallery">
@@ -24,9 +23,19 @@
                 {{-- Product Info --}}
                 <div class="col-md-6">
                     <div class="details-info">
-                        <h3><b>Product name</b></h3>
+                        <h3><b>{{ $data->name }}</b></h3>
                         <small>Lorem ipsum dolor sit amet.</small>
-                        <h4>$150</h4>
+                        @if ($data->discount > 0)
+                        <?php
+                            $total_price = $data->price - ($data->discount * $data->price / 100)
+                        ?>
+                        <h4><s>${{ $data->price }}</s> ${{ $total_price }} <small class="discount-percent bg-danger text-light">%{{ $data->discount }} Discounted</small></h4>
+                        @else
+                        <h4>${{ $data->price }}</h4>
+                        @endif
+
+                        
+                        
                         <div class="mb-2">
                             <a href="#" class="text-warning"><i class="fas fa-star"></i></a>
                             <a href="#" class="text-warning"><i class="fas fa-star"></i></a>
@@ -35,26 +44,18 @@
                             <a href="#" class="text-warning"><i class="fas fa-star"></i></a>
                         </div>
                         <ul>
-                            <li><b>Colors -</b> <i>Black, yellow, white</i></li>
-                            <li><b>Display -</b> <i>LCD</i></li>
-                            <li><b>Camera -</b> <i>4K</i></li>
-                            <li><b>Memory -</b> <i>64gb</i></li>
-                            <li><b>RAM -</b> <i>4gb</i></li>
+                            <li><b>Colors -</b> <i>{{ $data->colors }}</i></li>
+                            <li><b>Display -</b> <i>{{ $data->display }}</i></li>
+                            <li><b>Camera -</b> <i>{{ $data->camera }}</i></li>
+                            <li><b>Memory -</b> <i>{{ $data->memory }}</i></li>
+                            <li><b>RAM -</b> <i>{{ $data->ram }}</i></li>
                         </ul>
                         <div class="mt-3">
                             <button type="button" class="btn btn-primary">Add to cart</button>
                             <button type="button" class="btn btn-success">Buy now</button>
                         </div>
                         <hr>
-                        <div class="detail-descr">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Odit dolorem tenetur architecto, quisquam velit assumenda 
-                            vitae maxime quas officia, debitis sed alias perferendis 
-                            animi facilis ipsam dolor illo. Quaerat perferendis dolore 
-                            labore officia corrupti repudiandae, officiis vero, saepe 
-                            ratione debitis cum quas voluptates, suscipit assumenda 
-                            natus? Totam tempora repellendus beatae!
-                        </div>
+                        <div class="detail-descr">{{ $data->descr }}</div>
                     </div>
                 </div>
                 {{-- Product Info end --}}
@@ -81,18 +82,6 @@
                       Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. 
                       Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
                       Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                  
-                      <div class="media media-response mt-3">
-                        <a class="mr-3" href="#">
-                          <img src="https://www.shareicon.net/data/512x512/2017/01/06/868320_people_512x512.png" class="mr-3 img-comment" alt="Avatar">
-                        </a>
-                        <div class="media-body">
-                          <h5 class="mt-0">Media heading</h5>
-                          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. 
-                          Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
-                          Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        </div>
-                      </div>
                     </div>
                 </div>
                 {{-- Comment box end --}}
