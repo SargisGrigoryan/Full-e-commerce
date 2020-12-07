@@ -76,37 +76,37 @@
         <div class="container">
             <div class="row">
 
-              <!-- Header -->
-              <div class="col-12 text-center">
-                <h1>All Products</h1>
-              </div>
+                <!-- Header -->
+                <div class="col-12 text-center">
+                  <h1>All Products</h1>
+                </div>
 
-              @foreach ($all_products as $item)
-              <!-- Product -->
-              <div class="col-lg-3 col-md-4 col-6">
-                  <a href="/details/{{ $item->id }}" class="product product-common">
-                      <img src="{{ $item->image }}" alt="Image" class="img-resp">
-                      <h4>{{ $item->name }}</h4>
-                      @if ($item->discount > 0)
-                      <?php
-                        $total_price = $item->price - ($item->discount * $item->price / 100)
-                      ?>
-                      <span class="discounted">Discounted</span>
-                      Price - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
-                      @else
-                        Price - <b><i>${{ $item->price }}</i></b>
-                      @endif
-                  </a>
-              </div>
-              <!-- Product end -->    
-              @endforeach            
+                @foreach ($all_products as $item)
+                <!-- Product -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="/details/{{ $item->id }}" class="product product-common">
+                        <img src="{{ $item->image }}" alt="Image" class="img-resp">
+                        <h4>{{ $item->name }}</h4>
+                        @if ($item->discount > 0)
+                        <?php
+                          $total_price = $item->price - ($item->discount * $item->price / 100)
+                        ?>
+                        <span class="discounted">Discounted</span>
+                        Price - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
+                        @else
+                          Price - <b><i>${{ $item->price }}</i></b>
+                        @endif
+                    </a>
+                </div>
+                <!-- Product end -->    
+                @endforeach
 
-
-            <!-- Load more -->
-            <div class="col-12 text-center mt-3">
-              <button class="btn btn-primary">Load more</button>
-            </div>
-            <!-- Load more -->
+                <!-- Pagination -->
+                <div class="col-12 text-center mt-3">
+                  <hr>
+                  {{ $all_products->links('vendor.pagination.custom') }}
+                </div>
+                <!-- Pagination end -->
             </div>
         </div>
     </section>

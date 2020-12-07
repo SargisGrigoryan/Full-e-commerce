@@ -36,12 +36,12 @@ class AdminController extends Controller
 
         // General image
         $file_1 = $req->file('image');
-        $file_name_1 = md5(Carbon::now()).'.'.$req->file('image')->getClientOriginalExtension();
+        $file_name_1 = md5(Carbon::now().rand(1,10)).'.'.$req->file('image')->getClientOriginalExtension();
 
         // Slider image
         if($req->file('slider_image')){
             $file_2 = $req->file('slider_image');
-            $file_name_2 = md5(Carbon::now()).'.'.$req->file('slider_image')->getClientOriginalExtension();
+            $file_name_2 = md5(Carbon::now().rand(21,30)).'.'.$req->file('slider_image')->getClientOriginalExtension();
             $product->slider_image  = '/'.'slider_images/'.$file_name_2;
         }
 
@@ -63,10 +63,43 @@ class AdminController extends Controller
         $result = $product->save();
 
         if($result){
+            // General image
             $file_1->move(base_path('\public\images'), $file_name_1);
+
+            // Slider image
             if($req->file('slider_image')){
                 $file_2->move(base_path('\public\slider_images'), $file_name_2);
             }
+
+            // Gallery images
+            if($req->file('gallery_image_1')){
+                $gallery = new Gallery;
+                $gallery_image_1 = $req->file('gallery_image_1');
+                $gallery_image_name_1 = md5(Carbon::now().'-'.rand(11, 20)).'.'.$req->file('gallery_image_1')->getClientOriginalExtension();
+                $gallery_image_1->move(base_path('\public\gallery'), $gallery_image_name_1);
+                $gallery->src = '/'.'gallery/'.$gallery_image_name_1;
+                $gallery->product_id = $product->id;
+                $gallery->save();
+            }
+            if($req->file('gallery_image_2')){
+                $gallery = new Gallery;
+                $gallery_image_2 = $req->file('gallery_image_2');
+                $gallery_image_name_2 = md5(Carbon::now().'-'.rand(11, 20)).'.'.$req->file('gallery_image_2')->getClientOriginalExtension();
+                $gallery_image_2->move(base_path('\public\gallery'), $gallery_image_name_2);
+                $gallery->src = '/'.'gallery/'.$gallery_image_name_2;
+                $gallery->product_id = $product->id;
+                $gallery->save();
+            }
+            if($req->file('gallery_image_3')){
+                $gallery = new Gallery;
+                $gallery_image_3 = $req->file('gallery_image_3');
+                $gallery_image_name_3 = md5(Carbon::now().'-'.rand(11, 20)).'.'.$req->file('gallery_image_3')->getClientOriginalExtension();
+                $gallery_image_3->move(base_path('\public\gallery'), $gallery_image_name_3);
+                $gallery->src = '/'.'gallery/'.$gallery_image_name_3;
+                $gallery->product_id = $product->id;
+                $gallery->save();
+            }
+
             return "Product added successfully";
         }else{
             return "Connection error";

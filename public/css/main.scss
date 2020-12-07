@@ -60,6 +60,21 @@ img.img-resp{
 // Comments end
 
 
+// Pagination
+/* pagination */
+.pager{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: row;
+}
+.pager li{
+    padding: 10px;
+}
+// Pagination end
+
+
 // Container padding for special sections
 section#add-product .container,
 section#similar .container,
@@ -94,7 +109,7 @@ section#details .details-info{
     padding: 50px;
 }
 section#details .details-gallery .img-gallery{
-    width: 100px;
+    width: calc(25% - 16px);
     cursor: pointer;
     border: 3px solid #d6d6d6;
     margin: 5px;

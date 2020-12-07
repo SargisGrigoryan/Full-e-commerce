@@ -5,7 +5,6 @@
     <section id="details">
         <div class="container">
             <div class="row">
-
                 {{-- Product Gallery --}}
                 <div class="col-md-6">
                     <div class="details-image">
@@ -13,9 +12,9 @@
                     </div>
                     <div class="details-gallery">
                         <img src="{{ $data->image }}" alt="image" class="img-gallery">
-                        <img src="https://cdn.gsmarena.com/imgroot/news/18/05/aquaris-x2-x2pro/-500/gsmarena_003.jpg" alt="image" class="img-gallery">
-                        <img src="https://www.eutronix.nl/wp-content/uploads/2019/09/PM90-front-view-500x500.jpg" alt="image" class="img-gallery">
-                        <img src="https://www.swissphone.com/wp-content/uploads/2019/05/SOS-Mobile-App_EN.jpg" alt="image" class="img-gallery">
+                        @foreach ($gallery_images as $item)
+                            <img src="{{ $item->src }}" alt="image" class="img-gallery">
+                        @endforeach
                     </div>
                 </div>
                 {{-- Product Gallery end --}}
@@ -135,71 +134,30 @@
                 <div class="col-12">
                     <div class="owl-carousel">
 
+                        @foreach ($similar_products as $item)
                         <!-- Product -->
                         <div>
-                          <a href="#" class="product product-small">
-                            <img src="https://icdn2.digitaltrends.com/image/aem/aem-2020-7-3-dc6bd6650daf4630691cbe11c37b7b42bf0a30e9-500x500.png" alt="Image" class="img-resp">
-                            <h5>Smart Phone</h5>
-                            Price - <b><i>$200</i></b>
-                          </a>
-                        </div>
-                        <!-- Product end -->
-      
-                        <!-- Product -->
-                        <div>
-                          <a href="#" class="product product-small">
-                              <img src="https://www.gizmochina.com/wp-content/uploads/2018/11/HiSense-King-Kong-4-500x500.jpg" alt="Image" class="img-resp">
-                              <span class="discounted">Discounted</span>
-                              <h5>Smart Phone</h5>
-                              Price - <b><s><i>$300</i> </s>$180</b>
-                          </a>
-                        </div>
-                        <!-- Product end -->                
-      
-                        <!-- Product -->
-                        <div>
-                            <a href="#" class="product product-small">
-                                <img src="https://cdn.gsmarena.com/imgroot/news/18/05/aquaris-x2-x2pro/-500/gsmarena_003.jpg" alt="Image" class="img-resp">
-                                <h5>Smart Phone</h5>
-                                Price - <b><i>$250</i></b>
-                            </a>
-                        </div>
-                        <!-- Product end -->    
-      
-                        <!-- Product -->
-                        <div>
-                            <a href="#" class="product product-small">
-                                <img src="https://www.eutronix.nl/wp-content/uploads/2019/09/PM90-front-view-500x500.jpg" alt="Image" class="img-resp">
-                                <h5>Smart Phone</h5>
-                                Price - <b><i>$150</i></b>
+                            <a href="/details/{{ $item->id }}" class="product product-small">
+                                <img src="{{ $item->image }}" alt="Image" class="img-resp">
+                                <h5>{{ $item->name }}</h5>
+                                @if ($item->discount > 0)
+                                    <?php
+                                    $total_price = $item->price - ($item->discount * $item->price / 100)
+                                    ?>
+                                    <span class="discounted">Discounted</span>
+                                    Price - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
+                                @else
+                                    Price - <b><i>${{ $item->price }}</i></b>
+                                @endif
                             </a>
                         </div>
                         <!-- Product end -->
-      
-                        <!-- Product -->
-                        <div>
-                          <a href="#" class="product product-small">
-                              <img src="https://www.worldsim.com/media/catalog/product/cache/2/image/500x500/17f82f742ffe127f42dca9de82fb58b1/h/u/huaweip_1.jpg" alt="Image" class="img-resp">
-                              <h5>Smart Phone</h5>
-                              Price - <b><i>$200</i></b>
-                          </a>
-                        </div>
-                        <!-- Product end -->
-      
-                        <!-- Product -->
-                        <div>
-                          <a href="#" class="product product-small">
-                              <img src="https://www.swissphone.com/wp-content/uploads/2019/05/SOS-Mobile-App_EN.jpg" alt="Image" class="img-resp">
-                              <h5>Smart Phone</h5>
-                              Price - <b><i>$210</i></b>
-                          </a>
-                        </div>
-                        <!-- Product end -->
-      
+                        @endforeach
+
                     </div>
                 </div>
                 <div class="col-12 text-center mt-3">
-                    <button class="btn btn-primary">All Procucts</button>
+                    <a href="/" class="btn btn-primary">All Procucts</a>
                 </div>
             </div>
         </div>
