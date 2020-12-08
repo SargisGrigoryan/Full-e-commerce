@@ -21,5 +21,13 @@ $(function(){
         var src = $(this).attr('src');
         $('.details-image').find('.img-general').attr('src', src);
     }); 
+
+
+    // Notifications disapearing
+    if($('.alert')){
+        setTimeout(function(){
+            $('.alert').fadeOut(500);
+        }, 5000);
+    }
     
 });

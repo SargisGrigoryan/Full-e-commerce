@@ -11,6 +11,9 @@
     {{-- Header --}}
     @include('layouts/header')
 
+    {{-- Include notifications --}}
+    <x-notifications/>
+
     {{-- Content --}}
     @yield('content')
 

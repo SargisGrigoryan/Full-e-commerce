@@ -17,9 +17,11 @@ class AdminController extends Controller
         $result = $cat->save();
 
         if($result){
-            return "Category is added successfully ";
+            session()->flash('notify_success', 'Category is added successfully');
+            return redirect('addCat');
         }else{
-            return "Connection error please try again later";
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('addCat');
         }
     }
 
