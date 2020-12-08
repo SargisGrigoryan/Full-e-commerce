@@ -23,14 +23,25 @@ Route::view('/register', 'register');
 Route::view('/verify', 'verify');
 Route::view('/addCat', 'addCat');
 
-// Route POST (Admin Controller)
+
+// ___ADMIN___
+
+// POST
 Route::post('addCat', [AdminController::class, 'addCat']);
 Route::post('addProduct', [AdminController::class, 'addProduct']);
 
-// Route GET (User Controller)
+// GET
+Route::get('addProduct', [AdminController::class, 'getCat']);
+
+
+// ___USER___
+
+// POST
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
+
+// GET
 Route::get('/details/{id}', [UserController::class, 'getDetails']);
 Route::get('home', [UserController::class, 'getHomeProducts']);
 Route::get('/', [UserController::class, 'getHomeProducts']);
-
-// Route GET (User Admin)
-Route::get('addProduct', [AdminController::class, 'getCat']);
+Route::get('logout', [UserController::class, 'logout']);

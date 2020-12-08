@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Gallery;
+use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Session;
 
 class UserController extends Controller
 {
@@ -32,5 +36,120 @@ class UserController extends Controller
         $all_products = Product::where('status', '1')->orderByDesc('id')->paginate(12);
 
         return view('home', ['slider_products' => $slider_products, 'top_products' => $top_products, 'all_products' => $all_products]);
+    }
+
+    // Register new user
+    function register(Request $req){
+        $user = new User;
+
+        // Take all datas
+        $first_name         = $req->input('first_name');
+        $last_name          = $req->input('last_name');
+        $personal_image     = $req->file('personal_image');
+        $email              = $req->input('email');
+        $password_1         = $req->input('password_1');
+        $password_2         = $req->input('password_2');
+
+        // Keep datas in flash session
+        session()->flash('first_name', $first_name);
+        session()->flash('last_name', $last_name);
+        session()->flash('email', $email);
+        session()->flash('password_1', $password_1);
+        session()->flash('password_2', $password_2);
+
+        // Check all required datas
+        if(!$first_name){
+            // Notify user
+            session()->flash('notify_danger', 'Firstname is required.');
+            return redirect('register');
+        }
+        if(!$last_name){
+            // Notify user
+            session()->flash('notify_danger', 'Lastname is required.');
+            return redirect('register');
+        }
+        if(!$personal_image){
+            // Notify user
+            session()->flash('notify_danger', 'Personal image is required.');
+            return redirect('register');
+        }
+        if(!$email){
+            // Notify user
+            session()->flash('notify_danger', 'Email is required.');
+            return redirect('register');
+        }
+        if(!$password_1){
+            // Notify user
+            session()->flash('notify_danger', 'Password is required.');
+            return redirect('register');
+        }
+        if(!$password_2){
+            // Notify user
+            session()->flash('notify_danger', 'Password confirmation is required.');
+            return redirect('register');
+        }
+
+        // Check email if not already exists
+        $check_email = $user::all()->where('email', $email);
+
+        if(count($check_email) > 0){
+            // Notify user
+            session()->flash('notify_danger', 'Email is already registered, please try another one');
+            return redirect('register');
+        }else{
+            // Generate image name
+            $image_name = md5(Carbon::now().rand(1,10)).'.'.$personal_image->getClientOriginalExtension();
+
+            // Check password confirmation
+            if($password_1 != $password_2){
+                // Notify user
+                session()->flash('notify_danger', 'Confirm password is incorrect.');
+                return redirect('register');
+            }else{
+                // Insert all datas in db
+                $user->first_name       = $first_name;
+                $user->last_name        = $last_name;
+                $user->personal_image   = '/'.'user_images/'.$image_name;
+                $user->email            = $email;
+                $user->password         = Hash::make($password_1);
+
+                $result = $user->save();
+
+                if($result){
+                    // Upload image
+                    $personal_image->move(base_path('\public\user_images'), $image_name);
+                    // notify user
+                    session()->flash('notify_success', 'You have successfully registered');
+                    return redirect('login');
+                }else{
+                    session()->flash('notify_danger', 'Connection error, please try again later');
+                    return redirect('register');
+                }
+            }
+        }
+
+    }
+
+    // User login
+    function login(Request $req){
+        $user = User::where('email', $req->email)->first();
+        if(!$user || !Hash::check($req->password, $user->password)){
+            // Notify user
+            session()->flash('notify_danger', 'Email or password is incorrect');
+            session()->flash('email', $req->input('email'));
+            session()->flash('password', $req->input('password'));
+            return redirect('login');
+        }else{
+            session()->put('user', $user);
+            return redirect('home');
+        }
+    }
+
+    // User logout
+    function logout(){
+        if(Session::has('user')){
+            Session::pull('user');
+            return redirect('login');
+        }
     }
 }
