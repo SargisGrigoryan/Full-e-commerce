@@ -1,6 +1,6 @@
 $(function(){
 
-    // Components
+    // Owl Carousel
     $(".owl-carousel").owlCarousel({
         loop: true,
         responsive:{
@@ -29,5 +29,8 @@ $(function(){
             $('.alert').fadeOut(500);
         }, 5000);
     }
+
+    // DropDown
+    $('.dropdown-toggle').dropdown()
     
 });

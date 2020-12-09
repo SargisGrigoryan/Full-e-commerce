@@ -39,9 +39,13 @@ Route::get('addProduct', [AdminController::class, 'getCat']);
 // POST
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
+Route::post('updateUserData', [UserController::class, 'updateUserData']);
+Route::post('updateUserPass', [UserController::class, 'updateUserPass']);
+Route::post('updateUserImage', [UserController::class, 'updateUserImage']);
 
 // GET
 Route::get('/details/{id}', [UserController::class, 'getDetails']);
 Route::get('home', [UserController::class, 'getHomeProducts']);
 Route::get('/', [UserController::class, 'getHomeProducts']);
 Route::get('logout', [UserController::class, 'logout']);
+Route::get('/myProfile', [UserController::class, 'getUserProfile']);

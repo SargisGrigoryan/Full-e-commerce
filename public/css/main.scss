@@ -11,6 +11,9 @@ body{
 img.img-resp{
     width: 100%;
 }
+ul li{
+    list-style: none;
+}
 
 
 // products
@@ -76,6 +79,7 @@ img.img-resp{
 
 
 // Container padding for special sections
+section#user-profile .container,
 section#add-product .container,
 section#similar .container,
 section#user-login .container,
@@ -113,9 +117,6 @@ section#details .details-gallery .img-gallery{
     cursor: pointer;
     border: 3px solid #d6d6d6;
     margin: 5px;
-}
-section#details ul li{
-    list-style: none;
 }
 section#details .discount-percent{
     border-radius: 5px;

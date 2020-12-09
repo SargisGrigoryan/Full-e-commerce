@@ -21,6 +21,10 @@ class UserAuth
             if($request->path()=="login" || $request->path()=="register"){
                 return redirect('/');
             }
+        }else{
+            if($request->path()=="myProfile" || $request->path()=="cart" || $request->path()=="orders"){
+                return redirect('/');
+            }
         }
         return $next($request);
     }

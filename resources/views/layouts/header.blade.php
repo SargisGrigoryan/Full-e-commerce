@@ -13,23 +13,29 @@
                   <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/cart">Cart (0)</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/register">Register</a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link" href="/addProduct">Add product</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/addCat">Add category</a>
                 </li>
+                @if (session()->has('user'))
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ session()->get('user')['first_name'] }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/myProfile">My profile</a></li>
+                      <li><a class="dropdown-item" href="/cart">Cart (0)</a></li>
+                      <li><a class="dropdown-item" href="/cart">Order list</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                  </li>
+                @else
                 <li class="nav-item">
-                  <a class="nav-link" href="/logout">Logout</a>
+                  <a class="nav-link" href="/login">Login</a>
                 </li>
+                @endif
               </ul>
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

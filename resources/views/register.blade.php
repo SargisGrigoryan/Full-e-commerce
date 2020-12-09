@@ -37,6 +37,9 @@
                             <input type="password" class="form-control" id="exampleInputPassword2" placeholder="********" name="password_2" value="{{ Session::get('password_2') }}" >
                         </div>
                         <button type="submit" class="btn btn-secondary">Register</button>
+                        <div class="mt-3">
+                            If you have an account you can <a href="/login">login now</a>
+                        </div>
                     </form>
                 </div>
             </div>

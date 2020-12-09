@@ -14,6 +14,10 @@ img.img-resp {
   width: 100%;
 }
 
+ul li {
+  list-style: none;
+}
+
 .product {
   display: block;
   padding: 5px 5px 15px;
@@ -84,6 +88,7 @@ img.img-resp {
   padding: 10px;
 }
 
+section#user-profile .container,
 section#add-product .container,
 section#similar .container,
 section#user-login .container,
@@ -119,10 +124,6 @@ section#details .details-gallery .img-gallery {
   cursor: pointer;
   border: 3px solid #d6d6d6;
   margin: 5px;
-}
-
-section#details ul li {
-  list-style: none;
 }
 
 section#details .discount-percent {
