@@ -21,7 +21,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\UserAuth::class,
+        // \Illuminate\Session\Middleware\StartSession::class,
+        // \App\Http\Middleware\UserAuth::class,
     ];
 
     /**
@@ -44,6 +45,14 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'userNotLogined' => [
+            \App\Http\Middleware\UserNotAuth::class,
+        ],
+
+        'userLogined' => [
+            \App\Http\Middleware\UserAuth::class,
+        ]
     ];
 
     /**

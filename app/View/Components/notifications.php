@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Session;
 
 class notifications extends Component
 {

@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Session;
+use Illuminate\Http\Response;
+use App\Http\Controller\Controllers;
 
 class UserController extends Controller
 {
@@ -140,15 +142,12 @@ class UserController extends Controller
 
             return redirect('login');
         }else{
-            // Check remember
-            if($req->input('remember')){
-                Cookie::queue('login_cookie', "1", 15);
-
-                $value = Cookie::get('login_cookie');
-                return($value);
-            }
+            // if($req->input('remember')){
+            //     Cookie::queue("user_auth", $user, 3000);
+            // }
             session()->put('user', $user);
             return redirect('home');
+
         }
     }
 
