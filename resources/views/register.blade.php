@@ -16,8 +16,8 @@
                             <input type="text" class="form-control" id="input1" placeholder="John" name="first_name" value="{{ Session::get('first_name') }}" >
                         </div>
                         <div class="form-group">
-                            <label for="input1">Last name</label>
-                            <input type="text" class="form-control" id="input1" placeholder="Snow" name="last_name" value="{{ Session::get('last_name') }}" >
+                            <label for="input2">Last name</label>
+                            <input type="text" class="form-control" id="input2" placeholder="Snow" name="last_name" value="{{ Session::get('last_name') }}" >
                         </div>
                         <div class="form-group">
                             <label for="File1">Your image</label>

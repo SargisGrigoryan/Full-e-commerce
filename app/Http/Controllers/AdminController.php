@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+// Use default
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+
+// Use models
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Gallery;
-use Carbon\Carbon;
+use App\Models\Admin;
+
+
 
 class AdminController extends Controller
 {
@@ -106,5 +113,38 @@ class AdminController extends Controller
         }else{
             return "Connection error";
         }
+    }
+
+    // Admin login
+    function adminLogin(Request $req){
+        $email = $req->input('email');
+        $pass = $req->input('password');
+
+        $admin = Admin::where('email', $email)->first();
+
+        if(!$admin || !Hash::check($pass, $admin->password)){
+            session()->flash('notify_danger', 'Email or password is incorrect');
+            session()->flash('email', $email);
+            return redirect('admin');
+        }else{
+            session()->put('admin', $admin);
+
+            if(session()->has('user')){
+                session()->pull('user');
+            }
+
+            return redirect('home');
+        }
+    }
+
+    // Admin Logout
+    function adminLogout(){
+        if(session()->has('admin')){
+            session()->pull('admin');
+        }
+        if(session()->has('user')){
+            session()->pull('user');
+        }
+        return redirect('/');
     }
 }

@@ -12,32 +12,55 @@
 
                 <div class="col-12 mt-3">
                     <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Descr.</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">
-                                <div class="cart-image">
-                                    <a href="/details">
-                                        <img src="https://icdn2.digitaltrends.com/image/aem/aem-2020-7-3-dc6bd6650daf4630691cbe11c37b7b42bf0a30e9-500x500.png" alt="Image" class="img-resp">
-                                    </a>
-                                </div>
-                            </th>
-                            <td>Product name</td>
-                            <td>
-                                <div class="cart-descr">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                    Nobis omnis expedita et distinctio, quis excepturi fugit 
-                                    natus officiis sequi fugiat quos nesciunt tempora, in ea 
-                                    labore voluptatum commodi laudantium similique.
-                                </div>
-                            </td>
-                            <td>$150</td>
-                            <td>
-                                <button class="btn btn-success"><i class="fas fa-shopping-cart"></i></button>
-                                <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                            </td>
-                          </tr>
+                            @foreach ($userCart as $item)
+                            <tr>
+                                <th scope="row">
+                                    <div class="cart-image">
+                                        <a href="/details/{{ $item->product_id }}">
+                                            <img src="{{ $item->image }}" alt="Image" class="img-resp">
+                                        </a>
+                                    </div>
+                                </th>
+                                <td>{{ $item->name }}</td>
+                                <td>
+                                    {{ $item->descr }}
+                                </td>
+                                <td>
+                                    @if ($item->discount > 0)
+                                    <?php
+                                        $total_price = $item->price - ($item->discount * $item->price / 100)
+                                    ?>
+                                    <s>${{ $item->price }}</s> ${{ $total_price }} <small class="discount-percent bg-danger text-light">%{{ $item->discount }} Discounted</small>
+                                    @else
+                                    ${{ $item->price }}
+                                    @endif
+                                </td>
+                                <td>{{ $item->qty }}</td>
+                                <td>{{ $item->color }}</td>
+                                <td>
+                                    <a href="/cart/buyNow/{{ $item->id }}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy Now"><i class="fas fa-shopping-cart"></i></a>
+                                    <a href="/cart/removeFromCart/{{ $item->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <a href="/cart/buyAll" class="btn btn-primary">Buy all</a>
                 </div>
             </div>
         </div>

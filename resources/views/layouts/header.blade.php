@@ -1,3 +1,13 @@
+<?php
+
+use App\Http\Controllers\UserController;
+$cart_counter = 0;
+if(Session::has('user')){
+  $cart_counter = UserController::cartItem();
+}
+
+?>
+
 <!-- Header Navigation -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -12,12 +22,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/addProduct">Add product</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/addCat">Add category</a>
-                </li>
+                @if (session()->has('admin'))
+                  <li class="nav-item">
+                    <a class="nav-link" href="/addProduct">Add product</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/addCat">Add category</a>
+                  </li>
+                @endif
                 @if (session()->has('user'))
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -25,16 +37,22 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="/myProfile">My profile</a></li>
-                      <li><a class="dropdown-item" href="/cart">Cart (0)</a></li>
+                      <li><a class="dropdown-item" href="/cart">Cart ({{ $cart_counter }})</a></li>
                       <li><a class="dropdown-item" href="/cart">Order list</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
                   </li>
                 @else
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">Login</a>
-                </li>
+                @if (!session()->has('admin'))
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                @else
+                  <li class="nav-item">
+                    <a class="nav-link" href="/adminLogout">logout</a>
+                  </li>
+                @endif
                 @endif
               </ul>
               <form class="form-inline my-2 my-lg-0">

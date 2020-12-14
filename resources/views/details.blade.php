@@ -50,8 +50,27 @@
                             <li><b>RAM -</b> <i>{{ $data->ram }}</i></li>
                         </ul>
                         <div class="mt-3">
-                            <button type="button" class="btn btn-primary">Add to cart</button>
-                            <button type="button" class="btn btn-success">Buy now</button>
+                            <form action="addToCart" method="POST">
+                                @csrf
+                                <input type="hidden" value="{{ $data->id }}" name="product_id">
+                                <div class="form-group">
+                                    <label for="input1">Quantity</label>
+                                    <input type="number" class="form-control" placeholder="Quantity" name="qty" id="input1" min="1" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Color</label>
+                                    <?php
+                                        $colors_array = explode(', ', $data->colors);
+                                    ?>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="color">
+                                        @foreach ($colors_array as $color)
+                                            <option value="{{ $color }}">{{ $color }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add to cart</button>
+                            </form>
+                            <a href="/cart/buyNow/{{ $data->id }}" class="btn btn-success mt-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy Now">Buy now</a>
                         </div>
                         <hr>
                         <div class="detail-descr">{{ $data->descr }}</div>

@@ -18,6 +18,16 @@ ul li {
   list-style: none;
 }
 
+.discount-percent {
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 15px;
+}
+
+.img-order {
+  max-width: 200px;
+}
+
 .product {
   display: block;
   padding: 5px 5px 15px;
@@ -126,12 +136,6 @@ section#details .details-gallery .img-gallery {
   margin: 5px;
 }
 
-section#details .discount-percent {
-  border-radius: 5px;
-  padding: 3px;
-  font-size: 15px;
-}
-
 section#comments .img-comment {
   width: 100px;
 }
@@ -153,7 +157,7 @@ section#comments .media-response {
 }
 
 section#cart .cart-image {
-  width: 150px;
+  width: 100px;
 }
 
 section#cart .cart-descr {

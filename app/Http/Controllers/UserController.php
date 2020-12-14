@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+// Use Default
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Session;
+use Illuminate\Support\Facades\Hash;
+
+// Use Models
 use App\Models\Product;
 use App\Models\Gallery;
-use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Session;
+use App\Models\Cart;
+
+
 use Illuminate\Http\Response;
 use App\Http\Controller\Controllers;
 
@@ -142,9 +148,9 @@ class UserController extends Controller
 
             return redirect('login');
         }else{
-            // if($req->input('remember')){
-            //     Cookie::queue("user_auth", $user, 3000);
-            // }
+            if(session()->has('admin')){
+                session()->pull('admin');
+            }
             session()->put('user', $user);
             return redirect('home');
 
@@ -153,10 +159,13 @@ class UserController extends Controller
 
     // User logout
     function logout(){
-        if(Session::has('user')){
-            Session::pull('user');
-            return redirect('login');
+        if(session()->has('admin')){
+            session()->pull('admin');
         }
+        if(session()->has('user')){
+            session()->pull('user');
+        }
+        return redirect('login');
     }
 
     // Get User datas from db
@@ -267,5 +276,70 @@ class UserController extends Controller
         }
 
         
+    }
+
+    // Add to cart
+    function addToCart(Request $req){
+        // Take required datas
+        $user_id = session()->get('user')['id'];
+        $product_id = $req->input('product_id');
+        $qty = $req->input('qty');
+        $color = $req->input('color');
+
+        // Connect to the db
+        $cart = new Cart;
+        $cart->user_id = $user_id;
+        $cart->product_id = $product_id;
+        $cart->qty = $qty;
+        $cart->color = $color;
+        $result = $cart->save();
+
+        if($result){
+            session()->flash('notify_success', 'Product was added to cart successfully');
+            return redirect('details/'.$product_id);
+        }else{
+            session()->flash('notify_danger', 'Connetion error please try again later');
+            return redirect('details/'.$product_id);
+        }
+    }
+
+    // Get user cart from db
+    function getUserCart(){
+        $user_id = session()->get('user')['id'];
+
+        $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
+        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price')
+        ->where('cart.user_id', $user_id)
+        ->where('cart.status', '1')
+        ->get();
+
+        return view('/cart', ['userCart' => $cart]);
+    }
+
+    // Remove from cart
+    function removeFromCart($id){
+        $cart = Cart::find($id);
+        $result = $cart->delete();
+
+        if($result){
+            session()->flash('notify_success', 'Product was successfully removed from your cart.');
+            return redirect('cart');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later.');
+            return redirect('cart');
+        }
+    }
+
+    // Get number of user cart
+    static function cartItem(){
+        $user_id = Session::get('user')['id'];
+        return Cart::where('user_id', $user_id)->count();
+    }
+
+    // But now
+    function buyNow($id){
+        $product = Product::find($id);
+        
+        return view('buyNow', ['product' => $product]);
     }
 }

@@ -21,13 +21,16 @@ use App\Http\Controllers\UserController;
 
 // VIEW
 Route::view('/addCat', 'addCat');
+Route::view('/admin', 'adminLogin');
 
 // POST
 Route::post('addCat', [AdminController::class, 'addCat']);
 Route::post('addProduct', [AdminController::class, 'addProduct']);
+Route::post('adminLogin', [AdminController::class, 'adminLogin']);
 
 // GET
 Route::get('addProduct', [AdminController::class, 'getCat']);
+Route::get('adminLogout', [AdminController::class, 'adminLogout']);
 
 
 // ___USER___
@@ -41,16 +44,17 @@ Route::get('logout', [UserController::class, 'logout']);
 
 // Redirect pages when user is not loggined
 Route::group(['middleware' => ['userNotLogined']], function(){
-    // VIEW
-    Route::view('/cart', 'cart');
-
     // GET
     Route::get('/myProfile', [UserController::class, 'getUserProfile']);
+    Route::get('/cart', [UserController::class, 'getUserCart']);
+    Route::get('/cart/removeFromCart/{id}', [UserController::class, 'removeFromCart']);
+    Route::get('/cart/buyNow/{id}', [UserController::class, 'buyNow']);
 
     // POST
     Route::post('updateUserData', [UserController::class, 'updateUserData']);
     Route::post('updateUserPass', [UserController::class, 'updateUserPass']);
     Route::post('updateUserImage', [UserController::class, 'updateUserImage']);
+    Route::post('details/addToCart', [UserController::class, 'addToCart']);
 });
 
 
