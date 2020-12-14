@@ -16,10 +16,10 @@
                             <tr>
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Descr.</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Color</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -35,9 +35,6 @@
                                 </th>
                                 <td>{{ $item->name }}</td>
                                 <td>
-                                    {{ $item->descr }}
-                                </td>
-                                <td>
                                     @if ($item->discount > 0)
                                     <?php
                                         $total_price = $item->price - ($item->discount * $item->price / 100)
@@ -49,8 +46,21 @@
                                 </td>
                                 <td>{{ $item->qty }}</td>
                                 <td>{{ $item->color }}</td>
+                                <th>
+                                    @if ($item->status == 0)
+                                        <div class="p-1 bg-warning text-white">Blocked</div>
+                                    @elseif($item->status == 1)
+                                        <div class="p-1 bg-success text-white">Active</div>
+                                    @else
+                                        <div class="p-1 bg-danger text-white">Removed</div>
+                                    @endif
+                                </th>
                                 <td>
-                                    <a href="/cart/buyNow/{{ $item->id }}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy Now"><i class="fas fa-shopping-cart"></i></a>
+                                    @if ($item->status)
+                                    <a href="/cart/buyNow/{{ $item->product_id }}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy Now"><i class="fas fa-shopping-cart"></i></a>
+                                    @else
+                                    <button disabled  class="btn btn-secondary"><i class="fas fa-shopping-cart"></i></button>
+                                    @endif
                                     <a href="/cart/removeFromCart/{{ $item->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -60,7 +70,7 @@
                 </div>
 
                 <div class="col-12 mt-3">
-                    <a href="/cart/buyAll" class="btn btn-primary">Buy all</a>
+                    <a href="/cart/buyAll" class="btn btn-primary">Buy all (active products)</a>
                 </div>
             </div>
         </div>

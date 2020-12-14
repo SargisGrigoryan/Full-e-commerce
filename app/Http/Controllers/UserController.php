@@ -313,7 +313,7 @@ class UserController extends Controller
         $user_id = session()->get('user')['id'];
 
         $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
-        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price')
+        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price', 'products.status')
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
         ->get();
@@ -343,8 +343,13 @@ class UserController extends Controller
 
     // But now
     function buyNow($id){
-        $product = Product::find($id);
+        $product = Product::where('status', '1')->find($id);
+        if($product){
+            return view('buyNow', ['product' => $product]);
+        }else{
+            session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
+            return redirect('/');
+        }
         
-        return view('buyNow', ['product' => $product]);
     }
 }

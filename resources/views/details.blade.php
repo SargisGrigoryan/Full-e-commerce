@@ -73,9 +73,11 @@
                             <div class="mt-2">
                                 <a href="/cart/buyNow/{{ $data->id }}" class="btn btn-success">Buy now</a>
                             </div>
-                            <div class="mt-2">
-                                <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>
-                            </div>
+                            @if (session()->has('admin'))
+                                <div class="mt-2">
+                                    <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>
+                                </div>
+                            @endif
                         </div>
                         <hr>
                         <div class="detail-descr">{{ $data->descr }}</div>
