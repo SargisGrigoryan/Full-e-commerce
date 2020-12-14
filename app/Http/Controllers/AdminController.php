@@ -210,6 +210,7 @@ class AdminController extends Controller
         }
         $product->slider = $slider;
         $product->top = $top;
+        $product->status = $req->status;
 
         $result = $product->save();
 

@@ -23,15 +23,20 @@ class UserController extends Controller
     // Get product details from db
     function getDetails($id){
         // Get current products datas from db
-        $data = Product::find($id);
+        $data = Product::where('status', '1')->find($id);
 
-        // Get gallery from db
-        $gallery = Gallery::all()->where('product_id', $id);
+        if($data){
+            // Get gallery from db
+            $gallery = Gallery::all()->where('product_id', $id);
 
-        // Get similar products
-        $similar = Product::where('cat_id', $data->cat_id)->inRandomOrder()->limit(12)->get();
+            // Get similar products
+            $similar = Product::where('cat_id', $data->cat_id)->inRandomOrder()->limit(12)->get();
 
-        return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar]);
+            return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar]);
+        }else{
+            session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
+            return redirect('/');
+        }
     }
 
     // Get home products from db

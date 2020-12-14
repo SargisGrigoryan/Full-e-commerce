@@ -127,13 +127,13 @@
                         <div class="form-group">
                             <label for="input11">Status</label>
                             <div class="form-check">
-                              <input class="form-check-input" type="radio" name="status" id="exampleRadios5" value="0" {{ $product->top==0?'checked':'' }}>
+                              <input class="form-check-input" type="radio" name="status" id="exampleRadios5" value="0" {{ $product->status==0?'checked':'' }}>
                               <label class="form-check-label" for="exampleRadios5">
                                 Hidden
                               </label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="radio" name="status" id="exampleRadios6" value="1" {{ $product->top==1?'checked':'' }}>
+                              <input class="form-check-input" type="radio" name="status" id="exampleRadios6" value="1" {{ $product->status==1?'checked':'' }}>
                               <label class="form-check-label" for="exampleRadios6">
                                 Public
                               </label>
