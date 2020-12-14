@@ -70,7 +70,12 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Add to cart</button>
                             </form>
-                            <a href="/cart/buyNow/{{ $data->id }}" class="btn btn-success mt-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy Now">Buy now</a>
+                            <div class="mt-2">
+                                <a href="/cart/buyNow/{{ $data->id }}" class="btn btn-success">Buy now</a>
+                            </div>
+                            <div class="mt-2">
+                                <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>
+                            </div>
                         </div>
                         <hr>
                         <div class="detail-descr">{{ $data->descr }}</div>

@@ -52,6 +52,10 @@ class Kernel extends HttpKernel
 
         'userLogined' => [
             \App\Http\Middleware\UserAuth::class,
+        ],
+
+        'AdminNotLoggined' => [
+            \App\Http\Middleware\AdminNotAuth::class,
         ]
     ];
 

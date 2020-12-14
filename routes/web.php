@@ -20,16 +20,12 @@ use App\Http\Controllers\UserController;
 // ___ADMIN___
 
 // VIEW
-Route::view('/addCat', 'addCat');
 Route::view('/admin', 'adminLogin');
 
 // POST
-Route::post('addCat', [AdminController::class, 'addCat']);
-Route::post('addProduct', [AdminController::class, 'addProduct']);
 Route::post('adminLogin', [AdminController::class, 'adminLogin']);
 
 // GET
-Route::get('addProduct', [AdminController::class, 'getCat']);
 Route::get('adminLogout', [AdminController::class, 'adminLogout']);
 
 
@@ -40,6 +36,21 @@ Route::get('/details/{id}', [UserController::class, 'getDetails']);
 Route::get('home', [UserController::class, 'getHomeProducts']);
 Route::get('/', [UserController::class, 'getHomeProducts']);
 Route::get('logout', [UserController::class, 'logout']);
+
+// Redirect pages when admin is not loggined
+Route::group(['middleware' => ['AdminNotLoggined']], function(){
+    // VIEW
+    Route::view('/addCat', 'addCat');
+
+    // POST
+    Route::post('addCat', [AdminController::class, 'addCat']);
+    Route::post('addProduct', [AdminController::class, 'addProduct']);
+    Route::post('saveProduct', [AdminController::class, 'saveProduct']);
+
+    // GET
+    Route::get('addProduct', [AdminController::class, 'getCat']);
+    Route::get('editProduct/{id}', [AdminController::class, 'getProduct']);
+});
 
 
 // Redirect pages when user is not loggined

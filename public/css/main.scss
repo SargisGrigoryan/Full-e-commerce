@@ -24,6 +24,12 @@ ul li{
 .img-order{
     max-width: 200px;
 }
+.img-gallery{
+    width: calc(25% - 16px);
+    cursor: pointer;
+    border: 3px solid #d6d6d6;
+    margin: 5px;
+}
 // Main classes end
 
 
@@ -122,12 +128,6 @@ section#details .details-image{
 }
 section#details .details-info{
     padding: 50px;
-}
-section#details .details-gallery .img-gallery{
-    width: calc(25% - 16px);
-    cursor: pointer;
-    border: 3px solid #d6d6d6;
-    margin: 5px;
 }
 // Details end
 
