@@ -29,6 +29,9 @@ if(Session::has('user')){
                   <li class="nav-item">
                     <a class="nav-link" href="/addCat">Add category</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/allProducts">All Products</a>
+                  </li>
                 @endif
                 @if (session()->has('user'))
                   <li class="nav-item dropdown">

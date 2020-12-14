@@ -35,6 +35,10 @@ ul li {
   margin: 5px;
 }
 
+.img-products {
+  max-width: 100px;
+}
+
 .product {
   display: block;
   padding: 5px 5px 15px;

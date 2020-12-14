@@ -50,6 +50,10 @@ Route::group(['middleware' => ['AdminNotLoggined']], function(){
     // GET
     Route::get('addProduct', [AdminController::class, 'getCat']);
     Route::get('editProduct/{id}', [AdminController::class, 'getProduct']);
+    Route::get('allProducts', [AdminController::class, 'getAllProducts']);
+    Route::get('/removeProduct/{id}', [AdminController::class, 'removeProduct']);
+    Route::get('/recoverProduct/{id}', [AdminController::class, 'recoverProduct']);
+    Route::get('/blockProduct/{id}', [AdminController::class, 'blockProduct']);
 });
 
 

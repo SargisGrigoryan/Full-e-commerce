@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 notification-area">
             {{-- Check if isset success status --}}
             @if (Session::get('notify_success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">

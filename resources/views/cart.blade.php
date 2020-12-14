@@ -48,11 +48,11 @@
                                 <td>{{ $item->color }}</td>
                                 <th>
                                     @if ($item->status == 0)
-                                        <div class="p-1 bg-warning text-white">Blocked</div>
+                                        <span class="p-2 bg-warning text-white">Blocked</span>
                                     @elseif($item->status == 1)
-                                        <div class="p-1 bg-success text-white">Active</div>
+                                        <span class="p-2 bg-success text-white">Active</span>
                                     @else
-                                        <div class="p-1 bg-danger text-white">Removed</div>
+                                        <span class="p-2 bg-danger text-white">Removed</span>
                                     @endif
                                 </th>
                                 <td>
