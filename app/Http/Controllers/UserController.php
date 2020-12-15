@@ -341,7 +341,7 @@ class UserController extends Controller
         return Cart::where('user_id', $user_id)->count();
     }
 
-    // But now
+    // Buy now
     function buyNow($id){
         $product = Product::where('status', '1')->find($id);
         if($product){
@@ -351,5 +351,13 @@ class UserController extends Controller
             return redirect('/');
         }
         
+    }
+
+    function search(Request $req){
+        $products = Product::where('name', 'like', '%'.$req->input('query').'%')->orWhere('descr', 'like', '%'.$req->input('query').'%')
+        ->where('status', '1')
+        ->paginate(12);
+
+        return view('search', ['products' => $products, 'searched' => $req->input('query')]);
     }
 }

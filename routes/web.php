@@ -36,6 +36,7 @@ Route::get('/details/{id}', [UserController::class, 'getDetails']);
 Route::get('home', [UserController::class, 'getHomeProducts']);
 Route::get('/', [UserController::class, 'getHomeProducts']);
 Route::get('logout', [UserController::class, 'logout']);
+Route::get('search', [UserController::class, 'search']);
 
 // Redirect pages when admin is not loggined
 Route::group(['middleware' => ['AdminNotLoggined']], function(){
