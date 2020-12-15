@@ -1,9 +1,18 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+
 $cart_counter = 0;
 if(Session::has('user')){
   $cart_counter = UserController::cartItem();
+}
+
+if(Session::has('admin')){
+  $active_product_counter = AdminController::getActiveProductsQty();
+  $blocked_product_counter = AdminController::getBlockedProductsQty();
+  $removed_product_counter = AdminController::getRemovedProductsQty();
+  $all_product_counter = $active_product_counter + $blocked_product_counter + $removed_product_counter;
 }
 
 ?>
@@ -29,8 +38,15 @@ if(Session::has('user')){
                   <li class="nav-item">
                     <a class="nav-link" href="/addCat">Add category</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/allProducts">All Products</a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Products ({{ $all_product_counter }})
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/activeProducts">Active Products ({{ $active_product_counter }})</a></li>
+                      <li><a class="dropdown-item" href="/blockedProducts">Blocked Products ({{ $blocked_product_counter }})</a></li>
+                      <li><a class="dropdown-item" href="/removedProducts">Removed Products ({{ $removed_product_counter }})</a></li>
+                    </ul>
                   </li>
                 @endif
                 @if (session()->has('user'))

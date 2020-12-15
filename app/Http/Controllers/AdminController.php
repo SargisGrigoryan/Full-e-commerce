@@ -308,88 +308,162 @@ class AdminController extends Controller
         return $image;
     }
 
-    // Get all products
-    function getAllProducts(){
-        // Get all blocked products
-        $products_blocked = Product::join('categories', 'products.cat_id', '=', 'categories.id')
-        ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
-        'products.display', 'products.camera', 'products.memory', 'products.ram', 
-        'products.slider', 'products.price', 'products.discount', 'products.top', 
-        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '0')->paginate(3);
-
-        // Get blocked products qty
-        $products_blocked_qty = Product::where('status', '0')->count();
-
+    // Get active products
+    function getActiveProducts(){
         // Get all active products
         $products_active = Product::join('categories', 'products.cat_id', '=', 'categories.id')
         ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
         'products.display', 'products.camera', 'products.memory', 'products.ram', 
         'products.slider', 'products.price', 'products.discount', 'products.top', 
-        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '1')->paginate(3);
+        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '1')->paginate(6);
 
         // Get active products qty
         $products_active_qty = Product::where('status', '1')->count();
 
+        // Send all datas to user side
+        return view('activeProducts', [
+            'products_active' => $products_active, 
+            'products_active_qty' => $products_active_qty
+        ]);
+    }
+
+    // Get blocked products
+    function getBlockedProducts(){
+        // Get all blocked products
+        $products_blocked = Product::join('categories', 'products.cat_id', '=', 'categories.id')
+        ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
+        'products.display', 'products.camera', 'products.memory', 'products.ram', 
+        'products.slider', 'products.price', 'products.discount', 'products.top', 
+        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '0')->paginate(6);
+
+        // Get blocked products qty
+        $products_blocked_qty = Product::where('status', '0')->count();
+
+        // Send all datas to user side
+        return view('blockedProducts', [
+            'products_blocked' => $products_blocked, 
+            'products_blocked_qty' => $products_blocked_qty
+        ]);
+    }
+
+    // Get removed products
+    function getRemovedProducts(){
         // Get all removed products
         $products_removed = Product::join('categories', 'products.cat_id', '=', 'categories.id')
         ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
         'products.display', 'products.camera', 'products.memory', 'products.ram', 
         'products.slider', 'products.price', 'products.discount', 'products.top', 
-        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '2')->paginate(3);
+        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '2')->paginate(6);
 
         // Get removed products qty
         $products_removed_qty = Product::where('status', '2')->count();
 
         // Send all datas to user side
-        return view('allProducts', [
-            'products_blocked' => $products_blocked, 
-            'products_active' => $products_active, 
+        return view('removedProducts', [
             'products_removed' => $products_removed,
-            'products_blocked_qty' => $products_blocked_qty,
-            'products_active_qty' => $products_active_qty,
             'products_removed_qty' => $products_removed_qty
         ]);
     }
 
-    // Remove product
-    function removeProduct($id){
-        $product = Product::find($id);
-        $product->status = '2';
-        $result = $product->save();
-        if($result){
-            session()->flash('notify_success', 'Product was successfully removed');
-            return redirect('allProducts');
-        }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
-            return redirect('allProducts');
-        }
+    // Get active products
+    static function getActiveProductsqty(){
+        // Get active products qty
+        return Product::where('status', '1')->count();
     }
 
-    // Recover product
-    function recoverProduct($id){
-        $product = Product::find($id);
-        $product->status = '1';
-        $result = $product->save();
-        if($result){
-            session()->flash('notify_success', 'Product was successfully recovered');
-            return redirect('allProducts');
-        }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
-            return redirect('allProducts');
-        }
+    // Get blocked products
+    static function getBlockedProductsqty(){
+        // Get blocked products qty
+        return Product::where('status', '0')->count();
     }
 
-    // Block product
-    function blockProduct($id){
+    // Get removed products
+    static function getRemovedProductsqty(){
+        // Get removed products qty
+        return Product::where('status', '2')->count();
+    }
+
+    // Remove product from active
+    function blockProductFromActive($id){
         $product = Product::find($id);
         $product->status = '0';
         $result = $product->save();
         if($result){
             session()->flash('notify_success', 'Product was successfully blocked');
-            return redirect('allProducts');
+            return redirect('activeProducts');
         }else{
             session()->flash('notify_danger', 'Connection error please try again later');
-            return redirect('allProducts');
+            return redirect('activeProducts');
+        }
+    }
+
+    // Recover product from active
+    function removeProductFromActive($id){
+        $product = Product::find($id);
+        $product->status = '2';
+        $result = $product->save();
+        if($result){
+            session()->flash('notify_success', 'Product was successfully removed');
+            return redirect('activeProducts');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('activeProducts');
+        }
+    }
+
+    // Remove product from blocked
+    function removeProductFromBlocked($id){
+        $product = Product::find($id);
+        $product->status = '2';
+        $result = $product->save();
+        if($result){
+            session()->flash('notify_success', 'Product was successfully removed');
+            return redirect('blockedProducts');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('blockedProducts');
+        }
+    }
+
+    // Recover product from blocked
+    function recoverProductFromBlocked($id){
+        $product = Product::find($id);
+        $product->status = '1';
+        $result = $product->save();
+        if($result){
+            session()->flash('notify_success', 'Product was successfully recovered');
+            return redirect('blockedProducts');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('blockedProducts');
+        }
+    }
+
+    // Recover product from trash
+    function recoverProductFromTrash($id){
+        $product = Product::find($id);
+        $product->status = '1';
+        $result = $product->save();
+        if($result){
+            session()->flash('notify_success', 'Product was successfully recovered');
+            return redirect('removedProducts');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('removedProducts');
+        }
+    }
+
+    // Block product from trash
+    function blockProductFromTrash($id){
+        $product = Product::find($id);
+        $product->status = '0';
+        $result = $product->save();
+        if($result){
+            session()->flash('notify_success', 'Product was successfully blocked');
+            return redirect('removedProducts');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('removedProducts');
         }
     }
 }
