@@ -50,6 +50,7 @@
                             <li><b>RAM -</b> <i>{{ $data->ram }}</i></li>
                         </ul>
                         <div class="mt-3">
+                            @if (!session()->has('admin'))
                             <form action="addToCart" method="POST">
                                 @csrf
                                 <input type="hidden" value="{{ $data->id }}" name="product_id">
@@ -70,9 +71,18 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Add to cart</button>
                             </form>
-                            <div class="mt-2">
+
+                            <form action="/buyNow" method="POST">
+                                @csrf
+                                <input type="hidden" value="{{ $data->id }}" name="product_id">
+                                <input type="hidden" id="qty_input" name="qty">
+                                <input type="hidden" id="color_input" name="color">
+                                <button type="submit" class="btn btn-success mt-3">Buy now</button>
+                            </form>
+                            @endif
+                            {{-- <div class="mt-2">
                                 <a href="/cart/buyNow/{{ $data->id }}" class="btn btn-success">Buy now</a>
-                            </div>
+                            </div> --}}
                             @if (session()->has('admin'))
                                 <div class="mt-2">
                                     <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>

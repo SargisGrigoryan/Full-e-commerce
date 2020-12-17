@@ -56,10 +56,16 @@
                                     @endif
                                 </th>
                                 <td>
-                                    @if ($item->status)
-                                    <a href="/cart/buyNow/{{ $item->product_id }}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy Now"><i class="fas fa-shopping-cart"></i></a>
+                                    @if ($item->status == 1)
+                                    <form action="/buyNow" method="POST" class="d-inline-block">
+                                        @csrf
+                                        <input type="hidden" value="{{ $item->product_id }}" name="product_id">
+                                        <input type="hidden" value="{{ $item->qty }}" name="qty">
+                                        <input type="hidden" value="{{ $item->color }}" name="color">
+                                        <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy this one"><i class="fas fa-shopping-cart"></i></button>
+                                    </form>
                                     @else
-                                    <button disabled  class="btn btn-secondary"><i class="fas fa-shopping-cart"></i></button>
+                                    <button type="button" disabled class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy this one"><i class="fas fa-shopping-cart"></i></button>
                                     @endif
                                     <a href="/cart/removeFromCart/{{ $item->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><i class="fas fa-trash"></i></a>
                                 </td>
@@ -69,9 +75,21 @@
                     </table>
                 </div>
 
-                <div class="col-12 mt-3">
-                    <a href="/cart/buyAll" class="btn btn-primary">Buy all (active products)</a>
+                <div class="col-12">
+                    @if (count($userCart) == 0)
+                    <h4>No result is found</h4>
+                    @endif
+                    {{-- Paginate cart products --}}
+                    {{ $userCart->links('vendor.pagination.custom') }}
+                    {{-- Paginate cart products end --}}
                 </div>
+
+                @if (count($userCart) > 0)
+                <div class="col-12 mt-3">
+                    <a href="/buyAll" class="btn btn-primary">Buy all (active products)</a>
+                </div>
+                @endif
+
             </div>
         </div>
     </section>

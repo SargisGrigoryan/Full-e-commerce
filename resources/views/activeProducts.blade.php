@@ -30,7 +30,7 @@
                             @foreach ($products_active as $product)
                             <tr>
                                 <th scope="row">{{ $product->id }}</th>
-                                <td><img src="{{ $product->image }}" alt="Image" class="img-products"></td>
+                                <td><a href="/details/{{ $product->id }}"><img src="{{ $product->image }}" alt="Image" class="img-products"></a></td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->cat_name }}</td>
                                 <td>${{ $product->price }}</td>

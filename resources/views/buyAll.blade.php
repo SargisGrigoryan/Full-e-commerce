@@ -11,24 +11,30 @@
                 </div>
 
                 <div class="col-12 mt-3">
+                    <?php
+
+                    $product_qty = 0;
+                    $delivery_price = 15;
+                    $products_price = 0;
+                    $discounted_prices = 0;
+                    
+                    foreach ($cart as $item) {
+                        $product_qty += $item->qty;
+                        $products_price += ($item->price - ($item->discount * $item->price / 100)) * $item->qty;
+                    }
+                        
+                    ?>
                     <ul>
-                        <li><img src="{{ $product->image }}" alt="Image" class="img-order"></li>
-                        <li>Name - {{ $product->name }}</li>
-                        <li>Quantity - {{ $product_qty }}</li>
-                        <li>Color - {{ $product_color }}</li>
-                        <li>Price - ${{ $product->price * $product_qty }}</li>
-                        <li>Discount - %{{ $product->discount }}</li>
-                        <li>Delivery price - $10</li>
-                        <li>Total price - ${{ ($product->price - ($product->discount * $product->price / 100)) * $product_qty + 10}}</li>
+                        <li>Products quantity - {{ $product_qty }}</li>
+                        <li>Delivery price - ${{ $delivery_price }}</li>
+                        <li>Products price - ${{ $products_price }} (With all discounted prices)</li>
+                        <li>Total price = ${{ $products_price + $delivery_price }}</li>
                     </ul>
                 </div>
 
                 <div class="col-12 mt-3">
-                    <form action="/orderNow" method="POST">
+                    <form action="/orderAll" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $product->id }}">
-                        <input type="hidden" name="qty" value="{{ $product_qty }}">
-                        <input type="hidden" name="color" value="{{ $product_color }}">
                         <div class="form-group">
                             <label for="input1">First name</label>
                             <input type="text" class="form-control" id="input1" placeholder="John" name="first_name" value="{{ Session::get('first_name') }}" required>

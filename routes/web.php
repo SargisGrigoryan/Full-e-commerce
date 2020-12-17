@@ -72,13 +72,17 @@ Route::group(['middleware' => ['userNotLogined']], function(){
     Route::get('/myProfile', [UserController::class, 'getUserProfile']);
     Route::get('/cart', [UserController::class, 'getUserCart']);
     Route::get('/cart/removeFromCart/{id}', [UserController::class, 'removeFromCart']);
-    Route::get('/cart/buyNow/{id}', [UserController::class, 'buyNow']);
+    Route::get('/buyAll', [UserController::class, 'buyAll']);
+    Route::get('/orders', [UserController::class, 'getOrders']);
 
     // POST
     Route::post('updateUserData', [UserController::class, 'updateUserData']);
     Route::post('updateUserPass', [UserController::class, 'updateUserPass']);
     Route::post('updateUserImage', [UserController::class, 'updateUserImage']);
     Route::post('details/addToCart', [UserController::class, 'addToCart']);
+    Route::post('/buyNow', [UserController::class, 'buyNow']);
+    Route::post('/orderAll', [UserController::class, 'orderAll']);
+    Route::post('/orderNow', [UserController::class, 'orderNow']);
 });
 
 

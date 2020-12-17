@@ -109,6 +109,8 @@ ul li {
   padding: 10px;
 }
 
+section#order .container,
+section#searched-products .container,
 section#user-profile .container,
 section#add-product .container,
 section#similar .container,

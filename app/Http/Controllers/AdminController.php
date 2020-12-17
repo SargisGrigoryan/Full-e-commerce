@@ -152,10 +152,14 @@ class AdminController extends Controller
     // Get product datas for editing
     function getProduct($id){
         $product = Product::find($id);
-        $cats = Category::all();
-        $gallery = Gallery::where('product_id', $id)->get();
-
-        return view('editProduct', ['product' => $product, 'cats' => $cats, 'gallery' => $gallery]);
+        if($product->status != 2){
+            $cats = Category::all();
+            $gallery = Gallery::where('product_id', $id)->get();
+            return view('editProduct', ['product' => $product, 'cats' => $cats, 'gallery' => $gallery]);
+        }else{
+            session()->flash('notify_warning', 'You can not edit removed products, you can recover it in blocked mode than edit and save as public.');
+            return redirect('/');
+        }
     }
 
     // Save product details

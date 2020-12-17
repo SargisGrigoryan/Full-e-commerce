@@ -57,7 +57,7 @@ if(Session::has('admin')){
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="/myProfile">My profile</a></li>
                       <li><a class="dropdown-item" href="/cart">Cart ({{ $cart_counter }})</a></li>
-                      <li><a class="dropdown-item" href="/cart">Order list</a></li>
+                      <li><a class="dropdown-item" href="/orders">Order list</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>

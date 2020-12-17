@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\Gallery;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Order;
 
 
 use Illuminate\Http\Response;
@@ -316,7 +317,7 @@ class UserController extends Controller
         ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price', 'products.status')
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
-        ->get();
+        ->paginate(10);
 
         return view('/cart', ['userCart' => $cart]);
     }
@@ -342,22 +343,147 @@ class UserController extends Controller
     }
 
     // Buy now
-    function buyNow($id){
-        $product = Product::where('status', '1')->find($id);
+    function buyNow(Request $req){
+        $product = Product::where('status', '1')->find($req->product_id);
         if($product){
-            return view('buyNow', ['product' => $product]);
+            return view('buyNow', ['product' => $product, 'product_qty' => $req->qty, 'product_color' => $req->color]);
         }else{
             session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
             return redirect('/');
         }
-        
     }
 
+    // Search
     function search(Request $req){
         $products = Product::where('name', 'like', '%'.$req->input('query').'%')->orWhere('descr', 'like', '%'.$req->input('query').'%')
         ->where('status', '1')
         ->paginate(12);
 
         return view('search', ['products' => $products, 'searched' => $req->input('query')]);
+    }
+
+    // Buy all user cart
+    function buyAll(){
+        $user_id = session()->get('user')['id'];
+
+        $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
+        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price')
+        ->where('cart.user_id', $user_id)
+        ->where('cart.status', '1')
+        ->where('products.status', '1')
+        ->get();
+
+        if(!count($cart) < 1){
+            return view('buyAll', ['cart' => $cart]);
+        }else{
+            session()->flash('notify_warning', 'you cannot buy all products without having any cart list.');
+            return redirect('/cart');
+        }
+    }
+
+    // Order all
+    function orderAll(Request $req){
+        // Get all required datas from user cart
+        $user_id = session()->get('user')['id'];
+        $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
+        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price')
+        ->where('cart.user_id', $user_id)
+        ->where('cart.status', '1')
+        ->where('products.status', '1')
+        ->get();
+
+        $product_qty = 0;
+        $delivery_price = 15;
+        $products_price = 0;
+        $discounted_prices = 0;
+        
+        foreach ($cart as $item) {
+            $product_qty += $item->qty;
+            $products_price += ($item->price - ($item->discount * $item->price / 100)) * $item->qty;
+        }
+
+        // Connect to db
+        $order = New Order;
+
+        // Save datas
+        $order->first_name = $req->first_name;
+        $order->last_name = $req->last_name;
+        $order->cvv = "1234-****-****-****";
+        $order->products_qty = $product_qty;
+        $order->products_price = $products_price;
+        $order->delivery_price = $delivery_price;
+        $order->user_id = $user_id;
+
+        // Keep user datas in flash session 
+        session()->flash('first_name', $req->first_name);
+        session()->flash('last_name', $req->last_name);
+
+        // check all required datas
+        if(!$req->first_name){
+            session()->flash('notify_warning', 'First name is required');
+            return redirect('/buyAll');
+        }
+        
+        if(!$req->last_name){
+            session()->flash('notify_warning', 'Last name is required');
+            return redirect('/buyAll');
+        }
+
+        $result = $order->save();
+
+        if($result){
+            // After all remove user cart's ordered products
+            foreach ($cart as $item) {
+                Cart::find($item->id)->delete();
+            }
+            session()->flash('notify_success', 'Your order was successfully send, you can check the duration in your order list');
+            return redirect('/orders');
+        }else{
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('/cart');
+        }
+    }
+
+    // Order now
+    function orderNow(Request $req){
+        $user_id = session()->get('user')['id'];
+
+        $product = Product::where('status', '1')->find($req->id);
+        if($product){
+            $products_qty = $req->qty;
+            $delivery_price = 10;
+
+            // Connect to db
+            $order = New Order;
+            
+            // Save datas
+            $order->first_name = $req->first_name;
+            $order->last_name = $req->last_name;
+            $order->cvv = "1234-****-****-****";
+            $order->products_qty = $products_qty;
+            $order->products_price = ($product->price - ($product->discount * $product->price / 100)) * $products_qty;
+            $order->delivery_price = $delivery_price;
+            $order->user_id = $user_id;
+
+            $result = $order->save();
+
+            if($result){
+                session()->flash('notify_success', 'Your order was successfully send, you can check the duration in your order list');
+                return redirect('/orders');
+            }else{
+                session()->flash('notify_danger', 'Connection error please try again later');
+                return redirect('/cart');
+            }
+        }else{
+            session()->flash('notify_danger', 'Sorry but this product is not available now please try again later');
+            return redirect('/cart');
+        }
+    }
+
+    // Get user orders
+    function getOrders(){
+        $user_id = session()->get('user')['id'];
+        $orders = Order::where('user_id', $user_id)->paginate(15);
+        return view('orders', ['orders' => $orders]);
     }
 }
