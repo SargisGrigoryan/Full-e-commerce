@@ -139,9 +139,9 @@
                     @endif
                 @endforeach
 
-                <div class="col-12">
+                <div class="col-12 text-center">
                     @if (count($comments) == 0)
-                    <h4>No result is found</h4>
+                    <h4>No reviews yet.</h4>
                     @endif
                     {{-- Paginate cart products --}}
                     {{ $comments->links('vendor.pagination.custom') }}
