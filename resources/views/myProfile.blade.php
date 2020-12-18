@@ -6,7 +6,7 @@
     <section id="user-profile">
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
                     <img src="{{ $userDatas['personal_image'] }}" alt="Image" class="img-resp">
                     <form action="updateUserImage" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -14,7 +14,7 @@
                         <button type="submit" class="btn btn-secondary mt-2">Change</button>
                     </form>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <h4>{{ $userDatas['first_name'] }} {{ $userDatas['last_name'] }}</h4>
                     <p>{{ $userDatas['email'] }}</p>
                     <hr>

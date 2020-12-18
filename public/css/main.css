@@ -147,11 +147,11 @@ section#comments .comment-image {
   width: 50px;
   overflow: hidden;
   border-radius: 50%;
+  text-align: center;
 }
 
 section#comments .comment-image img {
   height: 100%;
-  margin: 0 auto;
 }
 
 section#comments .media-comment {
