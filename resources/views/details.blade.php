@@ -114,7 +114,9 @@
                                     <h6 class="mt-0"><b>{{ $comment->first_name }}</b></h6>
                                     {{ $comment->user_comment }}
                                 </div>
-                                <img src="{{ $comment->personal_image }}" class="ml-3 img-comment" alt="Avatar">
+                                <div class="comment-image ml-2">
+                                    <img src="{{ $comment->personal_image }}" alt="Avatar">
+                                </div>
                             </div>
                             <div class="comment-date mt-2 text-right">{{ $comment->date }}</div>
                         </div>
@@ -123,7 +125,9 @@
                         {{-- Comment box --}}
                         <div class="col-12">
                             <div class="media media-comment media-comment-other">
-                                <img src="{{ $comment->personal_image }}" class="mr-3 img-comment" alt="Avatar">
+                                <div class="comment-image mr-2">
+                                    <img src="{{ $comment->personal_image }}" alt="Avatar">
+                                </div>
                                 <div class="media-body">
                                 <h6 class="mt-0"><b>{{ $comment->first_name }}</b></h6>
                                 {{ $comment->user_comment }}
@@ -135,7 +139,16 @@
                     @endif
                 @endforeach
 
-                <div class="col-12 mt-5">
+                <div class="col-12">
+                    @if (count($comments) == 0)
+                    <h4>No result is found</h4>
+                    @endif
+                    {{-- Paginate cart products --}}
+                    {{ $comments->links('vendor.pagination.custom') }}
+                    {{-- Paginate cart products end --}}
+                </div>
+
+                <div class="col-12 mt-3">
                     <form action="/leaveComment" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $data->id }}">

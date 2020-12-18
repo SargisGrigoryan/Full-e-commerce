@@ -142,14 +142,21 @@ section#details .details-info {
   padding: 50px;
 }
 
-section#comments .img-comment {
+section#comments .comment-image {
   height: 50px;
+  width: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+section#comments .comment-image img {
+  height: 100%;
+  margin: 0 auto;
 }
 
 section#comments .media-comment {
   padding: 10px;
   border-radius: 20px;
-  border: 3px solid #d6d6d67e;
   margin-top: 30px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -157,11 +164,12 @@ section#comments .media-comment {
 }
 
 section#comments .media-comment.media-comment-other {
+  border: 1px solid #d6d6d67e;
   margin-right: auto;
 }
 
 section#comments .media-comment.media-comment-me {
-  border: 3px solid #4390bc86;
+  border: 1px solid #4390bc86;
   margin-left: auto;
 }
 

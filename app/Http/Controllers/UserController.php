@@ -26,9 +26,7 @@ class UserController extends Controller
     function getDetails($id){
         // Get current products datas from db
         $data = Product::where('status', '1')->find($id);
-        // $comments = Comment::where('product_id', $id)->where('status', '1')->get();
-        // $users = User::join('comments', 'comments.user_id', '=', 'users.id')->get();
-        $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')->get();
+        $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')->orderByDesc('comments.id')->paginate(6);
 
         if($data){
             // Get gallery from db
