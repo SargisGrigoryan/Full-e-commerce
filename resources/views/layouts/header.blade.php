@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 $cart_counter = 0;
 if(Session::has('user')){
   $cart_counter = UserController::cartItem();
+  $user_profile = UserController::getUserDatas();
 }
 
 if(Session::has('admin')){
@@ -52,7 +53,7 @@ if(Session::has('admin')){
                 @if (session()->has('user'))
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      {{ session()->get('user')['first_name'] }}
+                      {{ $user_profile->first_name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="/myProfile">My profile</a></li>

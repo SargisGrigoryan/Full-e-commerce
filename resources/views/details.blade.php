@@ -79,11 +79,7 @@
                                 <input type="hidden" id="color_input" name="color">
                                 <button type="submit" class="btn btn-success mt-3">Buy now</button>
                             </form>
-                            @endif
-                            {{-- <div class="mt-2">
-                                <a href="/cart/buyNow/{{ $data->id }}" class="btn btn-success">Buy now</a>
-                            </div> --}}
-                            @if (session()->has('admin'))
+                            @else
                                 <div class="mt-2">
                                     <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>
                                 </div>
@@ -109,47 +105,43 @@
                     <hr>
                 </div>
 
-                {{-- Comment box --}}
-                <div class="media media-comment">
-                    <img src="https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png" class="mr-3 img-comment" alt="Avatar">
-                    <div class="media-body">
-                      <h5 class="mt-0">Media heading</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. 
-                      Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
-                      Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
-                {{-- Comment box end --}}
-
-                {{-- Comment box --}}
-                <div class="media media-comment">
-                    <img src="https://www.shareicon.net/data/512x512/2017/01/06/868320_people_512x512.png" class="mr-3 img-comment" alt="Avatar">
-                    <div class="media-body">
-                      <h5 class="mt-0">Media heading</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. 
-                      Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
-                      Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
-                {{-- Comment box end --}}
-
-                {{-- Comment box me --}}
-                <div class="media media-comment media-comment-me">
-                    <div class="media-body text-right">
-                      <h5 class="mt-0">Media heading</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. 
-                      Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
-                      Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                    <img src="https://www.shareicon.net/data/512x512/2017/01/06/868320_people_512x512.png" class="ml-3 img-comment" alt="Avatar">
-                </div>
-                {{-- Comment box me end --}}
+                @foreach ($comments as $comment)
+                    @if ($comment->user_id == session()->get('user')['id'])
+                        {{-- Comment box me --}}
+                        <div class="col-12">
+                            <div class="media media-comment media-comment-me">
+                                <div class="media-body text-right">
+                                    <h6 class="mt-0"><b>{{ $comment->first_name }}</b></h6>
+                                    {{ $comment->user_comment }}
+                                </div>
+                                <img src="{{ $comment->personal_image }}" class="ml-3 img-comment" alt="Avatar">
+                            </div>
+                            <div class="comment-date mt-2 text-right">{{ $comment->date }}</div>
+                        </div>
+                        {{-- Comment box me end --}}
+                    @else
+                        {{-- Comment box --}}
+                        <div class="col-12">
+                            <div class="media media-comment media-comment-other">
+                                <img src="{{ $comment->personal_image }}" class="mr-3 img-comment" alt="Avatar">
+                                <div class="media-body">
+                                <h6 class="mt-0"><b>{{ $comment->first_name }}</b></h6>
+                                {{ $comment->user_comment }}
+                                </div>
+                            </div>
+                            <div class="comment-date mt-2">{{ $comment->date }}</div>
+                        </div>
+                        {{-- Comment box end --}}
+                    @endif
+                @endforeach
 
                 <div class="col-12 mt-5">
-                    <form>
+                    <form action="/leaveComment" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $data->id }}">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Leave a comment</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your review here, that's important for us..."></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your review here, that's important for us..." name="comment"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Send</button>
                     </form>

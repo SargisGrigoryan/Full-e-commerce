@@ -83,6 +83,7 @@ Route::group(['middleware' => ['userNotLogined']], function(){
     Route::post('/buyNow', [UserController::class, 'buyNow']);
     Route::post('/orderAll', [UserController::class, 'orderAll']);
     Route::post('/orderNow', [UserController::class, 'orderNow']);
+    Route::post('/leaveComment', [UserController::class, 'leaveComment']);
 });
 
 

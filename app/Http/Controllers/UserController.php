@@ -14,6 +14,7 @@ use App\Models\Gallery;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Comment;
 
 
 use Illuminate\Http\Response;
@@ -25,6 +26,9 @@ class UserController extends Controller
     function getDetails($id){
         // Get current products datas from db
         $data = Product::where('status', '1')->find($id);
+        // $comments = Comment::where('product_id', $id)->where('status', '1')->get();
+        // $users = User::join('comments', 'comments.user_id', '=', 'users.id')->get();
+        $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')->get();
 
         if($data){
             // Get gallery from db
@@ -33,7 +37,7 @@ class UserController extends Controller
             // Get similar products
             $similar = Product::where('cat_id', $data->cat_id)->inRandomOrder()->limit(12)->get();
 
-            return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar]);
+            return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar, 'comments' => $comments]);
         }else{
             session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
             return redirect('/');
@@ -157,6 +161,9 @@ class UserController extends Controller
             if(session()->has('admin')){
                 session()->pull('admin');
             }
+            if(session()->has('user')){
+                session()->pull('user');
+            }
             session()->put('user', $user);
             return redirect('home');
 
@@ -176,8 +183,14 @@ class UserController extends Controller
 
     // Get User datas from db
     function getUserProfile(){
-        $user = User::find(Session::get('user')['id'])->first();
+        $user = User::find(Session::get('user')['id']);
         return view('myProfile', ['userDatas' => $user]);
+    }
+
+    // Get user datas
+    static function getUserDatas(){
+        $user = User::find(Session::get('user')['id']);
+        return $user;
     }
 
     // User data changing 1
@@ -485,5 +498,21 @@ class UserController extends Controller
         $user_id = session()->get('user')['id'];
         $orders = Order::where('user_id', $user_id)->paginate(15);
         return view('orders', ['orders' => $orders]);
+    }
+
+    // Leave comment
+    function leaveComment(Request $req){
+        $user_id = session()->get('user')['id'];
+        
+        $comment = new Comment;
+
+        if($req->comment){
+            $comment->user_id = $user_id;
+            $comment->user_comment = $req->comment;
+            $comment->product_id = $req->product_id;
+            $comment->save();
+        }
+
+        return redirect('details/'.$req->product_id.'#comments');
     }
 }
