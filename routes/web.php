@@ -31,6 +31,9 @@ Route::get('adminLogout', [AdminController::class, 'adminLogout']);
 
 // ___USER___
 
+// POST AJAX
+Route::post('ajax/request/getcomment', [UserController::class, 'getComments'])->name('ajax.request.getcomment');
+
 // GET
 Route::get('/details/{id}', [UserController::class, 'getDetails']);
 Route::get('home', [UserController::class, 'getHomeProducts']);
@@ -84,6 +87,9 @@ Route::group(['middleware' => ['userNotLogined']], function(){
     Route::post('/orderAll', [UserController::class, 'orderAll']);
     Route::post('/orderNow', [UserController::class, 'orderNow']);
     Route::post('/leaveComment', [UserController::class, 'leaveComment']);
+
+    // AJAX POST
+    Route::post('ajax/request/sendcomment', [UserController::class, 'leaveComment'])->name('ajax.request.sendcomment');
 });
 
 

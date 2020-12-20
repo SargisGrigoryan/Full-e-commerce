@@ -104,62 +104,25 @@
                     <h3>Reviews</h3>
                     <hr>
                 </div>
-
-                @foreach ($comments as $comment)
-                    @if ($comment->user_id == session()->get('user')['id'])
-                        {{-- Comment box me --}}
-                        <div class="col-12">
-                            <div class="media media-comment media-comment-me">
-                                <div class="media-body text-right">
-                                    <h6 class="mt-0"><b>{{ $comment->first_name }}</b></h6>
-                                    {{ $comment->user_comment }}
-                                </div>
-                                <div class="comment-image ml-2">
-                                    <img src="{{ $comment->personal_image }}" alt="Avatar">
-                                </div>
-                            </div>
-                            <div class="comment-date mt-2 text-right">{{ $comment->date }}</div>
-                        </div>
-                        {{-- Comment box me end --}}
-                    @else
-                        {{-- Comment box --}}
-                        <div class="col-12">
-                            <div class="media media-comment media-comment-other">
-                                <div class="comment-image mr-2">
-                                    <img src="{{ $comment->personal_image }}" alt="Avatar">
-                                </div>
-                                <div class="media-body">
-                                <h6 class="mt-0"><b>{{ $comment->first_name }}</b></h6>
-                                {{ $comment->user_comment }}
-                                </div>
-                            </div>
-                            <div class="comment-date mt-2">{{ $comment->date }}</div>
-                        </div>
-                        {{-- Comment box end --}}
-                    @endif
-                @endforeach
-
-                <div class="col-12 text-center">
-                    @if (count($comments) == 0)
-                    <h4>No reviews yet.</h4>
-                    @endif
-                    {{-- Paginate cart products --}}
-                    {{ $comments->links('vendor.pagination.custom') }}
-                    {{-- Paginate cart products end --}}
-                </div>
-
                 <div class="col-12 mt-3">
-                    <form action="/leaveComment" method="POST">
+                    <form id="comments-form">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $data->id }}">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Leave a comment</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your review here, that's important for us..." name="comment"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        @if (session()->has('user'))
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        @else
+                            <a href="/login" class="btn btn-primary">Send</a>
+                        @endif
+                        
                     </form>
                 </div>
-
+                <div class="col-12">
+                    <div class="row" id="details-comments"></div>
+                </div>
             </div>
         </div>
     </section>
