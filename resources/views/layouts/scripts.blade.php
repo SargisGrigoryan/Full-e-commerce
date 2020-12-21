@@ -38,6 +38,7 @@
                 },
                 success: function(data_sending_comments){
                     $(form).find('button[type="submit"]').prop('disabled', false);
+                    $(form).find('#exampleFormControlTextarea1').val('');
                 }
             })
         });
