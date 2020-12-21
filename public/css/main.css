@@ -183,6 +183,10 @@ section#comments .comment-date {
   font-size: 12px;
 }
 
+section#comments .btn-load-comments {
+  display: none;
+}
+
 section#cart .cart-image {
   width: 100px;
 }

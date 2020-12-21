@@ -123,6 +123,10 @@
                 <div class="col-12">
                     <div class="row" id="details-comments"></div>
                 </div>
+
+                <div class="col-12 text-center mt-2">
+                    <button type="button" class="btn btn-primary btn-load-comments">Load more</button>
+                </div>
             </div>
         </div>
     </section>
