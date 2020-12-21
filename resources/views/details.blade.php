@@ -112,12 +112,11 @@
                             <label for="exampleFormControlTextarea1">Leave a comment</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your review here, that's important for us..." name="comment"></textarea>
                         </div>
-                        @if (session()->has('user'))
+                        @if (session()->has('user') || session()->has('admin'))
                             <button type="submit" class="btn btn-primary">Send</button>
                         @else
                             <a href="/login" class="btn btn-primary">Send</a>
                         @endif
-                        
                     </form>
                 </div>
                 <div class="col-12">

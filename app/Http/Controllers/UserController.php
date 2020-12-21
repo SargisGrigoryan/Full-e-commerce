@@ -169,7 +169,6 @@ class UserController extends Controller
             }
             session()->put('user', $user);
             return redirect('home');
-
         }
     }
 
@@ -505,13 +504,25 @@ class UserController extends Controller
 
     // Leave comment
     public function leaveComment(Request $req){
-        $user_id = session()->get('user')['id'];
+        $user_id = 0;
+        $admin_id = 0;
+
+        if(session()->has('user')){
+            $user_id = session()->get('user')['id'];
+        }
+        if(session()->has('admin')){
+            $admin_id = session()->get('admin')['id'];
+        }
     
         $comment = new Comment;
 
         if($req->comment){
-            $comment->user_id = $user_id;
-            $comment->user_comment = $req->comment;
+            if($user_id != 0){
+                $comment->user_id = $user_id;
+            }else if($admin_id != 0){
+                $comment->admin_id = $admin_id;
+            }
+            $comment->comment = $req->comment;
             $comment->product_id = $req->productId;
             $comment->save();
         }
@@ -521,20 +532,27 @@ class UserController extends Controller
     public function getComments(){
         if(session()->has('details_id')){
             $id = session()->get('details_id');
+
+            $admin_id = '0';
             $user_id = '0';
+            
             if(session()->has('user')){
-                $user_id = session()->get('user');
+                $user_id = session()->get('user')['id'];
+            }else if(session()->has('admin')){
+                $admin_id = session()->get('admin')['id'];
             }
 
             // Get all comments
-            $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')
-            ->select('users.first_name', 'users.personal_image', 'comments.user_comment', 'comments.date', 'comments.status', 'users.id')
-            ->where('comments.product_id', $id)
-            ->orderByDesc('comments.id')->get();
+            $comments = Comment::where('comments.product_id', $id)->orderByDesc('comments.id')->get();
+            $users = User::join('comments', 'comments.user_id', '=', 'users.id')->get();
+            // $comments = Comment::join('users', 'comments.user_id', '=', 'users.id')
+            // ->select('users.first_name', 'users.personal_image', 'comments.comment', 'comments.date', 'comments.status', 'users.id', 'comments.user_id', 'comments.admin_id')
+            // ->where('comments.product_id', $id)
+            // ->orderByDesc('comments.id')->get();      
 
-            return response()->json(['comments' => $comments, 'current_user' => $user_id]);
+
+            return response()->json(['comments' => $comments, 'current_user' => $user_id, 'current_admin' => $admin_id, 'users' => $users]);
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
             return redirect('/');
         }
     }

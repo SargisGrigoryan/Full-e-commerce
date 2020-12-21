@@ -69,12 +69,26 @@
             }
 
             for(i = 0; i < comCounter; i++){
-                var firstName = data_getting_comments['comments'][i].first_name;
-                var image = data_getting_comments['comments'][i].personal_image;
-                var comment = data_getting_comments['comments'][i].user_comment;
+                if(data_getting_comments['comments'][i].admin_id == '0'){
+                    // var firstName = data_getting_comments['comments'][i].first_name;
+                    // var image = data_getting_comments['comments'][i].personal_image;  
+                    var firstName = "USER";
+                    var image = 'https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png'; 
+                    for(f = 0; f < data_getting_comments['users'].length; f++){
+                        if(data_getting_comments['comments'][i].user_id == data_getting_comments['users'][f]['id']){
+                            var firstName = data_getting_comments['users'][f]['first_name'];
+                            var image = data_getting_comments['users'][f]['personal_image']; 
+                        }
+                    }
+                     
+                }else{
+                    var firstName = "ADMIN"
+                    var image = 'https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg';   
+                }
+                var comment = data_getting_comments['comments'][i].comment;
                 var date = data_getting_comments['comments'][i].date;
 
-                if(data_getting_comments['current_user']['id'] == data_getting_comments['comments'][i].id){
+                if((data_getting_comments['current_user'] == data_getting_comments['comments'][i].user_id && data_getting_comments['current_user'] != '0') || (data_getting_comments['current_admin'] == data_getting_comments['comments'][i].admin_id && data_getting_comments['current_admin'] != '0')){
                     var content = '<div class="col-12"><div class="media media-comment media-comment-me"><div class="media-body text-right"><h6 class="mt-0"><b>' + firstName + '</b></h6>' + comment + '</div><div class="comment-image ml-2"><img src="' + image + '" alt="Avatar"></div></div><div class="comment-date mt-2 text-right">' + date + '</div></div>';
                 }else{
                     var content = '<div class="col-12"><div class="media media-comment media-comment-other"><div class="comment-image mr-2"><img src="' + image + '" alt="Avatar"></div><div class="media-body"><h6 class="mt-0"><b>' + firstName + '</b></h6>' + comment + '</div></div><div class="comment-date mt-2">' + date + '</div></div>';

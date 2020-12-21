@@ -86,10 +86,6 @@ Route::group(['middleware' => ['userNotLogined']], function(){
     Route::post('/buyNow', [UserController::class, 'buyNow']);
     Route::post('/orderAll', [UserController::class, 'orderAll']);
     Route::post('/orderNow', [UserController::class, 'orderNow']);
-    Route::post('/leaveComment', [UserController::class, 'leaveComment']);
-
-    // AJAX POST
-    Route::post('ajax/request/sendcomment', [UserController::class, 'leaveComment'])->name('ajax.request.sendcomment');
 });
 
 
@@ -104,3 +100,6 @@ Route::group(['middleware' => ['userLogined']], function(){
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
+
+// Admin or User is logined
+Route::post('ajax/request/sendcomment', [UserController::class, 'leaveComment'])->name('ajax.request.sendcomment');
