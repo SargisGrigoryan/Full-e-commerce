@@ -179,6 +179,12 @@ class UserController extends Controller
     // Remeber user
     public static function rememberUser($id){
         $user = User::find($id);
+        if(session()->has('admin')){
+            session()->pull('admin');
+        }
+        if(session()->has('user')){
+            session()->pull('user');
+        }
         session()->put('user', $user);
         return redirect('home');
     }

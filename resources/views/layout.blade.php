@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 // Chekc if isset remember me cookies
 if(Cookie::get('remember_user') && !session()->has('user')){
   $id =  Cookie::get('remember_user');
-  if(session()->has('admin')){
-      session()->pull('admin');
-  }
   UserController::rememberUser($id);
+}
+if(Cookie::get('remember_admin') && !session()->has('admin')){
+  $id =  Cookie::get('remember_admin');
+  AdminController::rememberAdmin($id);
 }
 
 ?>

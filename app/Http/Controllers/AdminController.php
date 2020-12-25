@@ -128,14 +128,31 @@ class AdminController extends Controller
             session()->flash('email', $email);
             return redirect('admin');
         }else{
-            session()->put('admin', $admin);
-
+            if($req->input('remember')){
+                cookie()->queue('remember_admin', $admin->id, 30000);
+            }
+            if(session()->has('admin')){
+                session()->pull('admin');
+            }
             if(session()->has('user')){
                 session()->pull('user');
             }
-
+            session()->put('admin', $admin);
             return redirect('home');
         }
+    }
+
+    // Remember admin
+    public static function rememberAdmin($id){
+        $admin = Admin::find($id);
+        if(session()->has('admin')){
+            session()->pull('admin');
+        }
+        if(session()->has('user')){
+            session()->pull('user');
+        }
+        session()->put('admin', $admin);
+        return redirect('home');
     }
 
     // Admin Logout
