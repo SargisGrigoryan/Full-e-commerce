@@ -198,6 +198,7 @@ class UserController extends Controller
             session()->pull('user');
         }
         cookie()->queue('remember_user', '', -30000);
+        cookie()->queue('remember_admin', '', -30000);
         
         return redirect('login');
     }
@@ -326,6 +327,13 @@ class UserController extends Controller
         $qty = $req->input('qty');
         $color = $req->input('color');
 
+        // Check quantity in stock
+        $product = Product::find($product_id);
+        if($qty > $product->in_stock || $qty < 1){
+            session()->flash('notify_danger', 'Connection error please try again later.');
+            return redirect('home');
+        };
+
         // Connect to the db
         $cart = new Cart;
         $cart->user_id = $user_id;
@@ -348,7 +356,7 @@ class UserController extends Controller
         $user_id = session()->get('user')['id'];
 
         $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
-        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price', 'products.status')
+        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price', 'products.status', 'products.in_stock')
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
         ->paginate(10);
@@ -380,7 +388,13 @@ class UserController extends Controller
     function buyNow(Request $req){
         $product = Product::where('status', '1')->find($req->product_id);
         if($product){
-            return view('buyNow', ['product' => $product, 'product_qty' => $req->qty, 'product_color' => $req->color]);
+            // Check quantity in stock
+            if($req->qty > $product->in_stock || $req->qty < 1){
+                session()->flash('notify_danger', 'Connection error please try again later.');
+                return redirect('home');
+            }else{
+                return view('buyNow', ['product' => $product, 'product_qty' => $req->qty, 'product_color' => $req->color]);
+            }
         }else{
             session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
             return redirect('/');
@@ -405,6 +419,7 @@ class UserController extends Controller
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
         ->where('products.status', '1')
+        ->whereNotIn('products.in_stock', [0])
         ->get();
 
         if(!count($cart) < 1){

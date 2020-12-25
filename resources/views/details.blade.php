@@ -23,7 +23,12 @@
                 <div class="col-md-6">
                     <div class="details-info">
                         <h3><b>{{ $data->name }}</b></h3>
-                        <small>Lorem ipsum dolor sit amet.</small>
+                        @if ($data->in_stock != 0)
+                            <span class="text-success">In stock</span>
+                        @else
+                            <span class="text-danger">Not in stock</span>
+                        @endif
+                        <hr>
                         @if ($data->discount > 0)
                         <?php
                             $total_price = $data->price - ($data->discount * $data->price / 100)
@@ -51,34 +56,41 @@
                         </ul>
                         <div class="mt-3">
                             @if (!session()->has('admin'))
-                            <form action="addToCart" method="POST">
-                                @csrf
-                                <input type="hidden" value="{{ $data->id }}" name="product_id">
-                                <div class="form-group">
-                                    <label for="input1">Quantity</label>
-                                    <input type="number" class="form-control" placeholder="Quantity" name="qty" id="input1" min="1" value="1">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Color</label>
-                                    <?php
-                                        $colors_array = explode(', ', $data->colors);
-                                    ?>
-                                    <select class="form-control" id="exampleFormControlSelect1" name="color">
-                                        @foreach ($colors_array as $color)
-                                            <option value="{{ $color }}">{{ $color }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Add to cart</button>
-                            </form>
+                                @if ($data->in_stock != 0)
+                                    <form action="addToCart" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="{{ $data->id }}" name="product_id">
+                                        <div class="form-group">
+                                            <label for="input1">Quantity</label>
+                                            <input type="number" class="form-control" placeholder="Quantity" name="qty" id="input1" min="{{ $data->in_stock==0?'0':'1' }}" max="{{ $data->in_stock }}" value="{{ $data->in_stock==0?'0':'1' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Color</label>
+                                            <?php
+                                                $colors_array = explode(', ', $data->colors);
+                                            ?>
+                                            <select class="form-control" id="exampleFormControlSelect1" name="color">
+                                                @foreach ($colors_array as $color)
+                                                    <option value="{{ $color }}">{{ $color }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add to cart</button>
+                                    </form>
 
-                            <form action="/buyNow" method="POST">
-                                @csrf
-                                <input type="hidden" value="{{ $data->id }}" name="product_id">
-                                <input type="hidden" id="qty_input" name="qty">
-                                <input type="hidden" id="color_input" name="color">
-                                <button type="submit" class="btn btn-success mt-3">Buy now</button>
-                            </form>
+                                    <form action="/buyNow" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="{{ $data->id }}" name="product_id">
+                                        <input type="hidden" id="qty_input" name="qty">
+                                        <input type="hidden" id="color_input" name="color">
+                                        <button type="submit" class="btn btn-success mt-3">Buy now</button>
+                                    </form>
+                                @else
+                                    <div class="mb-3">
+                                        <button type="button" disabled class="btn btn-secondary">Add to cart</button>
+                                    </div>
+                                    <button type="button" disabled class="btn btn-secondary">Buy now</button>
+                                @endif
                             @else
                                 <div class="mt-2">
                                     <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>

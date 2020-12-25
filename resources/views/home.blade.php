@@ -85,8 +85,13 @@
                 <!-- Product -->
                 <div class="col-lg-3 col-md-4 col-6">
                     <a href="/details/{{ $item->id }}" class="product product-common">
+                        @if ($item->in_stock != 0)
+                          <span class="text-success">In stock</span>
+                        @else
+                          <span class="text-danger">Not in stock</span>
+                        @endif
                         <img src="{{ $item->image }}" alt="Image" class="img-resp">
-                        <h4>{{ $item->name }}</h4>
+                        <h4>{{ $item->name }} </h4>
                         @if ($item->discount > 0)
                         <?php
                           $total_price = $item->price - ($item->discount * $item->price / 100)

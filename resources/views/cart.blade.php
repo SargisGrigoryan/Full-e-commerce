@@ -20,6 +20,7 @@
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Color</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">In Stock</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -55,8 +56,15 @@
                                         <span class="p-2 bg-danger text-white">Removed</span>
                                     @endif
                                 </th>
+                                <th>
+                                    @if ($item->in_stock == 0)
+                                        <span class="p-2 bg-danger text-white">Not in stock</span>
+                                    @else
+                                        <span class="p-2 bg-success text-white">In stock</span>
+                                    @endif
+                                </th>
                                 <td>
-                                    @if ($item->status == 1)
+                                    @if ($item->status == 1 && $item->in_stock != 0)
                                     <form action="/buyNow" method="POST" class="d-inline-block">
                                         @csrf
                                         <input type="hidden" value="{{ $item->product_id }}" name="product_id">

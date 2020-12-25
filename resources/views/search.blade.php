@@ -8,13 +8,18 @@
 
                 <!-- Header -->
                 <div class="col-12 text-center">
-                  <h1>Searched Products</h1>
+                  <h2>Searched Products</h2><span>Results found ({{ count($products) }})</span>
                 </div>
 
                 @foreach ($products as $item)
                 <!-- Product -->
                 <div class="col-lg-3 col-md-4 col-6">
                     <a href="/details/{{ $item->id }}" class="product product-common">
+                        @if ($item->in_stock != 0)
+                          <span class="text-success">In stock</span>
+                        @else
+                          <span class="text-danger">Not in stock</span>
+                        @endif
                         <img src="{{ $item->image }}" alt="Image" class="img-resp">
                         <h4>{{ $item->name }}</h4>
                         @if ($item->discount > 0)

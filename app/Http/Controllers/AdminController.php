@@ -163,6 +163,9 @@ class AdminController extends Controller
         if(session()->has('user')){
             session()->pull('user');
         }
+        cookie()->queue('remember_user', '', -30000);
+        cookie()->queue('remember_admin', '', -30000);
+
         return redirect('/');
     }
 
