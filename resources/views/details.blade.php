@@ -101,7 +101,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3>Reviews</h3>
+                    <h3>Reviews ({{ $reviews_count }})</h3>
                     <hr>
                 </div>
                 <div class="col-12 mt-3">

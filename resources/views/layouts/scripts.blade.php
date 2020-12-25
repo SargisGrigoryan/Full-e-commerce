@@ -45,7 +45,7 @@
 
         // Comments getting ajax
         var comCounter = 5;
-        if($('#comments')){
+        if($('#comments').length){
             setInterval(function(){
                 loadComments(comCounter);
             }, '1000');

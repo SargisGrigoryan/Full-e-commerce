@@ -32,6 +32,7 @@ class UserController extends Controller
 
         // Get current products datas from db
         $data = Product::where('status', '1')->find($id);
+        $reviews_count = Comment::where('product_id', $id)->count();
 
         if($data){
             // Get gallery from db
@@ -40,7 +41,7 @@ class UserController extends Controller
             // Get similar products
             $similar = Product::where('cat_id', $data->cat_id)->inRandomOrder()->limit(12)->get();
 
-            return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar]);
+            return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar, 'reviews_count' => $reviews_count]);
         }else{
             session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
             return redirect('/');
@@ -161,6 +162,9 @@ class UserController extends Controller
 
             return redirect('login');
         }else{
+            if($req->input('remember')){
+                cookie()->queue('remember_user', $user->id, 30000);
+            }
             if(session()->has('admin')){
                 session()->pull('admin');
             }
@@ -172,6 +176,13 @@ class UserController extends Controller
         }
     }
 
+    // Remeber user
+    public static function rememberUser($id){
+        $user = User::find($id);
+        session()->put('user', $user);
+        return redirect('home');
+    }
+
     // User logout
     function logout(){
         if(session()->has('admin')){
@@ -180,6 +191,8 @@ class UserController extends Controller
         if(session()->has('user')){
             session()->pull('user');
         }
+        cookie()->queue('remember_user', '', -30000);
+        
         return redirect('login');
     }
 
