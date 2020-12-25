@@ -51,9 +51,9 @@ class UserController extends Controller
     // Get home products from db
     function getHomeProducts(){
         // Get all slider products
-        $slider_products = Product::where('slider', '1')->orderByDesc('id')->where('status', '1')->limit(12)->get();
+        $slider_products = Product::where('slider', '1')->whereNotIn('in_stock', [0])->orderByDesc('id')->where('status', '1')->limit(12)->get();
         // Get all Top products
-        $top_products = Product::where('top', '1')->orderByDesc('id')->where('status', '1')->limit(12)->get();
+        $top_products = Product::where('top', '1')->whereNotIn('in_stock', [0])->orderByDesc('id')->where('status', '1')->limit(12)->get();
         // Get all Products
         $all_products = Product::where('status', '1')->orderByDesc('id')->paginate(12);
 

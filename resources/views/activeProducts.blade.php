@@ -22,6 +22,7 @@
                             <th scope="col">Total</th>
                             <th scope="col">Slider</th>
                             <th scope="col">Top</th>
+                            <th scope="col">In Stock</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
                           </tr>
@@ -48,6 +49,13 @@
                                         <span class="p-2 bg-danger text-white">Off</span>
                                     @else
                                         <span class="p-2 bg-success text-white">On</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($product->in_stock == 0)
+                                        <span class="p-2 bg-danger text-white">Not</span>
+                                    @else
+                                        <span class="p-2 bg-success text-white">In</span>
                                     @endif
                                 </td>
                                 <td>{{ $product->date }}</td>

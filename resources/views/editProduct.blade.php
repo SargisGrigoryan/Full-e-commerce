@@ -85,7 +85,11 @@
                         </div>
                         <div class="form-group">
                             <label for="input9">Discount</label>
-                            <input type="number" class="form-control" id="input9" placeholder="discount" min="0" value="0" name="discount" value="{{ $product->discount }}">
+                            <input type="number" class="form-control" id="input9" placeholder="discount" min="0" name="discount" value="{{ $product->discount }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input9">In stock</label>
+                            <input type="number" class="form-control" id="input9" placeholder="discount" min="0" name="in_stock" value="{{ $product->in_stock }}">
                         </div>
                         <div class="form-group">
                             <label for="input10">Slider</label>

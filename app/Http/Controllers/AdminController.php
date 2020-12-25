@@ -66,6 +66,7 @@ class AdminController extends Controller
         $product->ram           = $req->ram;
         $product->price         = $req->price;
         $product->discount      = $req->discount;
+        $product->in_stock      = $req->in_stock;
         $product->slider        = $req->slider;
         $product->top           = $req->top;
         $product->status        = $req->status;
@@ -110,9 +111,11 @@ class AdminController extends Controller
                 $gallery->save();
             }
 
-            return "Product added successfully";
+            session()->flash('notify_success', 'Product added successfully');
+            return redirect('addProduct');
         }else{
-            return "Connection error";
+            session()->flash('notify_danger', 'Connection error please try again later');
+            return redirect('addProduct');
         }
     }
 
@@ -196,6 +199,7 @@ class AdminController extends Controller
         $ram = $req->ram;
         $price = $req->price;
         $discount = $req->discount;
+        $in_stock = $req->in_stock;
         $slider = $req->slider;
         $slider_image = $req->slider_image;
         $top = $req->top;
@@ -222,6 +226,7 @@ class AdminController extends Controller
         $product->ram = $ram;
         $product->price = $price;
         $product->discount = $discount;
+        $product->in_stock = $in_stock;
         // Slider image
         if($slider == 1 && $slider_image){
             $file_2 = $req->file('slider_image');
@@ -339,7 +344,7 @@ class AdminController extends Controller
         ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
         'products.display', 'products.camera', 'products.memory', 'products.ram', 
         'products.slider', 'products.price', 'products.discount', 'products.top', 
-        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '1')->paginate(6);
+        'products.status', 'products.date', 'categories.cat_name', 'products.in_stock')->where('products.status', '1')->orderByDesc('id')->paginate(6);
 
         // Get active products qty
         $products_active_qty = Product::where('status', '1')->count();
@@ -358,7 +363,7 @@ class AdminController extends Controller
         ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
         'products.display', 'products.camera', 'products.memory', 'products.ram', 
         'products.slider', 'products.price', 'products.discount', 'products.top', 
-        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '0')->paginate(6);
+        'products.status', 'products.date', 'categories.cat_name', 'products.in_stock')->where('products.status', '0')->paginate(6);
 
         // Get blocked products qty
         $products_blocked_qty = Product::where('status', '0')->count();
@@ -377,7 +382,7 @@ class AdminController extends Controller
         ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
         'products.display', 'products.camera', 'products.memory', 'products.ram', 
         'products.slider', 'products.price', 'products.discount', 'products.top', 
-        'products.status', 'products.date', 'categories.cat_name')->where('products.status', '2')->paginate(6);
+        'products.status', 'products.date', 'categories.cat_name', 'products.in_stock')->where('products.status', '2')->paginate(6);
 
         // Get removed products qty
         $products_removed_qty = Product::where('status', '2')->count();
