@@ -33,6 +33,9 @@ ul li{
 .img-products{
     max-width: 100px;
 }
+.dropdown-menu{
+    min-width: fit-content;
+}
 // Main classes end
 
 
@@ -53,7 +56,7 @@ ul li{
     margin-right: auto;
 }
 .product.product-common{
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.12);
+    border: 1px solid #c5c5c5;
     width: 100%;
 }
 .product:hover{

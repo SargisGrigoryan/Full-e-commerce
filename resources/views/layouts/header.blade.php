@@ -74,11 +74,14 @@ if(Session::has('admin')){
                   </li>
                 @endif
                 @endif
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('locale', 'ru') }}">Ru</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('locale', 'en') }}">En</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-globe"></i>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{{ route('locale', 'ru') }}">RU</a></li>
+                    <li><a class="dropdown-item" href="{{ route('locale', 'en') }}">EN</a></li>
+                  </ul>
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
