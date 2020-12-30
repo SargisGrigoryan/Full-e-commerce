@@ -6,7 +6,7 @@
     <section id="add-product">
         <div class="container">
             <div class="row">
-                <div class="col-4 ml-auto mr-auto">
+                <div class="col-lg-4 ml-auto mr-auto">
                     <h2>Add new product</h2>
                     <hr>
                     <form action="addProduct" method="POST" enctype="multipart/form-data">
