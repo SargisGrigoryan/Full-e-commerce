@@ -15,34 +15,38 @@ use App\Http\Controllers\UserController;
 |
 */
 
+// LOCALIZATION
+Route::get('locale/{locale}', [UserController::class, 'changeLocale'])->name('locale');
+
+Route::group(['middleware' => ['SetLocale']], function(){
+
+    // ___ADMIN___
+
+    // VIEW
+    Route::view('/admin', 'adminLogin');
+
+    // POST
+    Route::post('adminLogin', [AdminController::class, 'adminLogin']);
+
+    // GET
+    Route::get('adminLogout', [AdminController::class, 'adminLogout']);
 
 
-// ___ADMIN___
+    // ___USER___
 
-// VIEW
-Route::view('/admin', 'adminLogin');
+    // POST AJAX
+    Route::post('ajax/request/getcomment', [UserController::class, 'getComments'])->name('ajax.request.getcomment');
+    Route::post('ajax/request/getlang', [UserController::class, 'getLang'])->name('ajax.request.getlang');
 
-// POST
-Route::post('adminLogin', [AdminController::class, 'adminLogin']);
+    // GET
+    Route::get('/details/{id}', [UserController::class, 'getDetails']);
+    Route::get('home', [UserController::class, 'getHomeProducts']);
+    Route::get('/', [UserController::class, 'getHomeProducts']);
+    Route::get('logout', [UserController::class, 'logout']);
+    Route::get('search', [UserController::class, 'search']);
 
-// GET
-Route::get('adminLogout', [AdminController::class, 'adminLogout']);
-
-
-// ___USER___
-
-// POST AJAX
-Route::post('ajax/request/getcomment', [UserController::class, 'getComments'])->name('ajax.request.getcomment');
-
-// GET
-Route::get('/details/{id}', [UserController::class, 'getDetails']);
-Route::get('home', [UserController::class, 'getHomeProducts']);
-Route::get('/', [UserController::class, 'getHomeProducts']);
-Route::get('logout', [UserController::class, 'logout']);
-Route::get('search', [UserController::class, 'search']);
-
-// Redirect pages when admin is not loggined
-Route::group(['middleware' => ['AdminNotLoggined']], function(){
+    // Redirect pages when admin is not loggined
+    Route::group(['middleware' => ['AdminNotLoggined']], function(){
     // VIEW
     Route::view('/addCat', 'addCat');
 
@@ -66,11 +70,11 @@ Route::group(['middleware' => ['AdminNotLoggined']], function(){
 
     Route::get('/recoverProductFromTrash/{id}', [AdminController::class, 'recoverProductFromTrash']);
     Route::get('/blockProductFromTrash/{id}', [AdminController::class, 'blockProductFromTrash']);
-});
+    });
 
 
-// Redirect pages when user is not loggined
-Route::group(['middleware' => ['userNotLogined']], function(){
+    // Redirect pages when user is not loggined
+    Route::group(['middleware' => ['userNotLogined']], function(){
     // GET
     Route::get('/myProfile', [UserController::class, 'getUserProfile']);
     Route::get('/cart', [UserController::class, 'getUserCart']);
@@ -86,11 +90,11 @@ Route::group(['middleware' => ['userNotLogined']], function(){
     Route::post('/buyNow', [UserController::class, 'buyNow']);
     Route::post('/orderAll', [UserController::class, 'orderAll']);
     Route::post('/orderNow', [UserController::class, 'orderNow']);
-});
+    });
 
 
-// Redirect pages when user is loggined
-Route::group(['middleware' => ['userLogined']], function(){
+    // Redirect pages when user is loggined
+    Route::group(['middleware' => ['userLogined']], function(){
     // VIEW
     Route::view('/login', 'login');
     Route::view('/register', 'register');
@@ -99,7 +103,9 @@ Route::group(['middleware' => ['userLogined']], function(){
     // POST
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
-});
+    });
 
-// Admin or User is logined
-Route::post('ajax/request/sendcomment', [UserController::class, 'leaveComment'])->name('ajax.request.sendcomment');
+    // Admin or User is logined
+    Route::post('ajax/request/sendcomment', [UserController::class, 'leaveComment'])->name('ajax.request.sendcomment');
+
+});

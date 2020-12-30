@@ -74,6 +74,12 @@ if(Session::has('admin')){
                   </li>
                 @endif
                 @endif
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('locale', 'ru') }}">Ru</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('locale', 'en') }}">En</a>
+                </li>
               </ul>
               <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">

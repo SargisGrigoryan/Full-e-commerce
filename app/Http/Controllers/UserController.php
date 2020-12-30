@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\App;
 
 // Use Models
 use App\Models\Product;
@@ -589,5 +590,12 @@ class UserController extends Controller
         }else{
             return redirect('/');
         }
+    }
+
+    // Change locale
+    public function changeLocale($locale){
+        session()->put('locale', $locale);
+        App::setLocale($locale);
+        return redirect()->back();
     }
 }

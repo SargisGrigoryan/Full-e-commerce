@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-4 ml-auto mr-auto">
-                    <h2>Login</h2>
+                    <h2>{{ __('login.login') }}</h2>
                     <hr>
                     <form action="login" method="POST">
                         @csrf

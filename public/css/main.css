@@ -225,9 +225,9 @@ section#cart .cart-descr {
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1921px) {
   .container {
-    max-width: 1600px;
+    max-width: 1140px;
   }
   .container-fluid {
     max-width: 1920px;

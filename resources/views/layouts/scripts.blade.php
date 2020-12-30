@@ -56,7 +56,6 @@
             comCounter += 3;
             loadComments(comCounter);
         });
-        
     })
 
     function loadComments(comCounter){

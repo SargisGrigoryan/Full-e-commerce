@@ -80,7 +80,7 @@
 
                 <!-- Header -->
                 <div class="col-12 text-center">
-                  <h1>All Products</h1>
+                  <h1>{{ __('home.all_products') }}</h1>
                 </div>
 
                 @foreach ($all_products as $item)
