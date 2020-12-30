@@ -7,12 +7,12 @@ $(function(){
             0:{
                 items: 3
             },
-            768:{
+            992:{
                 items: 4
             },
-            992:{
-                items: 6
-            }
+            // 992:{
+            //     items: 6
+            // }
         }
     });
 
@@ -31,7 +31,11 @@ $(function(){
     }
 
     // DropDown
-    $('.dropdown-toggle').dropdown();
+    // $('.dropdown-toggle').dropdown();
+    $('.dropdown').on('click', function(){
+        $(this).toggleClass('show');
+        $(this).find('.dropdown-menu').toggleClass('show');
+    })
 
     // Details add to cart and buy now qty and color
     if($('#qty_input') || $('#color_input')){

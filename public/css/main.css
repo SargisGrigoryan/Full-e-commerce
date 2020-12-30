@@ -76,6 +76,7 @@ ul li {
           transform: rotate(-45deg);
   width: 150px;
   background-color: #4390BC;
+  font-size: 16px;
   color: #fff;
 }
 
@@ -195,5 +196,41 @@ section#cart .cart-descr {
   width: 200px;
   max-height: 100px;
   overflow: hidden;
+}
+
+@media (min-width: 576px) {
+  #similar .product .discounted,
+  #top-products .product .discounted {
+    left: -55px;
+    top: 14px;
+    font-size: 8px;
+  }
+}
+
+@media (min-width: 768px) {
+  #similar .product .discounted,
+  #top-products .product .discounted {
+    left: -44px;
+    top: 20px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #similar .product .discounted,
+  #top-products .product .discounted {
+    left: -35px;
+    top: 28px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1600px;
+  }
+  .container-fluid {
+    max-width: 1920px;
+  }
 }
 /*# sourceMappingURL=main.css.map */

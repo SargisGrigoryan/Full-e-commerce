@@ -3,6 +3,7 @@
 @section('content')
     <!-- Slider section -->
     <section id="slider">
+      <div class="container-fluid p-0">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
 
             <div class="carousel-inner">
@@ -34,6 +35,7 @@
               <span class="sr-only">Next</span>
             </a>
         </div>
+      </div>
     </section>
     <!-- Slider section end -->
 

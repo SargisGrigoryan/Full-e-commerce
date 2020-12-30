@@ -68,6 +68,7 @@ ul li{
     transform: rotate(-45deg);
     width: 150px;
     background-color: #4390BC;
+    font-size: 16px;
     color: #fff;
 }
 // products end
@@ -186,3 +187,62 @@ section#cart .cart-descr{
     overflow: hidden;
 }
 // Cart end
+
+
+// BreakPoints
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    // Sections
+    #similar .product .discounted,
+    #top-products .product .discounted{
+        left: -55px;
+        top: 14px;
+        font-size: 8px;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    // Sections
+    #similar .product .discounted,
+    #top-products .product .discounted{
+        left: -44px;
+        top: 20px;
+        font-size: 12px;
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    // Sections
+    #similar .product .discounted,
+    #top-products .product .discounted{
+        left: -35px;
+        top: 28px;
+        font-size: 16px;
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+
+}
+
+@media (min-width: 1600px) {
+
+}
+
+@media (min-width: 1920px) {
+    // Main classes
+    .container{
+        max-width: 1600px;
+    }
+    .container-fluid{
+        max-width: 1920px;
+    }
+}

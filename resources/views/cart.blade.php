@@ -40,7 +40,7 @@
                                     <?php
                                         $total_price = $item->price - ($item->discount * $item->price / 100)
                                     ?>
-                                    <s>${{ $item->price }}</s> ${{ $total_price }} <small class="discount-percent bg-danger text-light">%{{ $item->discount }} Discounted</small>
+                                    <s>${{ $item->price }}</s> ${{ $total_price }}
                                     @else
                                     ${{ $item->price }}
                                     @endif
@@ -49,18 +49,18 @@
                                 <td>{{ $item->color }}</td>
                                 <th>
                                     @if ($item->status == 0)
-                                        <span class="p-2 bg-warning text-white">Blocked</span>
+                                        <span class="p-2 text-warning">Blocked</span>
                                     @elseif($item->status == 1)
-                                        <span class="p-2 bg-success text-white">Active</span>
+                                        <span class="p-2text-success">Active</span>
                                     @else
-                                        <span class="p-2 bg-danger text-white">Removed</span>
+                                        <span class="p-2 text-danger">Removed</span>
                                     @endif
                                 </th>
                                 <th>
                                     @if ($item->in_stock == 0)
-                                        <span class="p-2 bg-danger text-white">Not in stock</span>
+                                        <span class="p-2 text-danger">Not in stock</span>
                                     @else
-                                        <span class="p-2 bg-success text-white">In stock</span>
+                                        <span class="p-2 text-success">In stock</span>
                                     @endif
                                 </th>
                                 <td>

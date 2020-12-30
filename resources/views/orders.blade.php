@@ -38,11 +38,11 @@
                                 <td>{{ $item->date }}</td>
                                 <td>
                                     @if ($item->status == 0)
-                                        <span class="p-2 bg-danger text-white">Canceled</span>
+                                        <span class="p-2 text-danger">Canceled</span>
                                     @elseif($item->status == 1)
-                                        <span class="p-2 bg-warning text-white">In process</span>
+                                        <span class="p-2 text-warning">In process</span>
                                     @else
-                                        <span class="p-2 bg-success text-white">Ended</span>
+                                        <span class="p-2 text-success">Ended</span>
                                     @endif
                                 </td>
                             </tr>
