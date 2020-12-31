@@ -7,21 +7,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2>Your cart list</h2>
+                    <h2>{{ __('cart.your_cart') }}</h2>
                 </div>
 
                 <div class="col-12 mt-3">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Color</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">In Stock</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('cart.image') }}</th>
+                                <th scope="col">{{ __('cart.name') }}</th>
+                                <th scope="col">{{ __('cart.price') }}</th>
+                                <th scope="col">{{ __('cart.qty') }}</th>
+                                <th scope="col">{{ __('cart.color') }}</th>
+                                <th scope="col">{{ __('cart.status') }}</th>
+                                <th scope="col">{{ __('cart.in_stock') }}</th>
+                                <th scope="col">{{ __('cart.action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,18 +49,18 @@
                                 <td>{{ $item->color }}</td>
                                 <th>
                                     @if ($item->status == 0)
-                                        <span class="p-2 text-warning">Blocked</span>
+                                        <span class="p-2 text-warning">{{ __('cart.blocked') }}</span>
                                     @elseif($item->status == 1)
-                                        <span class="p-2text-success">Active</span>
+                                        <span class="p-2text-success">{{ __('cart.active') }}</span>
                                     @else
-                                        <span class="p-2 text-danger">Removed</span>
+                                        <span class="p-2 text-danger">{{ __('cart.removed') }}</span>
                                     @endif
                                 </th>
                                 <th>
                                     @if ($item->in_stock == 0)
-                                        <span class="p-2 text-danger">Not in stock</span>
+                                        <span class="p-2 text-danger">{{ __('cart.not_in_stock') }}</span>
                                     @else
-                                        <span class="p-2 text-success">In stock</span>
+                                        <span class="p-2 text-success">{{ __('cart.in_stock') }}</span>
                                     @endif
                                 </th>
                                 <td>
@@ -70,12 +70,12 @@
                                         <input type="hidden" value="{{ $item->product_id }}" name="product_id">
                                         <input type="hidden" value="{{ $item->qty }}" name="qty">
                                         <input type="hidden" value="{{ $item->color }}" name="color">
-                                        <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy this one"><i class="fas fa-shopping-cart"></i></button>
+                                        <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('cart.buy_this') }}"><i class="fas fa-shopping-cart"></i></button>
                                     </form>
                                     @else
-                                    <button type="button" disabled class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy this one"><i class="fas fa-shopping-cart"></i></button>
+                                    <button type="button" disabled class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('cart.buy_this') }}"><i class="fas fa-shopping-cart"></i></button>
                                     @endif
-                                    <a href="/cart/removeFromCart/{{ $item->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><i class="fas fa-trash"></i></a>
+                                    <a href="/cart/removeFromCart/{{ $item->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('cart.remove') }}"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -85,7 +85,7 @@
 
                 <div class="col-12">
                     @if (count($userCart) == 0)
-                    <h4>No result is found</h4>
+                    <h4>{{ __('cart.no_result') }}</h4>
                     @endif
                     {{-- Paginate cart products --}}
                     {{ $userCart->links('vendor.pagination.custom') }}
@@ -94,7 +94,7 @@
 
                 @if (count($userCart) > 0)
                 <div class="col-12 mt-3">
-                    <a href="/buyAll" class="btn btn-primary">Buy all (active products)</a>
+                    <a href="/buyAll" class="btn btn-primary">{{ __('cart.buy_all') }}</a>
                 </div>
                 @endif
 
