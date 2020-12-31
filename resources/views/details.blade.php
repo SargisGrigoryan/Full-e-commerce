@@ -24,16 +24,16 @@
                     <div class="details-info">
                         <h3><b>{{ $data->name }}</b></h3>
                         @if ($data->in_stock != 0)
-                            <span class="text-success">In stock</span>
+                            <span class="text-success">{{ __('details.in_stock') }}</span>
                         @else
-                            <span class="text-danger">Not in stock</span>
+                            <span class="text-danger">{{ __('details.not_in_stock') }}</span>
                         @endif
                         <hr>
                         @if ($data->discount > 0)
                         <?php
                             $total_price = $data->price - ($data->discount * $data->price / 100)
                         ?>
-                        <h4><s>${{ $data->price }}</s> ${{ $total_price }} <small class="discount-percent bg-danger text-light">%{{ $data->discount }} Discounted</small></h4>
+                        <h4><s>${{ $data->price }}</s> ${{ $total_price }} <small class="discount-percent bg-danger text-light">%{{ $data->discount }} {{ __('details.discounted') }}</small></h4>
                         @else
                         <h4>${{ $data->price }}</h4>
                         @endif
@@ -48,11 +48,11 @@
                             <a href="#" class="text-warning"><i class="fas fa-star"></i></a>
                         </div>
                         <ul>
-                            <li><b>Colors -</b> <i>{{ $data->colors }}</i></li>
-                            <li><b>Display -</b> <i>{{ $data->display }}</i></li>
-                            <li><b>Camera -</b> <i>{{ $data->camera }}</i></li>
-                            <li><b>Memory -</b> <i>{{ $data->memory }}</i></li>
-                            <li><b>RAM -</b> <i>{{ $data->ram }}</i></li>
+                            <li><b>{{ __('details.colors') }} -</b> <i>{{ $data->colors }}</i></li>
+                            <li><b>{{ __('details.display') }} -</b> <i>{{ $data->display }}</i></li>
+                            <li><b>{{ __('details.camera') }} -</b> <i>{{ $data->camera }}</i></li>
+                            <li><b>{{ __('details.memory') }} -</b> <i>{{ $data->memory }}</i></li>
+                            <li><b>{{ __('details.ram') }} -</b> <i>{{ $data->ram }}</i></li>
                         </ul>
                         <div class="mt-3">
                             @if (!session()->has('admin'))
@@ -61,11 +61,11 @@
                                         @csrf
                                         <input type="hidden" value="{{ $data->id }}" name="product_id">
                                         <div class="form-group">
-                                            <label for="input1">Quantity</label>
+                                            <label for="input1">{{ __('details.qty') }}</label>
                                             <input type="number" class="form-control" placeholder="Quantity" name="qty" id="input1" min="{{ $data->in_stock==0?'0':'1' }}" max="{{ $data->in_stock }}" value="{{ $data->in_stock==0?'0':'1' }}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Color</label>
+                                            <label for="exampleFormControlSelect1">{{ __('details.color') }}</label>
                                             <?php
                                                 $colors_array = explode(', ', $data->colors);
                                             ?>
@@ -75,7 +75,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Add to cart</button>
+                                        <button type="submit" class="btn btn-primary">{{ __('details.add_to_cart') }}</button>
                                     </form>
 
                                     <form action="/buyNow" method="POST">
@@ -83,17 +83,17 @@
                                         <input type="hidden" value="{{ $data->id }}" name="product_id">
                                         <input type="hidden" id="qty_input" name="qty">
                                         <input type="hidden" id="color_input" name="color">
-                                        <button type="submit" class="btn btn-success mt-3">Buy now</button>
+                                        <button type="submit" class="btn btn-success mt-3">{{ __('details.buy_now') }}</button>
                                     </form>
                                 @else
                                     <div class="mb-3">
-                                        <button type="button" disabled class="btn btn-secondary">Add to cart</button>
+                                        <button type="button" disabled class="btn btn-secondary">{{ __('details.add_to_cart') }}</button>
                                     </div>
-                                    <button type="button" disabled class="btn btn-secondary">Buy now</button>
+                                    <button type="button" disabled class="btn btn-secondary">{{ __('details.buy_now') }}</button>
                                 @endif
                             @else
                                 <div class="mt-2">
-                                    <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">Edit</a>
+                                    <a href="/editProduct/{{ $data->id }}" class="btn btn-secondary">{{ __('details.edit') }}</a>
                                 </div>
                             @endif
                         </div>
@@ -113,7 +113,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3>Reviews ({{ $reviews_count }})</h3>
+                    <h3>{{ __('details.reviews') }} ({{ $reviews_count }})</h3>
                     <hr>
                 </div>
                 <div class="col-12 mt-3">
@@ -121,13 +121,13 @@
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $data->id }}">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Leave a comment</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your review here, that's important for us..." name="comment"></textarea>
+                            <label for="exampleFormControlTextarea1">{{ __('details.leave_comment') }}</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="{{ __('details.text_1') }}" name="comment"></textarea>
                         </div>
                         @if (session()->has('user') || session()->has('admin'))
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary">{{ __('details.send') }}</button>
                         @else
-                            <a href="/login" class="btn btn-primary">Send</a>
+                            <a href="/login" class="btn btn-primary">{{ __('details.send') }}</a>
                         @endif
                     </form>
                 </div>
@@ -136,7 +136,7 @@
                 </div>
 
                 <div class="col-12 text-center mt-2">
-                    <button type="button" class="btn btn-primary btn-load-comments">Load more</button>
+                    <button type="button" class="btn btn-primary btn-load-comments">{{ __('details.load_more') }}</button>
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3>Similar products</h3>
+                    <h3>{{ __('details.similar_products') }}</h3>
                 </div>
                 <div class="col-12">
                     <div class="owl-carousel">
@@ -163,10 +163,10 @@
                                     <?php
                                     $total_price = $item->price - ($item->discount * $item->price / 100)
                                     ?>
-                                    <span class="discounted">Discounted</span>
-                                    Price - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
+                                    <span class="discounted">{{ __('details.discount') }}</span>
+                                    {{ __('details.price') }} - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
                                 @else
-                                    Price - <b><i>${{ $item->price }}</i></b>
+                                    {{ __('details.price') }} - <b><i>${{ $item->price }}</i></b>
                                 @endif
                             </a>
                         </div>
@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 <div class="col-12 text-center mt-3">
-                    <a href="/" class="btn btn-primary">All Procucts</a>
+                    <a href="/" class="btn btn-primary">{{ __('details.all_products') }}</a>
                 </div>
             </div>
         </div>

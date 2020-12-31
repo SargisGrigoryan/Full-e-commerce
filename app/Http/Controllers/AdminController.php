@@ -26,10 +26,10 @@ class AdminController extends Controller
 
         if($result){
             session()->flash('notify_success', 'Category is added successfully');
-            return redirect('addCat');
+            return redirect('cat');
         }else{
             session()->flash('notify_danger', 'Connection error please try again later');
-            return redirect('addCat');
+            return redirect('cat');
         }
     }
 

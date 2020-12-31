@@ -37,7 +37,7 @@ if(Session::has('admin')){
                     <a class="nav-link" href="/addProduct">{{ __('header.add_product') }}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/addCat">{{ __('header.add_cat') }}</a>
+                    <a class="nav-link" href="/cat">{{ __('header.cat') }}</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

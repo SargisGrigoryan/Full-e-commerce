@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'login' => "Авторизоваться",
+    'login_header' => "Авторизоваться",
     'email_address' => "Адрес электронной почты",
     'password' => "Пароль",
     'remember_me' => "Запомни меня",

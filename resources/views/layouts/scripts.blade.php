@@ -99,7 +99,7 @@
             $('#details-comments').html(allComments);
 
             if(data_getting_comments['comments'].length < 1){
-                $('#details-comments').html('<div class="col-12 text-center"><h4>No reviews yet.</h4></div>');
+                $('#details-comments').html('<div class="col-12 text-center"><h4>{{ __('details.no_reviews') }}</h4></div>');
             }
         });
     }

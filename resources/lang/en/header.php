@@ -11,7 +11,7 @@ return [
     'orders' => "Orders",
     'logout' => "Logout",
     'add_product' => "Add product",
-    'add_cat' => "Add category",
+    'cat' => "Categories",
     'products' => "Products",
     'active_products' => "Active products",
     'blocked_products' => "Blocked products",

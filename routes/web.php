@@ -48,7 +48,7 @@ Route::group(['middleware' => ['SetLocale']], function(){
     // Redirect pages when admin is not loggined
     Route::group(['middleware' => ['AdminNotLoggined']], function(){
     // VIEW
-    Route::view('/addCat', 'addCat');
+    Route::view('/cat', 'cat');
 
     // POST
     Route::post('addCat', [AdminController::class, 'addCat']);
