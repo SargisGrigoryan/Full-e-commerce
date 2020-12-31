@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'all_products' => "Все продукты",
+    'searched' => "Искали продукты",
+    'results_found' => 'Результаты найдены',
     'price' => "цена",
     'in_stock' => "в наличии",
     'not_in_stock' => "нет в наличии",

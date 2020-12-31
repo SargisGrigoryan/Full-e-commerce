@@ -30,23 +30,23 @@ if(Session::has('admin')){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="/">Home</a>
+                  <a class="nav-link" href="/">{{ __('header.home') }}</a>
                 </li>
                 @if (session()->has('admin'))
                   <li class="nav-item">
-                    <a class="nav-link" href="/addProduct">Add product</a>
+                    <a class="nav-link" href="/addProduct">{{ __('header.add_product') }}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/addCat">Add category</a>
+                    <a class="nav-link" href="/addCat">{{ __('header.add_cat') }}</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Products ({{ $all_product_counter }})
+                      {{ __('header.products') }} ({{ $all_product_counter }})
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="/activeProducts">Active Products ({{ $active_product_counter }})</a></li>
-                      <li><a class="dropdown-item" href="/blockedProducts">Blocked Products ({{ $blocked_product_counter }})</a></li>
-                      <li><a class="dropdown-item" href="/removedProducts">Removed Products ({{ $removed_product_counter }})</a></li>
+                      <li><a class="dropdown-item" href="/activeProducts">{{ __('header.active_products') }} ({{ $active_product_counter }})</a></li>
+                      <li><a class="dropdown-item" href="/blockedProducts">{{ __('header.blocked_products') }} ({{ $blocked_product_counter }})</a></li>
+                      <li><a class="dropdown-item" href="/removedProducts">{{ __('header.removed_products') }} ({{ $removed_product_counter }})</a></li>
                     </ul>
                   </li>
                 @endif
@@ -56,21 +56,21 @@ if(Session::has('admin')){
                       {{ $user_profile->first_name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="/myProfile">My profile</a></li>
-                      <li><a class="dropdown-item" href="/cart">Cart ({{ $cart_counter }})</a></li>
-                      <li><a class="dropdown-item" href="/orders">Order list</a></li>
+                      <li><a class="dropdown-item" href="/myProfile">{{ __('header.my_profile') }}</a></li>
+                      <li><a class="dropdown-item" href="/cart">{{ __('header.cart') }} ({{ $cart_counter }})</a></li>
+                      <li><a class="dropdown-item" href="/orders">{{ __('header.orders') }}</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                      <li><a class="dropdown-item" href="/logout">{{ __('header.logout') }}</a></li>
                     </ul>
                   </li>
                 @else
                 @if (!session()->has('admin'))
                   <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/login">{{ __('header.login') }}</a>
                   </li>
                 @else
                   <li class="nav-item">
-                    <a class="nav-link" href="/adminLogout">logout</a>
+                    <a class="nav-link" href="/adminLogout">{{ __('header.logout') }}</a>
                   </li>
                 @endif
                 @endif
@@ -79,13 +79,13 @@ if(Session::has('admin')){
                     <i class="fas fa-globe"></i>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{{ route('locale', 'ru') }}">RU</a></li>
-                    <li><a class="dropdown-item" href="{{ route('locale', 'en') }}">EN</a></li>
+                    <li><a class="dropdown-item" href="{{ route('locale', 'ru') }}">{{ __('header.ru') }}</a></li>
+                    <li><a class="dropdown-item" href="{{ route('locale', 'en') }}">{{ __('header.en') }}</a></li>
                   </ul>
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+                <input class="form-control mr-sm-2" type="search" placeholder="{{ __('header.search') }}" aria-label="Search" name="query">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
               </form>
             </div>

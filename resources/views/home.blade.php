@@ -56,10 +56,10 @@
                         <?php
                           $total_price = $item->price - ($item->discount * $item->price / 100)
                         ?>
-                        <span class="discounted">Discounted</span>
-                        Price - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
+                        <span class="discounted">{{ __('home.discount') }}</span>
+                        {{ __('home.price') }} - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
                       @else
-                        Price - <b><i>${{ $item->price }}</i></b>
+                        {{ __('home.price') }} - <b><i>${{ $item->price }}</i></b>
                       @endif
                     </a>
                   </div>
@@ -88,9 +88,9 @@
                 <div class="col-lg-3 col-md-4 col-6">
                     <a href="/details/{{ $item->id }}" class="product product-common">
                         @if ($item->in_stock != 0)
-                          <span class="text-success">In stock</span>
+                          <span class="text-success">{{ __('home.in_stock') }}</span>
                         @else
-                          <span class="text-danger">Not in stock</span>
+                          <span class="text-danger">{{ __('home.not_in_stock') }}</span>
                         @endif
                         <img src="{{ $item->image }}" alt="Image" class="img-resp">
                         <h4>{{ $item->name }} </h4>
@@ -98,10 +98,10 @@
                         <?php
                           $total_price = $item->price - ($item->discount * $item->price / 100)
                         ?>
-                        <span class="discounted">Discounted</span>
-                        Price - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
+                        <span class="discounted">{{ __('home.discount') }}</span>
+                        {{ __('home.price') }} - <b><s>${{ $item->price }}</s> <i>${{ $total_price }}</i></b>
                         @else
-                          Price - <b><i>${{ $item->price }}</i></b>
+                        {{ __('home.price') }} - <b><i>${{ $item->price }}</i></b>
                         @endif
                     </a>
                 </div>
