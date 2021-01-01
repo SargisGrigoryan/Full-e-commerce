@@ -70,12 +70,19 @@ class AdminController extends Controller
 
     // Remove cat
     function removeCat($id){
-        $removeCat = Category::find($id);
-        $result = $removeCat->delete();
-
-        if($result){
-            session()->flash('notify_success', 'Category was successfully removed.');
-            return redirect()->back();
+        // First check if the cat is not in used
+        $check_cat = Product::where('cat_id', $id)->get();
+        if(count($check_cat) == 0){
+            $removeCat = Category::find($id);
+            $result = $removeCat->delete();
+    
+            if($result){
+                session()->flash('notify_success', 'Category was successfully removed.');
+                return redirect()->back();
+            }else{
+                session()->flash('notify_danger', 'Connection error, please try again later.');
+                return redirect()->back();
+            }
         }else{
             session()->flash('notify_danger', 'Connection error, please try again later.');
             return redirect()->back();

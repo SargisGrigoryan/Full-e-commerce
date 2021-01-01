@@ -75,8 +75,8 @@
                                       <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_name') }}" name="name">
                                   </div>
                                 </th>
-                                <th></th>
-                                <th></th>
+                                <th>...</th>
+                                <th>...</th>
                                 <th>
                                   <button type="submit" class="btn btn-secondary">{{ __('cat.add') }}</button>
                                 </th>
