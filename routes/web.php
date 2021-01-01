@@ -27,9 +27,12 @@ Route::group(['middleware' => ['SetLocale']], function(){
 
     // POST
     Route::post('adminLogin', [AdminController::class, 'adminLogin']);
+    Route::post('saveCat', [AdminController::class, 'saveCat']);
 
     // GET
     Route::get('adminLogout', [AdminController::class, 'adminLogout']);
+    Route::get('removeCat/{id}', [AdminController::class, 'removeCat']);
+    Route::get('editCat/{id}', [AdminController::class, 'getEditingCat']);
 
 
     // ___USER___
@@ -47,29 +50,28 @@ Route::group(['middleware' => ['SetLocale']], function(){
 
     // Redirect pages when admin is not loggined
     Route::group(['middleware' => ['AdminNotLoggined']], function(){
-    // VIEW
-    Route::view('/cat', 'cat');
 
-    // POST
-    Route::post('addCat', [AdminController::class, 'addCat']);
-    Route::post('addProduct', [AdminController::class, 'addProduct']);
-    Route::post('saveProduct', [AdminController::class, 'saveProduct']);
+        // POST
+        Route::post('addCat', [AdminController::class, 'addCat']);
+        Route::post('addProduct', [AdminController::class, 'addProduct']);
+        Route::post('saveProduct', [AdminController::class, 'saveProduct']);
 
-    // GET
-    Route::get('addProduct', [AdminController::class, 'getCat']);
-    Route::get('editProduct/{id}', [AdminController::class, 'getProduct']);
-    Route::get('activeProducts', [AdminController::class, 'getActiveProducts']);
-    Route::get('blockedProducts', [AdminController::class, 'getBlockedProducts']);
-    Route::get('removedProducts', [AdminController::class, 'getRemovedProducts']);
+        // GET
+        Route::get('addProduct', [AdminController::class, 'getCat']);
+        Route::get('editProduct/{id}', [AdminController::class, 'getProduct']);
+        Route::get('activeProducts', [AdminController::class, 'getActiveProducts']);
+        Route::get('blockedProducts', [AdminController::class, 'getBlockedProducts']);
+        Route::get('removedProducts', [AdminController::class, 'getRemovedProducts']);
+        Route::get('cat', [AdminController::class, 'getAllCats']);
 
-    Route::get('/blockProductFromActive/{id}', [AdminController::class, 'blockProductFromActive']);
-    Route::get('/removeProductFromActive/{id}', [AdminController::class, 'removeProductFromActive']);
+        Route::get('/blockProductFromActive/{id}', [AdminController::class, 'blockProductFromActive']);
+        Route::get('/removeProductFromActive/{id}', [AdminController::class, 'removeProductFromActive']);
 
-    Route::get('/recoverProductFromBlocked/{id}', [AdminController::class, 'recoverProductFromBlocked']);
-    Route::get('/removeProductFromBlocked/{id}', [AdminController::class, 'removeProductFromBlocked']);
+        Route::get('/recoverProductFromBlocked/{id}', [AdminController::class, 'recoverProductFromBlocked']);
+        Route::get('/removeProductFromBlocked/{id}', [AdminController::class, 'removeProductFromBlocked']);
 
-    Route::get('/recoverProductFromTrash/{id}', [AdminController::class, 'recoverProductFromTrash']);
-    Route::get('/blockProductFromTrash/{id}', [AdminController::class, 'blockProductFromTrash']);
+        Route::get('/recoverProductFromTrash/{id}', [AdminController::class, 'recoverProductFromTrash']);
+        Route::get('/blockProductFromTrash/{id}', [AdminController::class, 'blockProductFromTrash']);
     });
 
 

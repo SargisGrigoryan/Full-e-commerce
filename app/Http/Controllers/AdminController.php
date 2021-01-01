@@ -18,6 +18,13 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+    // Get categories for showing cat lists
+    function getAllCats(){
+        $cat = Category::paginate(12);
+        $products_cats = Product::select('products.cat_id')->get();
+        return view('cat', ['cats' => $cat, 'products_cats' => $products_cats]);
+    }
+
     // Add category
     function addCat(Request $req){
         $cat = new Category;
@@ -33,10 +40,46 @@ class AdminController extends Controller
         }
     }
 
-    // Get Categories from db
+    // Get Categories for adding new product
     function getCat(){
         $data = Category::all();
         return view('addProduct', ['data' => $data]);
+    }
+
+    // Edit cat
+    function getEditingCat($id){
+        $cat = Category::find($id);
+        return view('editCat', ['cat' => $cat]);
+    }
+
+    // Save cat
+    function saveCat(Request $req){
+        $cat_name = $req->input('name');
+        $cat_id = $req->input('id');
+        $cat = Category::find($cat_id);
+        $cat->cat_name = $cat_name;
+        $result = $cat->save();
+        if($result){
+            session()->flash('notify_success', 'Category was successfully edited.');
+            return redirect('cat');
+        }else{
+            session()->flash('notify_danger', 'Connection error, please try again later.');
+            return redirect()->back();
+        }
+    }
+
+    // Remove cat
+    function removeCat($id){
+        $removeCat = Category::find($id);
+        $result = $removeCat->delete();
+
+        if($result){
+            session()->flash('notify_success', 'Category was successfully removed.');
+            return redirect()->back();
+        }else{
+            session()->flash('notify_danger', 'Connection error, please try again later.');
+            return redirect()->back();
+        }
     }
 
     // Add product

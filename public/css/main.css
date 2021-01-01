@@ -115,6 +115,8 @@ ul li {
   padding: 10px;
 }
 
+section#cat-table .container,
+section#categories .container,
 section#order .container,
 section#searched-products .container,
 section#user-profile .container,
