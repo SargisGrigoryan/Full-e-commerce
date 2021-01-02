@@ -1,10 +1,18 @@
 <?php
 
 return[
-    'new_cat' => "New category",
+    'all_cats' => "All categories",
     'cat_name' => "Category name",
-    'cat_placeholder' => "Mobile, TV, etc...",
-    'add' => "Add"
+    'add' => "Add",
+    'new' => "New",
+    'name' => "Name",
+    'date' => "Date",
+    'used' => "Used",
+    'action' => "Action",
+    'remove' => "Remove",
+    'edit' => "Edit",
+    'edit_cat' => "Edit category",
+    'save' => "Save"
 ]
 
 ?>

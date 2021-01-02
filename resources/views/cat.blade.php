@@ -28,17 +28,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 mb-2">
-                    <h1 class="text-center">All categories</h1>
+                    <h1 class="text-center">{{ __('cat.all_cats') }}</h1>
                 </div>
                 <div class="col-12">
                     <table class="table">
                       <thead>
                         <tr>
                           <th scope="col">#ID</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Date</th>
-                          <th scope="col">Used</th>
-                          <th scope="col">Action</th>
+                          <th scope="col">{{ __('cat.name') }}</th>
+                          <th scope="col">{{ __('cat.date') }}</th>
+                          <th scope="col">{{ __('cat.used') }}</th>
+                          <th scope="col">{{ __('cat.action') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -60,16 +60,16 @@
                                     @if ($cat_counter != 0)
                                         <button class="btn btn-secondary" disabled><i class="fas fa-trash"></i></button>
                                     @else
-                                        <a href="/removeCat/{{ $cat->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><i class="fas fa-trash"></i></a>
+                                        <a href="/removeCat/{{ $cat->id }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('cat.remove') }}"><i class="fas fa-trash"></i></a>
                                     @endif
-                                    <a href="/editCat/{{ $cat->id }}" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fas fa-pen"></i></i></a>
+                                    <a href="/editCat/{{ $cat->id }}" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('cat.edit') }}"><i class="fas fa-pen"></i></i></a>
                                 </td>
                             </tr>
                           @endforeach
                           <tr>
                             <form action="addCat" method="POST">
                                 @csrf
-                                <th scope="row">Add new</th>
+                                <th scope="row">{{ __('cat.new') }}</th>
                                 <th>
                                   <div class="form-group">
                                       <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_name') }}" name="name">
