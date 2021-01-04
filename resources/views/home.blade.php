@@ -15,8 +15,16 @@
                 <a href="/details/{{ $item->id }}">
                   <img src="{{ $item->slider_image }}" class="d-block w-100" alt="Image">
                   <div class="carousel-caption d-none d-md-block">
-                    <h5>{{ $item->name }}</h5>
-                    <p>{{ $item->descr }}</p>
+                    <h5>
+                      @if (App::getLocale() == 'en')
+                          {{ $item->name_en }}
+                      @elseif(App::getLocale() == 'ru')
+                          {{ $item->name_ru }}
+                      @else
+                          {{ $item->name_en }}
+                      @endif  
+                    </h5>
+                    <p>Lorem, ipsum dolor...</p>
                   </div>
                 </a>
               </div>
@@ -51,7 +59,15 @@
                   <div>
                     <a href="/details/{{ $item->id }}" class="product product-small">
                       <img src="{{ $item->image }}" alt="Image" class="img-resp">
-                      <h5>{{ $item->name }}</h5>
+                      <h5>
+                        @if (App::getLocale() == 'en')
+                            {{ $item->name_en }}
+                        @elseif(App::getLocale() == 'ru')
+                            {{ $item->name_ru }}
+                        @else
+                            {{ $item->name_en }}
+                        @endif  
+                      </h5>
                       @if ($item->discount > 0)
                         <?php
                           $total_price = $item->price - ($item->discount * $item->price / 100)
@@ -93,7 +109,15 @@
                           <span class="text-danger">{{ __('home.not_in_stock') }}</span>
                         @endif
                         <img src="{{ $item->image }}" alt="Image" class="img-resp">
-                        <h4>{{ $item->name }} </h4>
+                        <h4>
+                          @if (App::getLocale() == 'en')
+                              {{ $item->name_en }}
+                          @elseif(App::getLocale() == 'ru')
+                              {{ $item->name_ru }}
+                          @else
+                              {{ $item->name_en }}
+                          @endif  
+                        </h4>
                         @if ($item->discount > 0)
                         <?php
                           $total_price = $item->price - ($item->discount * $item->price / 100)

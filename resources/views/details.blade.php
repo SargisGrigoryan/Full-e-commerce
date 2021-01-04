@@ -22,7 +22,15 @@
                 {{-- Product Info --}}
                 <div class="col-md-6">
                     <div class="details-info">
-                        <h3><b>{{ $data->name }}</b></h3>
+                        <h3><b>
+                            @if (App::getLocale() == 'en')
+                                {{ $data->name_en }}
+                            @elseif(App::getLocale() == 'ru')
+                                {{ $data->name_ru }}
+                            @else
+                                {{ $data->name_en }}
+                            @endif    
+                        </b></h3>
                         @if ($data->in_stock != 0)
                             <span class="text-success">{{ __('details.in_stock') }}</span>
                         @else
@@ -48,11 +56,59 @@
                             <a href="#" class="text-warning"><i class="fas fa-star"></i></a>
                         </div>
                         <ul>
-                            <li><b>{{ __('details.colors') }} -</b> <i>{{ $data->colors }}</i></li>
-                            <li><b>{{ __('details.display') }} -</b> <i>{{ $data->display }}</i></li>
-                            <li><b>{{ __('details.camera') }} -</b> <i>{{ $data->camera }}</i></li>
-                            <li><b>{{ __('details.memory') }} -</b> <i>{{ $data->memory }}</i></li>
-                            <li><b>{{ __('details.ram') }} -</b> <i>{{ $data->ram }}</i></li>
+                            <li><b>{{ __('details.colors') }} -</b> <i>
+                                @if (App::getLocale() == 'en')
+                                    {{ $data->colors_en }}
+                                @elseif(App::getLocale() == 'ru')
+                                    {{ $data->colors_ru }}
+                                @else
+                                    {{ $data->colors_en }}
+                                @endif
+                            </i></li>
+                            @if ($data->display_en)
+                                <li><b>{{ __('details.display') }} -</b> <i>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $data->display_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $data->display_ru }}
+                                    @else
+                                        {{ $data->display_en }}
+                                    @endif    
+                                </i></li>
+                            @endif
+                            @if ($data->camera_en)
+                                <li><b>{{ __('details.camera') }} -</b> <i>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $data->camera_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $data->camera_ru }}
+                                    @else
+                                        {{ $data->camera_en }}
+                                    @endif 
+                                </i></li>
+                            @endif
+                            @if ($data->memory_en)
+                                <li><b>{{ __('details.memory') }} -</b> <i>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $data->memory_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $data->memory_ru }}
+                                    @else
+                                        {{ $data->memory_en }}
+                                    @endif 
+                                </i></li>  
+                            @endif
+                            @if ($data->ram_en)
+                                <li><b>{{ __('details.ram') }} -</b> <i>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $data->ram_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $data->ram_ru }}
+                                    @else
+                                        {{ $data->ram_en }}
+                                    @endif 
+                                </i></li>
+                            @endif
                         </ul>
                         <div class="mt-3">
                             @if (!session()->has('admin'))
@@ -63,17 +119,6 @@
                                         <div class="form-group">
                                             <label for="input1">{{ __('details.qty') }}</label>
                                             <input type="number" class="form-control" placeholder="Quantity" name="qty" id="input1" min="{{ $data->in_stock==0?'0':'1' }}" max="{{ $data->in_stock }}" value="{{ $data->in_stock==0?'0':'1' }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">{{ __('details.color') }}</label>
-                                            <?php
-                                                $colors_array = explode(', ', $data->colors);
-                                            ?>
-                                            <select class="form-control" id="exampleFormControlSelect1" name="color">
-                                                @foreach ($colors_array as $color)
-                                                    <option value="{{ $color }}">{{ $color }}</option>
-                                                @endforeach
-                                            </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary">{{ __('details.add_to_cart') }}</button>
                                     </form>
@@ -98,7 +143,15 @@
                             @endif
                         </div>
                         <hr>
-                        <div class="detail-descr">{{ $data->descr }}</div>
+                        <div class="detail-descr">
+                            @if (App::getLocale() == 'en')
+                                {{ $data->descr_en }}
+                            @elseif(App::getLocale() == 'ru')
+                                {{ $data->descr_ru }}
+                            @else
+                                {{ $data->descr_en }}
+                            @endif
+                        </div>
                     </div>
                 </div>
                 {{-- Product Info end --}}
@@ -158,7 +211,15 @@
                         <div>
                             <a href="/details/{{ $item->id }}" class="product product-small">
                                 <img src="{{ $item->image }}" alt="Image" class="img-resp">
-                                <h5>{{ $item->name }}</h5>
+                                <h5>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $item->name_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $item->name_ru }}
+                                    @else
+                                        {{ $item->name_en }}
+                                    @endif
+                                </h5>
                                 @if ($item->discount > 0)
                                     <?php
                                     $total_price = $item->price - ($item->discount * $item->price / 100)

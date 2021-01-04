@@ -12,12 +12,20 @@
                     <form action="addProduct" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="input1">{{ __('addProduct.name') }}</label>
-                            <input type="text" class="form-control" id="input1" placeholder="{{ __('addProduct.product_name') }}" name="name">
+                            <label for="input1">{{ __('addProduct.name_en') }}</label>
+                            <input type="text" class="form-control" id="input1" placeholder="{{ __('addProduct.product_name') }}" name="name_en">
                         </div>
                         <div class="form-group">
-                            <label for="Textarea1">{{ __('addProduct.descr') }}</label>
-                            <textarea class="form-control" id="Textarea1" rows="3" placeholder="..." name="descr"></textarea>
+                            <label for="input1">{{ __('addProduct.name_ru') }}</label>
+                            <input type="text" class="form-control" id="input1" placeholder="{{ __('addProduct.product_name') }}" name="name_ru">
+                        </div>
+                        <div class="form-group">
+                            <label for="Textarea1">{{ __('addProduct.descr_en') }}</label>
+                            <textarea class="form-control" id="Textarea1" rows="3" placeholder="..." name="descr_en"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="Textarea1">{{ __('addProduct.descr_ru') }}</label>
+                            <textarea class="form-control" id="Textarea1" rows="3" placeholder="..." name="descr_ru"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="File1">{{ __('addProduct.gen_image') }}</label>
@@ -39,24 +47,44 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="input3">{{ __('addProduct.colors') }}</label>
-                            <input type="text" class="form-control" id="input3" placeholder="{{ __('addProduct.color_placeholder') }}" name="colors">
+                            <label for="input3">{{ __('addProduct.colors_en') }}</label>
+                            <input type="text" class="form-control" id="input3" placeholder="{{ __('addProduct.color_placeholder') }}" name="colors_en">
                         </div>
                         <div class="form-group">
-                            <label for="input4">{{ __('addProduct.display') }}</label>
-                            <input type="text" class="form-control" id="input4" placeholder="{{ __('addProduct.display') }}" name="display">
+                            <label for="input3">{{ __('addProduct.colors_ru') }}</label>
+                            <input type="text" class="form-control" id="input3" placeholder="{{ __('addProduct.color_placeholder') }}" name="colors_ru">
                         </div>
                         <div class="form-group">
-                            <label for="input5">{{ __('addProduct.camera') }}</label>
-                            <input type="text" class="form-control" id="input5" placeholder="{{ __('addProduct.camera') }}" name="camera">
+                            <label for="input4">{{ __('addProduct.display_en') }}</label>
+                            <input type="text" class="form-control" id="input4" placeholder="{{ __('addProduct.display') }}" name="display_en">
                         </div>
                         <div class="form-group">
-                            <label for="input6">{{ __('addProduct.memory') }}</label>
-                            <input type="text" class="form-control" id="input6" placeholder="{{ __('addProduct.memory') }}" name="memory">
+                            <label for="input4">{{ __('addProduct.display_ru') }}</label>
+                            <input type="text" class="form-control" id="input4" placeholder="{{ __('addProduct.display') }}" name="display_ru">
                         </div>
                         <div class="form-group">
-                            <label for="input7">{{ __('addProduct.ram') }}</label>
-                            <input type="text" class="form-control" id="input7" placeholder="{{ __('addProduct.ram') }}" name="ram">
+                            <label for="input5">{{ __('addProduct.camera_en') }}</label>
+                            <input type="text" class="form-control" id="input5" placeholder="{{ __('addProduct.camera') }}" name="camera_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="input5">{{ __('addProduct.camera_ru') }}</label>
+                            <input type="text" class="form-control" id="input5" placeholder="{{ __('addProduct.camera') }}" name="camera_ru">
+                        </div>
+                        <div class="form-group">
+                            <label for="input6">{{ __('addProduct.memory_en') }}</label>
+                            <input type="text" class="form-control" id="input6" placeholder="{{ __('addProduct.memory') }}" name="memory_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="input6">{{ __('addProduct.memory_ru') }}</label>
+                            <input type="text" class="form-control" id="input6" placeholder="{{ __('addProduct.memory') }}" name="memory_ru">
+                        </div>
+                        <div class="form-group">
+                            <label for="input7">{{ __('addProduct.ram_en') }}</label>
+                            <input type="text" class="form-control" id="input7" placeholder="{{ __('addProduct.ram') }}" name="ram_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="input7">{{ __('addProduct.ram_ru') }}</label>
+                            <input type="text" class="form-control" id="input7" placeholder="{{ __('addProduct.ram') }}" name="ram_ru">
                         </div>
                         <div class="form-group">
                             <label for="input8">{{ __('addProduct.price') }}</label>

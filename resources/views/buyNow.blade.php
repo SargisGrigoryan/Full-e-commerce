@@ -13,9 +13,17 @@
                 <div class="col-12 mt-3">
                     <ul>
                         <li><img src="{{ $product->image }}" alt="Image" class="img-order"></li>
-                        <li>Name - {{ $product->name }}</li>
+                        <?php
+                        if(App::getLocale() == 'en'){
+                            $name_result = $product->name_en;
+                        }elseif (App::getLocale() == 'ru') {
+                            $name_result = $product->name_ru;
+                        }else{
+                            $name_result = $product->name_en;
+                        }
+                        ?>
+                        <li>Name - {{  $name_result }}</li>
                         <li>Quantity - {{ $product_qty }}</li>
-                        <li>Color - {{ $product_color }}</li>
                         <li>Price - ${{ $product->price * $product_qty }}</li>
                         <li>Discount - %{{ $product->discount }}</li>
                         <li>Delivery price - $10</li>
@@ -28,7 +36,6 @@
                         @csrf
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="hidden" name="qty" value="{{ $product_qty }}">
-                        <input type="hidden" name="color" value="{{ $product_color }}">
                         <div class="form-group">
                             <label for="input1">First name</label>
                             <input type="text" class="form-control" id="input1" placeholder="John" name="first_name" value="{{ Session::get('first_name') }}" required>

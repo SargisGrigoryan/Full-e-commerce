@@ -32,7 +32,15 @@
                             <tr>
                                 <th scope="row">{{ $product->id }}</th>
                                 <td><a href="/details/{{ $product->id }}"><img src="{{ $product->image }}" alt="Image" class="img-products"></a></td>
-                                <td>{{ $product->name }}</td>
+                                <td>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $product->name_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $product->name_ru }}
+                                    @else
+                                        {{ $product->name_en }}
+                                    @endif
+                                </td>
                                 <td>{{ $product->cat_name }}</td>
                                 <td>${{ $product->price }}</td>
                                 <td>%{{ $product->discount }}</td>

@@ -18,7 +18,6 @@
                                 <th scope="col">{{ __('cart.name') }}</th>
                                 <th scope="col">{{ __('cart.price') }}</th>
                                 <th scope="col">{{ __('cart.qty') }}</th>
-                                <th scope="col">{{ __('cart.color') }}</th>
                                 <th scope="col">{{ __('cart.status') }}</th>
                                 <th scope="col">{{ __('cart.in_stock') }}</th>
                                 <th scope="col">{{ __('cart.action') }}</th>
@@ -34,7 +33,15 @@
                                         </a>
                                     </div>
                                 </th>
-                                <td>{{ $item->name }}</td>
+                                <td>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $item->name_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $item->name_ru }}
+                                    @else
+                                        {{ $item->name_en }}
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($item->discount > 0)
                                     <?php
@@ -46,7 +53,6 @@
                                     @endif
                                 </td>
                                 <td>{{ $item->qty }}</td>
-                                <td>{{ $item->color }}</td>
                                 <th>
                                     @if ($item->status == 0)
                                         <span class="p-2 text-warning">{{ __('cart.blocked') }}</span>
@@ -69,7 +75,6 @@
                                         @csrf
                                         <input type="hidden" value="{{ $item->product_id }}" name="product_id">
                                         <input type="hidden" value="{{ $item->qty }}" name="qty">
-                                        <input type="hidden" value="{{ $item->color }}" name="color">
                                         <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('cart.buy_this') }}"><i class="fas fa-shopping-cart"></i></button>
                                     </form>
                                     @else

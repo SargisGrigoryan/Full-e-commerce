@@ -106,15 +106,22 @@ class AdminController extends Controller
             $product->slider_image  = '/'.'slider_images/'.$file_name_2;
         }
 
-        $product->name          = $req->name;
-        $product->descr         = $req->descr;
+        $product->name_en       = $req->name_en;
+        $product->name_ru       = $req->name_ru;
+        $product->descr_en      = $req->descr_en;
+        $product->descr_ru      = $req->descr_ru;
         $product->image         = '/'.'images/'.$file_name_1;
         $product->cat_id        = $req->cat_id;
-        $product->colors        = $req->colors;
-        $product->display       = $req->display;
-        $product->camera        = $req->camera;
-        $product->memory        = $req->memory;
-        $product->ram           = $req->ram;
+        $product->colors_en     = $req->colors_en;
+        $product->colors_ru     = $req->colors_ru;
+        $product->display_en    = $req->display_en;
+        $product->display_ru    = $req->display_ru;
+        $product->camera_en     = $req->camera_en;
+        $product->camera_ru     = $req->camera_ru;
+        $product->memory_en     = $req->memory_en;
+        $product->memory_ru     = $req->memory_ru;
+        $product->ram_en        = $req->ram_en;
+        $product->ram_ru        = $req->ram_ru;
         $product->price         = $req->price;
         $product->discount      = $req->discount;
         $product->in_stock      = $req->in_stock;
@@ -239,15 +246,22 @@ class AdminController extends Controller
     // Save product details
     function saveProduct(Request $req){
         // Take original gallery data
-        $name = $req->name;
-        $descr = $req->descr;
+        $name_en = $req->name_en;
+        $name_ru = $req->name_ru;
+        $descr_en = $req->descr_en;
+        $descr_ru = $req->descr_ru;
         $image = $req->image;
         $cat_id = $req->cat_id;
-        $colors = $req->colors;
-        $display = $req->display;
-        $camera = $req->camera;
-        $memory = $req->memory;
-        $ram = $req->ram;
+        $colors_en = $req->colors_en;
+        $colors_ru = $req->colors_ru;
+        $display_en = $req->display_en;
+        $display_ru = $req->display_ru;
+        $camera_en = $req->camera_en;
+        $camera_ru = $req->camera_ru;
+        $memory_en = $req->memory_en;
+        $memory_ru = $req->memory_ru;
+        $ram_en = $req->ram_en;
+        $ram_ru = $req->ram_ru;
         $price = $req->price;
         $discount = $req->discount;
         $in_stock = $req->in_stock;
@@ -257,8 +271,10 @@ class AdminController extends Controller
         $status = $req->status;
 
         $product = Product::find($req->id);
-        $product->name = $name;
-        $product->descr = $descr;
+        $product->name_en = $name_en;
+        $product->name_ru = $name_ru;
+        $product->descr_en = $descr_en;
+        $product->descr_ru = $descr_ru;
         // General image
         if($image){
             $file_1 = $req->file('image');
@@ -270,11 +286,16 @@ class AdminController extends Controller
             $product->image = '/'.'images/'.$file_name_1;
         }
         $product->cat_id = $cat_id;
-        $product->colors = $colors;
-        $product->display = $display;
-        $product->camera = $camera;
-        $product->memory = $memory;
-        $product->ram = $ram;
+        $product->colors_en = $colors_en;
+        $product->colors_ru = $colors_ru;
+        $product->display_en = $display_en;
+        $product->display_ru = $display_ru;
+        $product->camera_en = $camera_en;
+        $product->camera_ru = $camera_ru;
+        $product->memory_en = $memory_en;
+        $product->memory_ru = $memory_ru;
+        $product->ram_en = $ram_en;
+        $product->ram_ru = $ram_ru;
         $product->price = $price;
         $product->discount = $discount;
         $product->in_stock = $in_stock;
@@ -392,8 +413,7 @@ class AdminController extends Controller
     function getActiveProducts(){
         // Get all active products
         $products_active = Product::join('categories', 'products.cat_id', '=', 'categories.id')
-        ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
-        'products.display', 'products.camera', 'products.memory', 'products.ram', 
+        ->select('products.id', 'products.name_en', 'products.name_ru', 'products.image', 
         'products.slider', 'products.price', 'products.discount', 'products.top', 
         'products.status', 'products.date', 'categories.cat_name', 'products.in_stock')->where('products.status', '1')->orderByDesc('id')->paginate(6);
 
@@ -411,8 +431,7 @@ class AdminController extends Controller
     function getBlockedProducts(){
         // Get all blocked products
         $products_blocked = Product::join('categories', 'products.cat_id', '=', 'categories.id')
-        ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
-        'products.display', 'products.camera', 'products.memory', 'products.ram', 
+        ->select('products.id', 'products.name_en', 'products.name_ru', 'products.image',
         'products.slider', 'products.price', 'products.discount', 'products.top', 
         'products.status', 'products.date', 'categories.cat_name', 'products.in_stock')->where('products.status', '0')->paginate(6);
 
@@ -430,8 +449,7 @@ class AdminController extends Controller
     function getRemovedProducts(){
         // Get all removed products
         $products_removed = Product::join('categories', 'products.cat_id', '=', 'categories.id')
-        ->select('products.id', 'products.name', 'products.descr', 'products.image', 'products.colors', 
-        'products.display', 'products.camera', 'products.memory', 'products.ram', 
+        ->select('products.id', 'products.name_en', 'products.name_ru', 'products.image',
         'products.slider', 'products.price', 'products.discount', 'products.top', 
         'products.status', 'products.date', 'categories.cat_name', 'products.in_stock')->where('products.status', '2')->paginate(6);
 

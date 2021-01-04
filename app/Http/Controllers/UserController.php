@@ -327,7 +327,6 @@ class UserController extends Controller
         $user_id = session()->get('user')['id'];
         $product_id = $req->input('product_id');
         $qty = $req->input('qty');
-        $color = $req->input('color');
 
         // Check quantity in stock
         $product = Product::find($product_id);
@@ -341,7 +340,6 @@ class UserController extends Controller
         $cart->user_id = $user_id;
         $cart->product_id = $product_id;
         $cart->qty = $qty;
-        $cart->color = $color;
         $result = $cart->save();
 
         if($result){
@@ -358,7 +356,7 @@ class UserController extends Controller
         $user_id = session()->get('user')['id'];
 
         $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
-        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price', 'products.status', 'products.in_stock')
+        ->select('cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name_en', 'products.name_ru', 'products.descr_en', 'products.descr_ru', 'products.discount', 'products.price', 'products.status', 'products.in_stock')
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
         ->paginate(10);
@@ -395,7 +393,7 @@ class UserController extends Controller
                 session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
                 return redirect('home');
             }else{
-                return view('buyNow', ['product' => $product, 'product_qty' => $req->qty, 'product_color' => $req->color]);
+                return view('buyNow', ['product' => $product, 'product_qty' => $req->qty]);
             }
         }else{
             session()->flash('notify_warning', Lang::get('notify_user.warning_5'));
@@ -417,7 +415,7 @@ class UserController extends Controller
         $user_id = session()->get('user')['id'];
 
         $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
-        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price')
+        ->select('cart.qty', 'cart.id', 'cart.product_id', 'products.discount', 'products.price')
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
         ->where('products.status', '1')
@@ -437,7 +435,7 @@ class UserController extends Controller
         // Get all required datas from user cart
         $user_id = session()->get('user')['id'];
         $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
-        ->select('cart.color', 'cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.name', 'products.descr', 'products.discount', 'products.price')
+        ->select('cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.discount', 'products.price')
         ->where('cart.user_id', $user_id)
         ->where('cart.status', '1')
         ->where('products.status', '1')
@@ -534,7 +532,7 @@ class UserController extends Controller
     // Get user orders
     function getOrders(){
         $user_id = session()->get('user')['id'];
-        $orders = Order::where('user_id', $user_id)->paginate(15);
+        $orders = Order::where('user_id', $user_id)->orderByDesc('id')->paginate(15);
         return view('orders', ['orders' => $orders]);
     }
 

@@ -7,18 +7,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 ml-auto mr-auto">
-                    <h2>{{ __('editProduct.new_prod') }}</h2>
+                    <h2>{{ __('editProduct.edit_prod') }}</h2>
                     <hr>
                     <form action="/saveProduct" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" value="{{ $product->id }}" name="id">
                         <div class="form-group">
-                            <label for="input1">{{ __('editProduct.name') }}</label>
-                            <input type="text" class="form-control" id="input1" placeholder="{{ __('editProduct.product_name') }}" name="name" value="{{ $product->name }}">
+                            <label for="input1">{{ __('editProduct.name_en') }}</label>
+                            <input type="text" class="form-control" id="input1" placeholder="{{ __('editProduct.product_name') }}" name="name_en" value="{{ $product->name_en }}">
                         </div>
                         <div class="form-group">
-                            <label for="Textarea1">{{ __('editProduct.descr') }}</label>
-                            <textarea class="form-control" id="Textarea1" rows="3" placeholder="..." name="descr">{{ $product->descr }}</textarea>
+                            <label for="input1">{{ __('editProduct.name_ru') }}</label>
+                            <input type="text" class="form-control" id="input1" placeholder="{{ __('editProduct.product_name') }}" name="name_ru" value="{{ $product->name_ru }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="Textarea1">{{ __('editProduct.descr_en') }}</label>
+                            <textarea class="form-control" id="Textarea1" rows="3" placeholder="..." name="descr_en">{{ $product->descr_en }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="Textarea1">{{ __('editProduct.descr_ru') }}</label>
+                            <textarea class="form-control" id="Textarea1" rows="3" placeholder="..." name="descr_ru">{{ $product->descr_ru }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="File1">{{ __('editProduct.gen_image') }}</label>
@@ -60,24 +68,44 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="input3">{{ __('editProduct.colors') }}</label>
-                            <input type="text" class="form-control" id="input3" placeholder="{{ __('editProduct.color_placeholder') }}" name="colors" value="{{ $product->colors }}">
+                            <label for="input3">{{ __('editProduct.colors_en') }}</label>
+                            <input type="text" class="form-control" id="input3" placeholder="{{ __('editProduct.color_placeholder') }}" name="colors_en" value="{{ $product->colors_en }}">
                         </div>
                         <div class="form-group">
-                            <label for="input4">{{ __('editProduct.display') }}</label>
-                            <input type="text" class="form-control" id="input4" placeholder="{{ __('editProduct.display') }}" name="display" value="{{ $product->display }}">
+                            <label for="input3">{{ __('editProduct.colors_ru') }}</label>
+                            <input type="text" class="form-control" id="input3" placeholder="{{ __('editProduct.color_placeholder') }}" name="colors_ru" value="{{ $product->colors_ru }}">
                         </div>
                         <div class="form-group">
-                            <label for="input5">{{ __('editProduct.camera') }}</label>
-                            <input type="text" class="form-control" id="input5" placeholder="{{ __('editProduct.camera') }}" name="camera" value="{{ $product->camera }}">
+                            <label for="input4">{{ __('editProduct.display_en') }}</label>
+                            <input type="text" class="form-control" id="input4" placeholder="{{ __('editProduct.display_en') }}" name="display_en" value="{{ $product->display_en }}">
                         </div>
                         <div class="form-group">
-                            <label for="input6">{{ __('editProduct.memory') }}</label>
-                            <input type="text" class="form-control" id="input6" placeholder="{{ __('editProduct.memory') }}" name="memory" value="{{ $product->memory }}">
+                            <label for="input4">{{ __('editProduct.display_ru') }}</label>
+                            <input type="text" class="form-control" id="input4" placeholder="{{ __('editProduct.display_ru') }}" name="display_ru" value="{{ $product->display_ru }}">
                         </div>
                         <div class="form-group">
-                            <label for="input7">{{ __('editProduct.ram') }}</label>
-                            <input type="text" class="form-control" id="input7" placeholder="{{ __('editProduct.ram') }}" name="ram" value="{{ $product->ram }}">
+                            <label for="input5">{{ __('editProduct.camera_en') }}</label>
+                            <input type="text" class="form-control" id="input5" placeholder="{{ __('editProduct.camera_en') }}" name="camera_en" value="{{ $product->camera_en }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input5">{{ __('editProduct.camera_ru') }}</label>
+                            <input type="text" class="form-control" id="input5" placeholder="{{ __('editProduct.camera_ru') }}" name="camera_ru" value="{{ $product->camera_ru }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input6">{{ __('editProduct.memory_en') }}</label>
+                            <input type="text" class="form-control" id="input6" placeholder="{{ __('editProduct.memory_en') }}" name="memory_en" value="{{ $product->memory_en }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input6">{{ __('editProduct.memory_ru') }}</label>
+                            <input type="text" class="form-control" id="input6" placeholder="{{ __('editProduct.memory_ru') }}" name="memory_ru" value="{{ $product->memory_ru }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input7">{{ __('editProduct.ram_en') }}</label>
+                            <input type="text" class="form-control" id="input7" placeholder="{{ __('editProduct.ram_en') }}" name="ram_en" value="{{ $product->ram_en }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input7">{{ __('editProduct.ram_ru') }}</label>
+                            <input type="text" class="form-control" id="input7" placeholder="{{ __('editProduct.ram_ru') }}" name="ram_ru" value="{{ $product->ram_ru }}">
                         </div>
                         <div class="form-group">
                             <label for="input8">{{ __('editProduct.price') }}</label>
