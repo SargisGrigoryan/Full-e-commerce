@@ -56,15 +56,17 @@
                             <a href="#" class="text-warning"><i class="fas fa-star"></i></a>
                         </div>
                         <ul>
-                            <li><b>{{ __('details.colors') }} -</b> <i>
-                                @if (App::getLocale() == 'en')
-                                    {{ $data->colors_en }}
-                                @elseif(App::getLocale() == 'ru')
-                                    {{ $data->colors_ru }}
-                                @else
-                                    {{ $data->colors_en }}
-                                @endif
-                            </i></li>
+                            @if ($data->colors_en)
+                                <li><b>{{ __('details.colors') }} -</b> <i>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $data->colors_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $data->colors_ru }}
+                                    @else
+                                        {{ $data->colors_en }}
+                                    @endif
+                                </i></li>
+                            @endif
                             @if ($data->display_en)
                                 <li><b>{{ __('details.display') }} -</b> <i>
                                     @if (App::getLocale() == 'en')

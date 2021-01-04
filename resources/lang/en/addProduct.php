@@ -12,7 +12,7 @@ return[
     'select_cat' => "Select category",
     'colors_en' => "Colors (EN)",
     'colors_ru' => "Colors (RU)",
-    'color_placeholder' => "Black, White, etc...",
+    'color_placeholder' => "Color",
     'display_en' => "Display (EN)",
     'display_ru' => "Display (RU)",
     'camera_en' => "Camera (EN)",

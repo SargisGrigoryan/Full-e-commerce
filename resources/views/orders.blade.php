@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2>Your order list</h2>
+                    <h2>{{ __('orderList.order_list') }}</h2>
                 </div>
 
                 <div class="col-12 mt-3">
@@ -15,14 +15,14 @@
                         <thead>
                           <tr>
                             <th scope="col">#ID</th>
-                            <th scope="col">First name</th>
-                            <th scope="col">Last name</th>
-                            <th scope="col">Products qty.</th>
-                            <th scope="col">Products price</th>
-                            <th scope="col">Del. price</th>
-                            <th scope="col">Total price</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">{{ __('orderList.first_name') }}</th>
+                            <th scope="col">{{ __('orderList.last_name') }}</th>
+                            <th scope="col">{{ __('orderList.products_qty') }}</th>
+                            <th scope="col">{{ __('orderList.price') }}</th>
+                            <th scope="col">{{ __('orderList.del_price') }}</th>
+                            <th scope="col">{{ __('orderList.total_price') }}</th>
+                            <th scope="col">{{ __('orderList.date') }}</th>
+                            <th scope="col">{{ __('orderList.status') }}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -38,11 +38,11 @@
                                 <td>{{ $item->date }}</td>
                                 <td>
                                     @if ($item->status == 0)
-                                        <span class="p-2 text-danger">Canceled</span>
+                                        <span class="p-2 text-danger">{{ __('orderList.canceled') }}</span>
                                     @elseif($item->status == 1)
-                                        <span class="p-2 text-warning">In process</span>
+                                        <span class="p-2 text-warning">{{ __('orderList.in_proc') }}</span>
                                     @else
-                                        <span class="p-2 text-success">Ended</span>
+                                        <span class="p-2 text-success">{{ __('orderList.ended') }}</span>
                                     @endif
                                 </td>
                             </tr>

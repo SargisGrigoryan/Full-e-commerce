@@ -532,7 +532,7 @@ class UserController extends Controller
     // Get user orders
     function getOrders(){
         $user_id = session()->get('user')['id'];
-        $orders = Order::where('user_id', $user_id)->orderByDesc('id')->paginate(15);
+        $orders = Order::where('user_id', $user_id)->orderByDesc('id')->paginate(12);
         return view('orders', ['orders' => $orders]);
     }
 
