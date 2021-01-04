@@ -21,7 +21,15 @@
                           <span class="text-danger">{{ __('search.not_in_stock') }}</span>
                         @endif
                         <img src="{{ $item->image }}" alt="Image" class="img-resp">
-                        <h4>{{ $item->name }}</h4>
+                        <h4>
+                          @if (App::getLocale() == 'en')
+                              {{ $item->name_en }}
+                          @elseif(App::getLocale() == 'ru')
+                              {{ $item->name_ru }}
+                          @else
+                              {{ $item->name_en }}
+                          @endif
+                        </h4>
                         @if ($item->discount > 0)
                         <?php
                           $total_price = $item->price - ($item->discount * $item->price / 100)

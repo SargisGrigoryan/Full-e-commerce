@@ -403,7 +403,10 @@ class UserController extends Controller
 
     // Search
     function search(Request $req){
-        $products = Product::where('name', 'like', '%'.$req->input('query').'%')->orWhere('descr', 'like', '%'.$req->input('query').'%')
+        $products = Product::where('name_en', 'like', '%'.$req->input('query').'%')
+        ->orWhere('descr_en', 'like', '%'.$req->input('query').'%')
+        ->orWhere('name_ru', 'like', '%'.$req->input('query').'%')
+        ->orWhere('descr_ru', 'like', '%'.$req->input('query').'%')
         ->where('status', '1')
         ->paginate(12);
 
