@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
+use Lang;
 
 // Use Models
 use App\Models\Product;
@@ -44,7 +45,7 @@ class UserController extends Controller
 
             return view('details', ['data' => $data, 'gallery_images' => $gallery, 'similar_products' => $similar, 'reviews_count' => $reviews_count]);
         }else{
-            session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_1'));
             return redirect('/');
         }
     }
@@ -83,32 +84,32 @@ class UserController extends Controller
         // Check all required datas
         if(!$first_name){
             // Notify user
-            session()->flash('notify_danger', 'Firstname is required.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_1'));
             return redirect('register');
         }
         if(!$last_name){
             // Notify user
-            session()->flash('notify_danger', 'Lastname is required.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_2'));
             return redirect('register');
         }
         if(!$personal_image){
             // Notify user
-            session()->flash('notify_danger', 'Personal image is required.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_3'));
             return redirect('register');
         }
         if(!$email){
             // Notify user
-            session()->flash('notify_danger', 'Email is required.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_4'));
             return redirect('register');
         }
         if(!$password_1){
             // Notify user
-            session()->flash('notify_danger', 'Password is required.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_5'));
             return redirect('register');
         }
         if(!$password_2){
             // Notify user
-            session()->flash('notify_danger', 'Password confirmation is required.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_6'));
             return redirect('register');
         }
 
@@ -117,7 +118,7 @@ class UserController extends Controller
 
         if(count($check_email) > 0){
             // Notify user
-            session()->flash('notify_danger', 'Email is already registered, please try another one');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_7'));
             return redirect('register');
         }else{
             // Generate image name
@@ -126,7 +127,7 @@ class UserController extends Controller
             // Check password confirmation
             if($password_1 != $password_2){
                 // Notify user
-                session()->flash('notify_danger', 'Confirm password is incorrect.');
+                session()->flash('notify_danger', Lang::get('notify_user.danger_8'));
                 return redirect('register');
             }else{
                 // Insert all datas in db
@@ -142,10 +143,10 @@ class UserController extends Controller
                     // Upload image
                     $personal_image->move(base_path('\public\user_images'), $image_name);
                     // notify user
-                    session()->flash('notify_success', 'You have successfully registered');
+                    session()->flash('notify_success', Lang::get('notify_user.success_1'));
                     return redirect('login');
                 }else{
-                    session()->flash('notify_danger', 'Connection error, please try again later');
+                    session()->flash('notify_danger', Lang::get('notify_user.danger_9'));
                     return redirect('register');
                 }
             }
@@ -158,7 +159,7 @@ class UserController extends Controller
         $user = User::where('email', $req->email)->first();
         if(!$user || !Hash::check($req->password, $user->password)){
             // Notify user
-            session()->flash('notify_danger', 'Email or password is incorrect');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_10'));
             session()->flash('email', $req->input('email'));
 
             return redirect('login');
@@ -232,14 +233,14 @@ class UserController extends Controller
             $result = $user->save();
 
             if($result){
-                session()->flash('notify_success', 'Your datas was successfully saved');
+                session()->flash('notify_success', Lang::get('notify_user.success_2'));
                 return redirect('myProfile');
             }else{
-                session()->flash('notify_success', 'COnnection error please try again later');
+                session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
                 return redirect('myProfile');
             }
         }else{
-            session()->flash('notify_warning', 'Warning, firstname or lastname must be minimum 2 chars.');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_2'));
             return redirect('myProfile');
         }
     }
@@ -256,19 +257,19 @@ class UserController extends Controller
 
         // Check new password
         if(strlen($pass1) < 3){
-            session()->flash('notify_warning', 'Warning user password must be more than 2 chars.');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_3'));
             return redirect('myProfile');
         }
 
         // Check current password
         if(!Hash::check($pass2, $user->password)){
-            session()->flash('notify_danger', 'User password is incorrect.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_11'));
             return redirect('myProfile');
         }
 
         // Check confirm password
         if($pass2 != $pass3){
-            session()->flash('notify_danger', 'Password confirmation is incorrect.');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_12'));
             return redirect('myProfile');
         }
 
@@ -276,10 +277,10 @@ class UserController extends Controller
         $result = $user->save();
 
         if($result){
-            session()->flash('notify_success', 'Password was successfully saved.');
+            session()->flash('notify_success', Lang::get('notify_user.success_3'));
             return redirect('myProfile');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later.');
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
             return redirect('myProfile');
         }
     }
@@ -294,7 +295,7 @@ class UserController extends Controller
         // Check image
         if(!$userImage){
             // Notify user
-            session()->flash('notify_warning', 'Warning you have to choose user image before uploading.');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_4'));
             return redirect('myProfile');
         }
 
@@ -310,10 +311,10 @@ class UserController extends Controller
             $userImage->move(base_path('\public\user_images'), $image_name);
 
             // Notify user
-            session()->flash('notify_success', 'User image was successfully uploaded.');
+            session()->flash('notify_success', Lang::get('notify_user.success_4'));
             return redirect('myProfile');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later.');
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
             return redirect('myProfile');
         }
 
@@ -331,7 +332,7 @@ class UserController extends Controller
         // Check quantity in stock
         $product = Product::find($product_id);
         if($qty > $product->in_stock || $qty < 1){
-            session()->flash('notify_danger', 'Connection error please try again later.');
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
             return redirect('home');
         };
 
@@ -344,10 +345,10 @@ class UserController extends Controller
         $result = $cart->save();
 
         if($result){
-            session()->flash('notify_success', 'Product was added to cart successfully');
+            session()->flash('notify_success', Lang::get('notify_user.success_5'));
             return redirect('details/'.$product_id);
         }else{
-            session()->flash('notify_danger', 'Connetion error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
             return redirect('details/'.$product_id);
         }
     }
@@ -371,10 +372,10 @@ class UserController extends Controller
         $result = $cart->delete();
 
         if($result){
-            session()->flash('notify_success', 'Product was successfully removed from your cart.');
+            session()->flash('notify_success', Lang::get('notify_user.success_6'));
             return redirect('cart');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later.');
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
             return redirect('cart');
         }
     }
@@ -391,13 +392,13 @@ class UserController extends Controller
         if($product){
             // Check quantity in stock
             if($req->qty > $product->in_stock || $req->qty < 1){
-                session()->flash('notify_danger', 'Connection error please try again later.');
+                session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
                 return redirect('home');
             }else{
                 return view('buyNow', ['product' => $product, 'product_qty' => $req->qty, 'product_color' => $req->color]);
             }
         }else{
-            session()->flash('notify_warning', 'Sorry, this product was removed or blocked, you can try again later.');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_5'));
             return redirect('/');
         }
     }
@@ -426,7 +427,7 @@ class UserController extends Controller
         if(!count($cart) < 1){
             return view('buyAll', ['cart' => $cart]);
         }else{
-            session()->flash('notify_warning', 'you cannot buy all products without having any cart list.');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_6'));
             return redirect('/cart');
         }
     }
@@ -470,12 +471,12 @@ class UserController extends Controller
 
         // check all required datas
         if(!$req->first_name){
-            session()->flash('notify_warning', 'First name is required');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_7'));
             return redirect('/buyAll');
         }
         
         if(!$req->last_name){
-            session()->flash('notify_warning', 'Last name is required');
+            session()->flash('notify_warning', Lang::get('notify_user.warning_8'));
             return redirect('/buyAll');
         }
 
@@ -486,10 +487,10 @@ class UserController extends Controller
             foreach ($cart as $item) {
                 Cart::find($item->id)->delete();
             }
-            session()->flash('notify_success', 'Your order was successfully send, you can check the duration in your order list');
+            session()->flash('notify_success', Lang::get('notify_user.success_7'));
             return redirect('/orders');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
             return redirect('/cart');
         }
     }
@@ -518,14 +519,14 @@ class UserController extends Controller
             $result = $order->save();
 
             if($result){
-                session()->flash('notify_success', 'Your order was successfully send, you can check the duration in your order list');
+                session()->flash('notify_success', Lang::get('notify_user.success_7'));
                 return redirect('/orders');
             }else{
-                session()->flash('notify_danger', 'Connection error please try again later');
+                session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
                 return redirect('/cart');
             }
         }else{
-            session()->flash('notify_danger', 'Sorry but this product is not available now please try again later');
+            session()->flash('notify_danger', Lang::get('notify_user.danger_13'));
             return redirect('/cart');
         }
     }

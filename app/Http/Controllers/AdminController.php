@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use File;
+use Lang;
 
 // Use models
 use App\Models\Category;
@@ -32,10 +33,10 @@ class AdminController extends Controller
         $result = $cat->save();
 
         if($result){
-            session()->flash('notify_success', 'Category is added successfully');
+            session()->flash('notify_success', Lang::get('notify_admin.success_1'));
             return redirect('cat');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('cat');
         }
     }
@@ -60,10 +61,10 @@ class AdminController extends Controller
         $cat->cat_name = $cat_name;
         $result = $cat->save();
         if($result){
-            session()->flash('notify_success', 'Category was successfully edited.');
+            session()->flash('notify_success', Lang::get('notify_admin.success_2'));
             return redirect('cat');
         }else{
-            session()->flash('notify_danger', 'Connection error, please try again later.');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect()->back();
         }
     }
@@ -77,14 +78,14 @@ class AdminController extends Controller
             $result = $removeCat->delete();
     
             if($result){
-                session()->flash('notify_success', 'Category was successfully removed.');
+                session()->flash('notify_success', Lang::get('notify_admin.success_3'));
                 return redirect()->back();
             }else{
-                session()->flash('notify_danger', 'Connection error, please try again later.');
+                session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
                 return redirect()->back();
             }
         }else{
-            session()->flash('notify_danger', 'Connection error, please try again later.');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect()->back();
         }
     }
@@ -161,10 +162,10 @@ class AdminController extends Controller
                 $gallery->save();
             }
 
-            session()->flash('notify_success', 'Product added successfully');
+            session()->flash('notify_success', Lang::get('notify_admin.success_4'));
             return redirect('addProduct');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('addProduct');
         }
     }
@@ -177,7 +178,7 @@ class AdminController extends Controller
         $admin = Admin::where('email', $email)->first();
 
         if(!$admin || !Hash::check($pass, $admin->password)){
-            session()->flash('notify_danger', 'Email or password is incorrect');
+            session()->flash('notify_danger', Lang::get('notify_admin.danger_1'));
             session()->flash('email', $email);
             return redirect('admin');
         }else{
@@ -230,7 +231,7 @@ class AdminController extends Controller
             $gallery = Gallery::where('product_id', $id)->get();
             return view('editProduct', ['product' => $product, 'cats' => $cats, 'gallery' => $gallery]);
         }else{
-            session()->flash('notify_warning', 'You can not edit removed products, you can recover it in blocked mode than edit and save as public.');
+            session()->flash('notify_warning', Lang::get('notify_admin.warning_1'));
             return redirect('/');
         }
     }
@@ -377,10 +378,10 @@ class AdminController extends Controller
             }
 
             // Notify user
-            session()->flash('notify_success', 'Product was successfully updated');
+            session()->flash('notify_success', Lang::get('notify_admin.success_5'));
             return redirect('editProduct/'.$req->id);
         }else{
-            session()->flash('notify_danger', 'COnnection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('editProduct/'.$req->id);
         }
 
@@ -468,10 +469,10 @@ class AdminController extends Controller
         $product->status = '0';
         $result = $product->save();
         if($result){
-            session()->flash('notify_success', 'Product was successfully blocked');
+            session()->flash('notify_success', Lang::get('notify_admin.success_6'));
             return redirect('activeProducts');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('activeProducts');
         }
     }
@@ -482,10 +483,10 @@ class AdminController extends Controller
         $product->status = '2';
         $result = $product->save();
         if($result){
-            session()->flash('notify_success', 'Product was successfully removed');
+            session()->flash('notify_success', Lang::get('notify_admin.success_7'));
             return redirect('activeProducts');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('activeProducts');
         }
     }
@@ -496,10 +497,10 @@ class AdminController extends Controller
         $product->status = '2';
         $result = $product->save();
         if($result){
-            session()->flash('notify_success', 'Product was successfully removed');
+            session()->flash('notify_success', Lang::get('notify_admin.success_8'));
             return redirect('blockedProducts');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('blockedProducts');
         }
     }
@@ -510,10 +511,10 @@ class AdminController extends Controller
         $product->status = '1';
         $result = $product->save();
         if($result){
-            session()->flash('notify_success', 'Product was successfully recovered');
+            session()->flash('notify_success', Lang::get('notify_admin.success_9'));
             return redirect('blockedProducts');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('blockedProducts');
         }
     }
@@ -524,10 +525,10 @@ class AdminController extends Controller
         $product->status = '1';
         $result = $product->save();
         if($result){
-            session()->flash('notify_success', 'Product was successfully recovered');
+            session()->flash('notify_success', Lang::get('notify_admin.success_10'));
             return redirect('removedProducts');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('removedProducts');
         }
     }
@@ -538,10 +539,10 @@ class AdminController extends Controller
         $product->status = '0';
         $result = $product->save();
         if($result){
-            session()->flash('notify_success', 'Product was successfully blocked');
+            session()->flash('notify_success', Lang::get('notify_admin.success_11'));
             return redirect('removedProducts');
         }else{
-            session()->flash('notify_danger', 'Connection error please try again later');
+            session()->flash('notify_danger', Lang::get('notify_admin.connection_error'));
             return redirect('removedProducts');
         }
     }
