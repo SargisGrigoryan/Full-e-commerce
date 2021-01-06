@@ -7,24 +7,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-3">
-                    <h2>Removed products</h2>
+                    <h2>{{ __('removedProducts.removed_products') }}</h2>
                 </div>
                 <div class="col-12">
                     <table class="table">
                         <thead>
                           <tr>
                             <th scope="col">#ID</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Discount</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Slider</th>
-                            <th scope="col">Top</th>
-                            <th scope="col">In stock</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">{{ __('removedProducts.image') }}</th>
+                            <th scope="col">{{ __('removedProducts.name') }}</th>
+                            <th scope="col">{{ __('removedProducts.cat') }}</th>
+                            <th scope="col">{{ __('removedProducts.price') }}</th>
+                            <th scope="col">{{ __('removedProducts.disc') }}</th>
+                            <th scope="col">{{ __('removedProducts.total') }}</th>
+                            <th scope="col">{{ __('removedProducts.slider') }}</th>
+                            <th scope="col">{{ __('removedProducts.top') }}</th>
+                            <th scope="col">{{ __('removedProducts.in_stock') }}</th>
+                            <th scope="col">{{ __('removedProducts.date') }}</th>
+                            <th scope="col">{{ __('removedProducts.action') }}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -47,23 +47,23 @@
                                 <td>${{ $product->price - ($product->discount * $product->price / 100) }}</td>
                                 <td>
                                     @if ($product->slider == 0)
-                                        <span class="p-2 bg-danger text-white">Off</span>
+                                        <span class="p-2 bg-danger text-white">{{ __('removedProducts.off') }}</span>
                                     @else
-                                        <span class="p-2 bg-success text-white">On</span>
+                                        <span class="p-2 bg-success text-white">{{ __('removedProducts.on') }}</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if ($product->top == 0)
-                                        <span class="p-2 bg-danger text-white">Off</span>
+                                        <span class="p-2 bg-danger text-white">{{ __('removedProducts.off') }}</span>
                                     @else
-                                        <span class="p-2 bg-success text-white">On</span>
+                                        <span class="p-2 bg-success text-white">{{ __('removedProducts.on') }}</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if ($product->in_stock == 0)
-                                        <span class="p-2 bg-danger text-white">Not</span>
+                                        <span class="p-2 bg-danger text-white">{{ __('removedProducts.not') }}</span>
                                     @else
-                                        <span class="p-2 bg-success text-white">In</span>
+                                        <span class="p-2 bg-success text-white">{{ __('removedProducts.in') }}</span>
                                     @endif
                                 </td>
                                 <td>{{ $product->date }}</td>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-12 text-center">
                     @if ($products_removed_qty == 0)
-                    <h4>No result is found</h4>
+                    <h4>{{ __('removedProducts.no_result') }}</h4>
                     @endif
                     {{-- Paginate Blocked products --}}
                     {{ $products_removed->links('vendor.pagination.custom') }}
