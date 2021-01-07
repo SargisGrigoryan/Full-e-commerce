@@ -10,22 +10,19 @@
                     <h1 class="text-center">{{ __('cat.edit_cat') }}</h1>
                 </div>
                 <div class="col-lg-6 m-auto">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <form action="/saveCat" method="POST">
-                                  @csrf
-                                  <input type="hidden" name="id" value="{{ $cat->id }}">
-                                  <th>
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_name') }}" name="name" value="{{ $cat->cat_name }}">
-                                      </div>
-                                  </th>
-                                  <th><button type="submit" class="btn btn-success">{{ __('cat.save') }}</button></th>
-                              </form>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <form action="/saveCat" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $cat->id }}">
+                        <div class="form-group">
+                            <label for="input1">{{ __('cat.cat_name_en') }}</label>
+                            <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_name') }}" name="name_en" value="{{ $cat->name_en }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="input2">{{ __('cat.cat_name_ru') }}</label>
+                            <input type="text" class="form-control" id="input2" placeholder="{{ __('cat.cat_name') }}" name="name_ru" value="{{ $cat->name_ru }}">
+                        </div>
+                        <button type="submit" class="btn btn-success">{{ __('cat.save') }}</button>
+                  </form>
                 </div>
             </div>
         </div>

@@ -12,7 +12,9 @@ return[
     'remove' => "Remove",
     'edit' => "Edit",
     'edit_cat' => "Edit category",
-    'save' => "Save"
+    'save' => "Save",
+    'cat_name_en' => "Category name (EN)",
+    'cat_name_ru' => "Category name (RU)",
 ]
 
 ?>

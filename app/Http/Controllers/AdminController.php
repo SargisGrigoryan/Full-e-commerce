@@ -29,7 +29,8 @@ class AdminController extends Controller
     // Add category
     function addCat(Request $req){
         $cat = new Category;
-        $cat->cat_name = $req->name;
+        $cat->name_en = $req->name_en;
+        $cat->name_ru = $req->name_ru;
         $result = $cat->save();
 
         if($result){
@@ -55,10 +56,12 @@ class AdminController extends Controller
 
     // Save cat
     function saveCat(Request $req){
-        $cat_name = $req->input('name');
+        $cat_name_en = $req->input('name_en');
+        $cat_name_ru = $req->input('name_ru');
         $cat_id = $req->input('id');
         $cat = Category::find($cat_id);
-        $cat->cat_name = $cat_name;
+        $cat->name_en = $cat_name_en;
+        $cat->name_ru = $cat_name_ru;
         $result = $cat->save();
         if($result){
             session()->flash('notify_success', Lang::get('notify_admin.success_2'));

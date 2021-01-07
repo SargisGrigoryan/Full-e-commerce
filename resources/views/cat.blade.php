@@ -1,28 +1,6 @@
 @extends('layout')
 
 @section('content')
-
-    {{-- Register section --}}
-    {{-- <section id="categories">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 ml-auto mr-auto">
-                    <h2>{{ __('cat.new_cat') }}</h2>
-                    <hr>
-                    <form action="addCat" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="input1">{{ __('cat.cat_name') }}</label>
-                            <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_placeholder') }}" name="name">
-                        </div>
-                        <button type="submit" class="btn btn-secondary">{{ __('cat.add') }}</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-    {{-- Register section end --}}
-
     {{-- Categories table section --}}
     <section id="cat-table">
         <div class="container">
@@ -53,7 +31,15 @@
                             ?>
                             <tr>
                                 <th scope="row">{{ $cat->id }}</th>
-                                <td>{{ $cat->cat_name }}</td>
+                                <td>
+                                    @if (App::getLocale() == 'en')
+                                        {{ $cat->name_en }}
+                                    @elseif(App::getLocale() == 'ru')
+                                        {{ $cat->name_ru }}
+                                    @else
+                                        {{ $cat->name_en }}
+                                    @endif
+                                </td>
                                 <td>{{ $cat->date }}</td>
                                 <td>{{ $cat_counter }}</td>
                                 <td>
@@ -72,10 +58,14 @@
                                 <th scope="row">{{ __('cat.new') }}</th>
                                 <th>
                                   <div class="form-group">
-                                      <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_name') }}" name="name">
+                                      <input type="text" class="form-control" id="input1" placeholder="{{ __('cat.cat_name_en') }}" name="name_en">
                                   </div>
                                 </th>
-                                <th>...</th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="input2" placeholder="{{ __('cat.cat_name_ru') }}" name="name_ru">
+                                    </div>
+                                </th>
                                 <th>...</th>
                                 <th>
                                   <button type="submit" class="btn btn-secondary">{{ __('cat.add') }}</button>
