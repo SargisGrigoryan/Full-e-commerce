@@ -9,6 +9,7 @@ use Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Lang;
+use Stripe;
 
 // Use Models
 use App\Models\Product;
@@ -599,5 +600,62 @@ class UserController extends Controller
         session()->put('locale', $locale);
         App::setLocale($locale);
         return redirect()->back();
+    }
+
+    // Payment with stripe
+    public function stripePost(Request $req){
+        // Get all required datas from user cart
+        $user_id = session()->get('user')['id'];
+        $cart = Cart::join('products', 'cart.product_id', '=', 'products.id')
+        ->select('cart.qty', 'cart.id', 'cart.product_id', 'products.image', 'products.discount', 'products.price')
+        ->where('cart.user_id', $user_id)
+        ->where('cart.status', '1')
+        ->where('products.status', '1')
+        ->get();
+
+        $product_qty = 0;
+        $delivery_price = 15;
+        $products_price = 0;
+        $discounted_prices = 0;
+        
+        // Count total price of all ordering cart
+        foreach ($cart as $item) {
+            $product_qty += $item->qty;
+            $products_price += ($item->price - ($item->discount * $item->price / 100)) * $item->qty;
+        }
+        $total_price = $products_price + $delivery_price;
+
+        // Pay now
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe\Charge::create ([
+                "amount" => 100 * $total_price,
+                "currency" => "usd",
+                "source" => $req->stripeToken,
+                "description" => "Test payment from itsolutionstuff.com." 
+        ]);
+
+        // Register order
+        $order = New Order;
+
+        // Save datas
+        $order->card_holder = $req->card_holder;
+        $order->products_qty = $product_qty;
+        $order->products_price = $products_price;
+        $order->delivery_price = $delivery_price;
+        $order->user_id = $user_id;
+  
+        $result = $order->save();
+
+        if($result){
+            // After all remove user cart's ordered products
+            foreach ($cart as $item) {
+                Cart::find($item->id)->delete();
+            }
+            session()->flash('notify_success', Lang::get('notify_user.success_7'));
+            return redirect('/orders');
+        }else{
+            session()->flash('notify_danger', Lang::get('notify_user.connection_error'));
+            return redirect('/cart');
+        }
     }
 }

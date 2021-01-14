@@ -6,6 +6,7 @@
 <!-- Optional -->
 <script src="/components/fontawesome/js/all.js"></script>
 <script src="/components/owlcarousel/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <!-- Main js -->
 <script src="/js/main.js"></script>
 <script>
@@ -56,8 +57,45 @@
             comCounter += 3;
             loadComments(comCounter);
         });
+
+        // Payment
+        var form = $(".require-validation");
+   
+        $('form.require-validation').bind('submit', function(e) {
+            var form         = $(".require-validation"),
+            inputSelector = ['input[type=email]', 'input[type=password]',
+                                'input[type=text]', 'input[type=file]',
+                                'textarea'].join(', '),
+            inputs       = form.find('.required').find(inputSelector),
+            valid         = true;
+        
+            $('.has-error').removeClass('has-error');
+            inputs.each(function(i, el) {
+                var input = $(el);
+                if (input.val() === '') {
+                    input.parent().addClass('has-error');
+                    errorMessage.removeClass('hide');
+                    e.preventDefault();
+                }
+            });
+        
+            if (!form.data('cc-on-file')) {
+                e.preventDefault();
+                Stripe.setPublishableKey(form.data('stripe-publishable-key'));
+                Stripe.createToken({
+                number: $('.card-number').val(),
+                cvc: $('.card-cvc').val(),
+                exp_month: $('.card-expiry-month').val(),
+                exp_year: $('.card-expiry-year').val()
+                }, stripeResponseHandler);
+            }
+        
+        });
     })
 
+    // __Functions__
+
+    // Load comments 
     function loadComments(comCounter){
         $.post("{{ route('ajax.request.getcomment') }}", function(data_getting_comments){
             var allComments = '';
@@ -102,5 +140,22 @@
                 $('#details-comments').html('<div class="col-12 text-center"><h4>{{ __('details.no_reviews') }}</h4></div>');
             }
         });
+    }
+
+    // Payment Response Handler
+    function stripeResponseHandler(status, response) {
+        var form = $(".require-validation");
+
+        if (response.error) {
+            console.log(response.error.message);
+            form.find('.error').html(response.error.message);
+        } else {
+            /* token contains id, last4, and card type */
+            var token = response['id'];
+
+            form.find('input[type=text]').empty();
+            form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            form.get(0).submit();
+        }
     }
 </script>

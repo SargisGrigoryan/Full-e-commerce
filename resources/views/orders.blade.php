@@ -15,8 +15,7 @@
                         <thead>
                           <tr>
                             <th scope="col">#ID</th>
-                            <th scope="col">{{ __('orderList.first_name') }}</th>
-                            <th scope="col">{{ __('orderList.last_name') }}</th>
+                            <th scope="col">Holder</th>
                             <th scope="col">{{ __('orderList.products_qty') }}</th>
                             <th scope="col">{{ __('orderList.price') }}</th>
                             <th scope="col">{{ __('orderList.del_price') }}</th>
@@ -29,8 +28,7 @@
                             @foreach ($orders as $item)
                             <tr>
                                 <th scope="row">{{ $item->id }}</th>
-                                <td>{{ $item->first_name }}</td>
-                                <td>{{ $item->last_name }}</td>
+                                <td>{{ $item->card_holder }}</td>
                                 <td>{{ $item->products_qty }}</td>
                                 <td>${{ $item->products_price }}</td>
                                 <td>${{ $item->delivery_price }}</td>

@@ -45,6 +45,12 @@ ul li {
   min-width: fit-content;
 }
 
+.error {
+  color: red;
+  padding: 0 5px;
+  font-size: 20px;
+}
+
 .product {
   display: block;
   padding: 5px 5px 15px;

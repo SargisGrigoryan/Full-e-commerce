@@ -33,25 +33,42 @@
                 </div>
 
                 <div class="col-12 mt-3">
-                    <form action="/orderAll" method="POST">
+                    <h2>Warning this is a test payment system</h2>
+                    <form 
+                            role="form" 
+                            action="{{ route('stripe.post') }}" 
+                            method="post" 
+                            class="require-validation"
+                            data-cc-on-file="false"
+                            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                            id="payment-form">
                         @csrf
+
                         <div class="form-group">
-                            <label for="input1">{{ __('buyAll.first_name') }}</label>
-                            <input type="text" class="form-control" id="input1" placeholder="John" name="first_name" value="{{ Session::get('first_name') }}" required>
+                            <label for="input1">Holder name</label>
+                            <input type="text" class="form-control" id="input1" placeholder="John" value="Test" name="card_holder" required>
                         </div>
                         <div class="form-group">
-                            <label for="input2">{{ __('buyAll.last_name') }}</label>
-                            <input type="text" class="form-control" id="input2" placeholder="Snow" name="last_name" value="{{ Session::get('last_name') }}" required>
+                            <label for="input3">Card number</label>
+                            <input autocomplete='off' class='form-control card-number' size='20' type='text' value="4242 4242 4242 4242">
                         </div>
                         <div class="form-group">
-                            <label for="input3">{{ __('buyAll.cvv') }}</label>
-                            <input type="text" class="form-control" id="input3" placeholder="1234-4567-8912-3456-7891" >
+                            <label for="input4">CVV</label>
+                            <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text' value="123">
                         </div>
                         <div class="form-group">
-                            <label for="input4">{{ __('buyAll.secure_code') }}</label>
-                            <input type="text" class="form-control" id="input4" placeholder="123" >
+                            <label for="input4">MM</label>
+                            <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text' value="12">
+                        </div>
+                        <div class="form-group">
+                            <label for="input4">YYYY</label>
+                            <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text' value="2024">
+                        </div>
+                        <div class='form-group'>
+                            <div class="error"></div>
                         </div>
                         <button type="submit" class="btn btn-success">{{ __('buyAll.order_now') }}</button>
+                        
                     </form>
                 </div>
             </div>
